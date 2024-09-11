@@ -11,15 +11,18 @@ function [R_PQW_IJK, R_IJK_PQW, state_PQW, state_IJK] = rot_pqw_ijk(a, e, i, W, 
     %   W              (1,1)    Double  RAAN              [rad]
     %   w              (1,1)    Double  Arg of periapsis  [rad]
     %   f              (1,1)    Double  True anomaly      [rad]
-    %   mu             (1,1)    Double  Gravitational parameter [km^3/s^2]
+    %   mu             (1,1)    Double  Gravitational parameter [DU^3/TU^2]
     %
     % OUTPUTS
     %   R_PQW_IJK      (3,3)    Double  Rotation matrix from PQW to IJK []
     %   R_IJK_PQW      (3,3)    Double  Rotation matrix from IJK to PQW []
-    %   state_PQW      (6,1)    Double  State vector (position and velocity) in PQW [km, km/s]
-    %   state_IJK      (6,1)    Double  State vector (position and velocity) in IJK [km, km/s]
+    %   state_PQW      (6,1)    Double  State vector (position and velocity) in PQW [DU, DU/TU]
+    %   state_IJK      (6,1)    Double  State vector (position and velocity) in IJK [DU, DU/TU]
     %
-
+    % NOTES
+    %
+    %
+    % FUNCTION 
     % Define the rotation matrix from PQW to IJK
     R_PQW_IJK = [cos(W)*cos(w) - sin(W)*sin(w)*cos(i), -cos(W)*sin(w) - sin(W)*cos(w)*cos(i), sin(W)*sin(i);
                  sin(W)*cos(w) + cos(W)*sin(w)*cos(i), -sin(W)*sin(w) + cos(W)*cos(w)*cos(i), -cos(W)*sin(i);
