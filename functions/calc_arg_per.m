@@ -1,4 +1,4 @@
-function omega = calcArgPer(n, e)
+function omega = calc_arg_per(n, e)
     %
     % DESCRIPTION
     %   Calculate the argument of perigee for an orbit given the eccentricity vector
