@@ -15,6 +15,7 @@ function [dv1, dv2, dvt, T_transfer] = hohmann_transfer(r1, r2, mu)
     %   dvt         (1,1)   Double  Total delta-V  [DU/TU]
     %   T_transfer  (1,1)   Double  Time of flight [TU]
     %
+    % FUNCTION
 
     % Velocities in initial and final orbits
     v1 = sqrt(mu / r1); % velocity in the initial orbit
