@@ -1,4 +1,4 @@
-function [R_PQW_IJK, R_IJK_PQW, state_PQW, state_IJK] = rot_pqw_ijk(a, e, i, W, w, f, mu)
+function [R_PQW_IJK, R_IJK_PQW, state_PQW, state_IJK] = rot_pqw_ijk(koe, mu)
     %
     % DESCRIPTION
     %   Calculate the rotation matrix from PQW to IJK frame and the inverse matrix from IJK to PQW.
@@ -24,6 +24,14 @@ function [R_PQW_IJK, R_IJK_PQW, state_PQW, state_IJK] = rot_pqw_ijk(a, e, i, W, 
     %
     % FUNCTION 
     % Define the rotation matrix from PQW to IJK
+
+    a = koe.a;
+    e = koe.e;
+    i = koe.i;
+    W = koe.W;
+    w = koe.w;
+    f = koe.f;
+
     R_PQW_IJK = [cos(W)*cos(w) - sin(W)*sin(w)*cos(i), -cos(W)*sin(w) - sin(W)*cos(w)*cos(i), sin(W)*sin(i);
                  sin(W)*cos(w) + cos(W)*sin(w)*cos(i), -sin(W)*sin(w) + cos(W)*cos(w)*cos(i), -cos(W)*sin(i);
                  sin(w)*sin(i),                         cos(w)*sin(i),                        cos(i)];
