@@ -5,7 +5,7 @@ function [R_PQW_IJK, R_IJK_PQW, state_PQW, state_IJK] = rot_pqw_ijk(koe, mu)
     %   Return the state (position and velocity) in both PQW and IJK frames as 6x1 matrices.
     %
     % INPUTS           size     Type
-    %   a              (1,1)    Double  Semi-major axis   [km]
+    %   a              (1,1)    Double  Semi-major axis   [DU]
     %   e              (1,1)    Double  Eccentricity      []
     %   i              (1,1)    Double  Inclination       [rad]
     %   W              (1,1)    Double  RAAN              [rad]
@@ -23,7 +23,6 @@ function [R_PQW_IJK, R_IJK_PQW, state_PQW, state_IJK] = rot_pqw_ijk(koe, mu)
     %
     %
     % FUNCTION 
-    % Define the rotation matrix from PQW to IJK
 
     a = koe.a;
     e = koe.e;
