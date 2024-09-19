@@ -1,4 +1,4 @@
-function f_p = tof_gauss_lambert(p, r_1_vec, r_2_vec, dt, mu, orbit)
+function [f_p, df_dp] = tof_gauss_lambert(p, r_1_vec, r_2_vec, dt, mu, orbit)
     %
     % DESCRIPTION
     %   Compute the time of flight between two position vectors using the Gauss-Lambert method.
@@ -16,6 +16,7 @@ function f_p = tof_gauss_lambert(p, r_1_vec, r_2_vec, dt, mu, orbit)
     %
     % OUTPUTS        size         Type    Description                   Units
     %   f_p          (1,1)        Double  Residual between desired TOF  [TU]
+    %   df_dp        (1,1)        Double  Derivative of f_p w.r.t p     [DU/TU]
     %
     % NOTES
     %
@@ -31,9 +32,9 @@ function f_p = tof_gauss_lambert(p, r_1_vec, r_2_vec, dt, mu, orbit)
             delta_nu = 2*pi - acos(dot(r_1_vec, r_2_vec) / (r_1 * r_2));
     end
     
-    k = r_1*r_2*(1 - cos(delta_nu));
+    k = r_1 * r_2 * (1 - cos(delta_nu));
     l = r_1 + r_2;
-    m = r_1*r_2*(1 + cos(delta_nu));
+    m = r_1 * r_2 * (1 + cos(delta_nu));
     
     a = (m * k *p) / ((2 * m - l^2)*p^2 + 2 * k * l * p - k^2);
     
@@ -43,4 +44,11 @@ function f_p = tof_gauss_lambert(p, r_1_vec, r_2_vec, dt, mu, orbit)
     
     dt_p = g + sqrt(a^3 / mu)*(delta_E - sin(delta_E));
     f_p = dt - dt_p;
+
+    dt_dp = -(g/(2 * p)) - ...
+            (3 / 2) * a * (dt_p - g) * ((k^2 + (2 * m - l^2) * p^2) / (m * k * p^2)) + ...
+            sqrt(a^3 / mu) * ((2 * k * sin(delta_E)) / (mu * p * (k - l * p)));
+
+    df_dp = -dt_dp;
+
 end
