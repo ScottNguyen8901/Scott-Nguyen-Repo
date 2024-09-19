@@ -12,8 +12,8 @@ function tof = tof_ta(a, e, nu_1, nu_2, mu)
     %   nu_1    (1,1)    Double  True anomaly 1                [rad]
     %   nu_2    (1,1)    Double  True anomaly 2                [rad]
     %
-    % OUTPUTS       size     Type    Description                Units
-    %   t_minutes   (1,1)    Double  TOF between the two TA     [TU]
+    % OUTPUTS   size     Type    Description                   Units
+    %   tof     (1,1)    Double  TOF between the two TA        [TU]
     %
     % NOTES
     %
