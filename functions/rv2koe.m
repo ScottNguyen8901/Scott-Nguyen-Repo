@@ -1,11 +1,11 @@
-function [koe] = rv2koe(r0, v0, mu)
+function [koe] = rv2koe(r_vec, v_vec, mu)
     %
     % DESCRIPTION
     %   Convert state vector into keplarian orbital elements
     %
     % INPUTS    
-    %   r0      (3,1)   Initial position vector [DU]   
-    %   v0      (3,1)   Initial velocity vector [DU^3/TU^2]
+    %   r_0_vec (3,1)   Initial position vector [DU]   
+    %   v_0_vec 3,1)   Initial velocity vector [DU^3/TU^2]
     %   mu      (1,1)   Gravitational parameter [DU^3/TU^2]
     %
     % OUTPUTS
@@ -15,7 +15,7 @@ function [koe] = rv2koe(r0, v0, mu)
     %    .i     (1,1)      Inclination       [rad]
     %    .W     (1,1)      RAAN              [rad]
     %    .w     (1,1)      Arg of periapsis  [rad]
-    %    .f     (1,1)      True anomaly      [rad]
+    %    .nu    (1,1)      True anomaly      [rad]
     %    .fpa   (1,1)      Flight path angle [rad]
     % NOTES
     %
@@ -28,18 +28,18 @@ function [koe] = rv2koe(r0, v0, mu)
     K = [0 0 1];
     
     %Norm of r0 and v0
-    r = norm(r0);
-    v = norm(v0);
+    r = norm(r_vec);
+    v = norm(v_vec);
     
     %Calculating semi-major axis using vis-viva eqn
     a = 1/((2/r) - ((v^2)/mu));
     
     %Calculating eccentricity vector then eccentricity
-    e_vec = (((v^2)/mu) - (1/r))*r0 - (1/mu)*dot(r0,v0)*v0;
+    e_vec = (((v^2)/mu) - (1/r))*r_vec - (1/mu)*dot(r_vec,v_vec)*v_vec;
     e = norm(e_vec);
     
     %Solving for inclination
-    h_vec = cross(r0,v0);
+    h_vec = cross(r_vec,v_vec);
     i = acos(dot((h_vec/norm(h_vec)),K));
     
     %Solving for RAN
@@ -60,14 +60,14 @@ function [koe] = rv2koe(r0, v0, mu)
     end
     
     %Solving for true anomaly
-    if dot(r0,v0) < 0
-        f = acos(dot((r0/norm(r0)),(e_vec/norm(e_vec))));
-        f = 2*pi - f;
+    if dot(r_vec,v_vec) < 0
+        nu = acos(dot((r_vec/norm(r_vec)),(e_vec/norm(e_vec))));
+        nu = 2*pi - nu;
     else
-        f = acos(dot((r0/norm(r0)),(e_vec/norm(e_vec))));
+        nu = acos(dot((r_vec/norm(r_vec)),(e_vec/norm(e_vec))));
     end
     
-    fpa = acos(norm(h_vec)/ (norm(r0) * norm(v0)));
+    fpa = acos(norm(h_vec)/ (norm(r_vec) * norm(v_vec)));
 
     % Populating KOE output sturcture
     
@@ -76,6 +76,6 @@ function [koe] = rv2koe(r0, v0, mu)
     koe.i   = i;
     koe.W   = W;
     koe.w   = w;
-    koe.f   = f; 
+    koe.nu  = nu; 
     koe.fpa = fpa;
 end
