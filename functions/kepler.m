@@ -1,16 +1,16 @@
-function E = kepler(M,e)
-    MAXITER = 100; % in case the loop does not converge
-    TOL = 1e-11; % tolerance for convergence
-    En = M; % first guess
-    fn = En - e*sin(En) - M; % f(E) that we want to be zero
+function E = kepler(M, e)
+    max_iter = 100; % in case the loop does not converge
+    tol = 1e-11; % tolerance for convergence
+    E_n = M; % first guess
+    f_n = E_n - e*sin(E_n) - M; % f(E) that we want to be zero
     iter = 1; % count the iterations
-    while ( abs(fn) > TOL ) & iter > TOL
-        En = En - fn/(1-e*cos(En));
-        fn = En - e*sin(En) - M;
+    while ( abs(f_n) > tol ) & iter > tol
+        E_n = E_n - f_n/(1-e*cos(E_n));
+        f_n = E_n - e*sin(E_n) - M;
         iter = iter+1;
-        if (iter>=MAXITER)
+        if (iter>=max_iter)
         error('Did not converge');
         end
     end
-    E = En;
+    E = E_n;
 end

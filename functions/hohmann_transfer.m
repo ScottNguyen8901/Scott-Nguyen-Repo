@@ -1,4 +1,4 @@
-function [dv1, dv2, dvt, T_transfer] = hohmann_transfer(r1, r2, mu)
+function [dv_1, dv_2, dv_t, T_transfer] = hohmann_transfer(r_1, r_2, mu)
     %
     % DESCRIPTION
     %   Calculate the delta-Vs and time of flight for a Hohmann transfer between 
@@ -15,23 +15,25 @@ function [dv1, dv2, dvt, T_transfer] = hohmann_transfer(r1, r2, mu)
     %   dvt         (1,1)   Double  Total delta-V  [DU/TU]
     %   T_transfer  (1,1)   Double  Time of flight [TU]
     %
+    % NOTES
+    %
     % FUNCTION
 
     % Velocities in initial and final orbits
-    v1 = sqrt(mu / r1); % velocity in the initial orbit
-    v2 = sqrt(mu / r2); % velocity in the final orbit
+    v1 = sqrt(mu / r_1); % velocity in the initial orbit
+    v2 = sqrt(mu / r_2); % velocity in the final orbit
 
     % Semi-major axis of the transfer orbit
-    a_transfer = (r1 + r2) / 2;
+    a_transfer = (r_1 + r_2) / 2;
 
     % Velocities at periapsis and apoapsis of the transfer orbit
-    v_periapsis = sqrt(mu * (2 / r1 - 1 / a_transfer)); % velocity at periapsis (r1
-    v_apoapsis = sqrt(mu * (2 / r2 - 1 / a_transfer)); % velocity at apoapsis (r2)
+    v_per = sqrt(mu * (2 / r_1 - 1 / a_transfer)); % velocity at periapsis (r1
+    v_apo = sqrt(mu * (2 / r_2 - 1 / a_transfer)); % velocity at apoapsis (r2)
 
     % Delta-V calculations
-    dv1 = v_periapsis - v1; % first burn (at r1)
-    dv2 = v2 - v_apoapsis;  % second burn (at r2)
-    dvt = abs(dv1) + abs(dv2); % total Delta-V for the Hohmann transfer
+    dv_1 = v_per - v1; % first burn (at r1)
+    dv_2 = v2 - v_apo;  % second burn (at r2)
+    dv_t = abs(dv_1) + abs(dv_2); % total Delta-V for the Hohmann transfer
 
     % Time of Flight (half the orbital period of the transfer orbit)
     T_transfer = pi * sqrt(a_transfer^3 / mu); % time for half the transfer orbit [s]
