@@ -1,0 +1,123 @@
+clear, clc, close all
+
+data_int_PC_GA = readmatrix('Group A\Interest Assessment.xlsx', 'Sheet', 'PC');
+data_int_PC_GB = readmatrix('Group B\Interest Assessment.xlsx', 'Sheet', 'PC');
+
+data_int_MC_GA = readmatrix('Group A\Interest Assessment.xlsx', 'Sheet', 'MC');
+data_int_MC_GB = readmatrix('Group B\Interest Assessment.xlsx', 'Sheet', 'MC');
+
+data_se_PC_GA = readmatrix('Group A\Self-Efficacy.xlsx', 'Sheet', 'PC');
+data_se_PC_GB = readmatrix('Group B\Self-Efficacy.xlsx', 'Sheet', 'PC');
+
+data_se_MC_GA = readmatrix('Group A\Self-Efficacy.xlsx', 'Sheet', 'MC');
+data_se_MC_GB = readmatrix('Group B\Self-Efficacy.xlsx', 'Sheet', 'MC');
+
+mean_PC_GA = [mean(data_int_PC_GA,2), mean(data_se_PC_GA,2)];
+mean_PC_GB = [mean(data_int_PC_GB,2) , mean(data_se_PC_GB,2)];
+
+mean_MC_GA = [mean(data_int_MC_GA,2), mean(data_se_MC_GA,2)];
+mean_MC_GB = [mean(data_int_MC_GB,2) , mean(data_se_MC_GB,2)];
+
+mean_PC_MC_GA = mean_MC_GA - mean_PC_GA;
+mean_PC_MC_GB = mean_MC_GB - mean_PC_GB;
+
+[h_PC, p_PC, stats_PC] = ttest2(mean_PC_GA(1,), mean_MC_GA(1), 'alpha', 0.01)
+
+[h_PC, p_PC, stats_PC] = ttest2(mean(data_PC_GA,2), mean(data_PC_GB,2), 'alpha', 0.01);
+
+
+% Store results in vectors
+p_values_GA = p_PCMC_GA;
+p_values_GB = p_PCMC_GB;
+
+x_label = {'Interest', 'Self-Efficacy'};
+x_tick_values = [0.8, 2];
+
+figure;
+
+subplot(1,2,1)
+pos_1 = [1, 2] - 0.25;
+pos_2 = pos_1 + 0.45;
+
+mean_GA = [[mean(data_PC_GA, 2); NaN], mean(data_MC_GA, 2)];
+mean_GB = [mean(data_PC_GB, 2), mean(data_MC_GB, 2)];
+
+h1 = boxplot(mean_GA, 'positions', pos_1, 'colors', 'b');
+hold on
+h2 = boxplot(mean_GB, 'positions', pos_2, 'colors', 'r');
+
+% Example of adjusting XTickLabel location
+set(gca, 'XTickLabel', x_label, 'XTick', x_tick_values, 'FontSize', 24, 'FontName', 'Times New Roman');
+
+% Modifying line widths
+set(findobj(h1, 'type', 'line'), 'LineWidth', 1.5); 
+set(findobj(h2, 'type', 'line'), 'LineWidth', 1.5); 
+
+% Add mean values to the plot
+for i = 1:numel(pos_1)
+    % Calculate the mean ignoring NaN values
+    mu_GA = nanmean(mean_GA(:,i));
+    % Display the mean value on the plot
+    text(pos_1(i), mu_GA + 0.03 * range(ylim), sprintf('\\mu = %.2f', mu_GA), 'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom', 'FontSize', 12, 'Color', 'b');
+end
+
+for i = 1:numel(pos_2)
+    % Calculate the mean ignoring NaN values
+    mu_GB = nanmean(mean_GB(:,i));
+    % Display the mean value on the plot
+    text(pos_2(i), mu_GB + 0.03 * range(ylim), sprintf('\\mu = %.2f', mu_GB), 'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom', 'FontSize', 12, 'Color', 'r');
+end
+
+ylabel('Score', 'FontSize', 24, 'FontName', 'Times New Roman')
+axis square; % Make axis square
+grid on; % Turn on grid
+
+hold off
+
+subplot(1,2,2)
+alpha_level = 0.01; % Alpha level for hypothesis testing
+bar(time-0.2, mean_val_diff_GA, 0.4, 'b') % Shift the first set of bars slightly to the left
+hold on
+bar(time+0.2, mean_val_diff_GB, 0.4, 'r') % Shift the second set of bars slightly to the right
+grid on
+axis square
+xticks(1:3);
+set(gca, 'XTickLabel', x_label_comp, 'XTick', x_tick_values, 'FontSize', 24, 'FontName', 'Times New Roman');
+ylim([-1.2, 1]) % Adjust the y-axis limit as needed
+ylabel('Change in Score', 'FontSize', 24, 'FontName', 'Times New Roman')
+legend('Group A', 'Group B', 'FontSize', 24) 
+
+sgtitle('Interest Comparison', 'FontSize', 24, 'FontName', 'Times New Roman')
+
+% Add bar values on top of the bars with the Greek letter delta
+for i = 1:length(time)
+    text(time(i) - 0.2, mean_val_diff_GA(i) + 0.05, sprintf('\\Delta=%.2f', mean_val_diff_GA(i)), ...
+        'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom', 'FontSize', 12, 'Color', 'b', 'FontName', 'Times New Roman', 'Interpreter', 'tex');
+    text(time(i) + 0.2, mean_val_diff_GB(i) + 0.05, sprintf('\\Delta=%.2f', mean_val_diff_GB(i)), ...
+        'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom', 'FontSize', 12, 'Color', 'r', 'FontName', 'Times New Roman', 'Interpreter', 'tex');
+
+    text(time(i) - 0.25, -1, ...
+        sprintf('%.1e\n%s', p_values_GA(i), decision(p_values_GA(i), alpha_level)), ...
+        'HorizontalAlignment', 'center', 'FontSize', 12, 'Color', 'b', 'FontName', 'Times New Roman');
+
+    text(time(i) + 0.25, -1, ...
+        sprintf('%.1e\n%s', p_values_GB(i), decision(p_values_GB(i), alpha_level)), ...
+        'HorizontalAlignment', 'center', 'FontSize', 12, 'Color', 'r', 'FontName', 'Times New Roman');
+end
+
+text(time(1) - 0.2, mean_val_diff_GA(1) - 0.1, sprintf('\\Delta=%.2f', mean_val_diff_GA(1)), ...
+    'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom', 'FontSize', 12, 'Color', 'b', 'FontName', 'Times New Roman', 'Interpreter', 'tex');
+
+text(time(1) - 0.25, -1, ...
+    sprintf('%.1e\n%s', p_values_GA(1), decision(p_values_GA(1), alpha_level)), ...
+    'HorizontalAlignment', 'center', 'FontSize', 12, 'Color', 'b', 'FontName', 'Times New Roman');
+
+text(time(1) + 0.25, -1, ...
+    sprintf('%.1e\n%s', p_values_GB(1), decision(p_values_GB(1), alpha_level)), ...
+    'HorizontalAlignment', 'center', 'FontSize', 12, 'Color', 'r', 'FontName', 'Times New Roman');
+
+text(0.25, -0.95, ...
+    sprintf('P-Val:'), 'HorizontalAlignment', 'center', 'FontSize', 12, 'Color', 'k', 'FontName', 'Times New Roman');
+
+text(0.25, -1.05, ...
+    sprintf('Rej H_0:'), 'HorizontalAlignment', 'center', 'FontSize', 12, 'Color', 'k', 'FontName', 'Times New Roman');
