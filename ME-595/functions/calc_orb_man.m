@@ -1,5 +1,7 @@
-function [dv_t, dt, orbit_type] = calc_orb_man(r_1, r_2, e_vec, mu)
-    % Preallocate arrays for results
+function [dv_1, dv_2, dv_t, dt, orbit_type] = calc_orb_man(r_1, r_2, e_vec, mu)
+    % Preallocate arrays for result
+    dv_1 = zeros(size(e_vec));
+    dv_2 = zeros(size(e_vec));
     dv_t = zeros(size(e_vec));
     dt = zeros(size(e_vec));
     orbit_type = zeros(size(e_vec)); % 1 for elliptical, 2 for parabolic, 3 for hyperbolic
@@ -15,11 +17,11 @@ function [dv_t, dt, orbit_type] = calc_orb_man(r_1, r_2, e_vec, mu)
         
         if e < 1
             % Elliptical Orbits
-            v1_ellip = sqrt(mu * (2 / r_1 - 1 / a)); % velocity at periapsis (r1)
-            v2_ellip = sqrt(mu * (2 / r_2 - 1 / a)); % velocity at apoapsis (r2)
-            dv1_ellip = v1_ellip - sqrt(mu / r_1); % first burn (at periapsis)
-            dv2_ellip = sqrt(mu / r_2) - v2_ellip; % second burn (at apoapsis)
-            dv_t(i) = abs(dv1_ellip) + abs(dv2_ellip);
+            v_init = sqrt(mu * (2 / r_1 - 1 / a));  % Velocity at periapsis
+            v_final = sqrt(mu * (2 / r_2 - 1 / a));  % Velocity at apoapsis
+            dv_1(i) = abs(v_init - v_1);  % First burn (periapsis)
+            dv_2(i) = abs(v_2 - v_final);  % Second burn (apoapsis)
+            dv_t(i) = dv_1(i) + dv_2(i);  % Total delta-v
 
             E = acos((1 - r_2 / a) / e); % Eccentric anomaly
             dt(i) = sqrt(a^3 / mu) * (E - e * sin(E));
@@ -27,11 +29,11 @@ function [dv_t, dt, orbit_type] = calc_orb_man(r_1, r_2, e_vec, mu)
 
         elseif e == 1
             % Parabolic Orbits
-            v1_par = sqrt(mu * (2 / r_1));
-            v2_par = sqrt(mu * (2 / r_2));
-            dv1_par = v1_par - sqrt(mu / r_1); % first burn (at periapsis)
-            dv2_par = sqrt(mu / r_2) - v2_par; % second burn (at apoapsis)
-            dv_t(i) = abs(dv1_par) + abs(dv2_par);
+            v_init = sqrt(mu * (2 / r_1));
+            v_final = sqrt(mu * (2 / r_2));
+            dv_1(i) = abs(v_init - v_1); % first burn (at periapsis)
+            dv_2(i) = abs(v_2 - v_final); % second burn (at apoapsis)
+            dv_t(i) = dv_1(i) + dv_2(i);
 
             % Semi-latus rectum for a parabolic orbit
             p = 2 * r_1; % Semi-latus rectum
@@ -42,11 +44,11 @@ function [dv_t, dt, orbit_type] = calc_orb_man(r_1, r_2, e_vec, mu)
 
         else
             % Velocities at periapsis and apoapsis of the elliptical transfer orbit
-            v_1_hyp = sqrt(mu * (2 / r_1 - 1 / a)); % velocity at periapsis (r1)
-            v_2_hyp = sqrt(mu * (2 / r_2 - 1 / a)); % velocity at apoapsis (r2)
+            v_init = sqrt(mu * (2 / r_1 - 1 / a)); % velocity at periapsis (r1)
+            v_final = sqrt(mu * (2 / r_2 - 1 / a)); % velocity at apoapsis (r2)
 
-            dv_1 = v_1_hyp - v_1; % first burn (at periapsis)
-            dv_2 = v_2 - v_2_hyp;  % second burn (at apoapsis)
+            dv_1 = v_init - v_1; % first burn (at periapsis)
+            dv_2 = v_2 - v_final;  % second burn (at apoapsis)
             dv_t(i) = abs(dv_1) + abs(dv_2); % total Delta-V for the transfer
             
             F = acosh((1 - r_2 / a) / e);
