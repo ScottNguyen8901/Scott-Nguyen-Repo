@@ -298,15 +298,15 @@ midpoints = (module_boundaries(1:end-1) + module_boundaries(2:end)) / 2;
 
 % Start a new figure
 figure;
-h1 = plot(1:len_1, 32*mod_1_data_GA_buffer(:,2), 'ko-', 'LineWidth', 2);
+h1 = plot(1:len_1, 32*mod_1_data_GA_buffer(:,2), 'bo-', 'LineWidth', 2);
 hold on;
-plot(len_1 + 1:len_1 + len_2, 32*mod_2_data_GA_buffer(:,2), 'ko-', 'LineWidth', 2);
-plot(len_1 + len_2 + 1:len_1 + len_2 + len_3, 32*mod_3_data_GA_buffer(:,2), 'ko-', 'LineWidth', 2);
-plot(len_1 + len_2 + len_3 + 1:num_videos, 32*mod_4_data_GA_buffer(:,2), 'ko-', 'LineWidth', 2);
-h2 = plot(1:len_1, mod_1_data_GB_buffer(:,1), 'k--*', 'LineWidth', 2);
-plot(len_1 + 1:len_1 + len_2, 25*mod_2_data_GB_buffer(:,2), 'k--*', 'LineWidth', 2);
-plot(len_1 + len_2 + 1:len_1 + len_2 + len_3, 25*mod_3_data_GB_buffer(:,2), 'k--*', 'LineWidth', 2);
-plot(len_1 + len_2 + len_3 + 1:num_videos, 25*mod_4_data_GB_buffer(:,2), 'k--*', 'LineWidth', 2);
+plot(len_1 + 1:len_1 + len_2, 32*mod_2_data_GA_buffer(:,2), 'bo-', 'LineWidth', 2);
+plot(len_1 + len_2 + 1:len_1 + len_2 + len_3, 32*mod_3_data_GA_buffer(:,2), 'bo-', 'LineWidth', 2);
+plot(len_1 + len_2 + len_3 + 1:num_videos, 32*mod_4_data_GA_buffer(:,2), 'bo-', 'LineWidth', 2);
+h2 = plot(1:len_1, mod_1_data_GB_buffer(:,1), 'r--*', 'LineWidth', 2);
+plot(len_1 + 1:len_1 + len_2, 25*mod_2_data_GB_buffer(:,2), 'r--*', 'LineWidth', 2);
+plot(len_1 + len_2 + 1:len_1 + len_2 + len_3, 25*mod_3_data_GB_buffer(:,2), 'r--*', 'LineWidth', 2);
+plot(len_1 + len_2 + len_3 + 1:num_videos, 25*mod_4_data_GB_buffer(:,2), 'r--*', 'LineWidth', 2);
 grid on;
 axis square;
 
@@ -341,26 +341,26 @@ figure
 % Subplot 1
 subplot(1, 2, 1);
 % Plot Group A data and set the legend 'IconDisplayStyle' to 'off' for lines
-h1 = plot(1:len_1, mod_1_data_GA(:,3), 'ko-', 'LineWidth', 2); % Group A solid black with open circle
+h1 = plot(1:len_1, mod_1_data_GA(:,3), 'bo-', 'LineWidth', 2); % Group A solid black with open circle
 set(get(get(h1,'Annotation'),'LegendInformation'),'IconDisplayStyle','on'); % Include in legend
 hold on;
 % For the rest of Group A data, exclude lines from legend
-h = plot(len_1 + 1:len_1 + len_2, mod_2_data_GA_buffer(:,3), 'ko-', 'LineWidth', 2);
+h = plot(len_1 + 1:len_1 + len_2, mod_2_data_GA_buffer(:,3), 'bo-', 'LineWidth', 2);
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off'); % Exclude from legend
-h = plot(len_1 + len_2 + 1:len_1 + len_2 + len_3, mod_3_data_GA_buffer(:,3), 'ko-', 'LineWidth', 2);
+h = plot(len_1 + len_2 + 1:len_1 + len_2 + len_3, mod_3_data_GA_buffer(:,3), 'bo-', 'LineWidth', 2);
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off'); % Exclude from legend
-h = plot(len_1 + len_2 + len_3 + 1:num_videos, mod_4_data_GA_buffer(:,3), 'ko-', 'LineWidth', 2);
+h = plot(len_1 + len_2 + len_3 + 1:num_videos, mod_4_data_GA_buffer(:,3), 'bo-', 'LineWidth', 2);
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off'); % Exclude from legend
 
 % Plot Group B data and set the legend 'IconDisplayStyle' to 'off' for lines
-h2 = plot(1:len_1, mod_1_data_GB_buffer(:,3), 'k--*', 'LineWidth', 2); % Group B dashed black with filled star
+h2 = plot(1:len_1, mod_1_data_GB_buffer(:,3), 'r--*', 'LineWidth', 2); % Group B dashed black with filled star
 set(get(get(h2,'Annotation'),'LegendInformation'),'IconDisplayStyle','on'); % Include in legend
 % For the rest of Group B data, exclude lines from legend
-h = plot(len_1 + 1:len_1 + len_2, mod_2_data_GB_buffer(:,3), 'k--*', 'LineWidth', 2);
+h = plot(len_1 + 1:len_1 + len_2, mod_2_data_GB_buffer(:,3), 'r--*', 'LineWidth', 2);
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off'); % Exclude from legend
-h = plot(len_1 + len_2 + 1:len_1 + len_2 + len_3, mod_3_data_GB_buffer(:,3), 'k--*', 'LineWidth', 2);
+h = plot(len_1 + len_2 + 1:len_1 + len_2 + len_3, mod_3_data_GB_buffer(:,3), 'r--*', 'LineWidth', 2);
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off'); % Exclude from legend
-h = plot(len_1 + len_2 + len_3 + 1:num_videos, mod_4_data_GB_buffer(:,3), 'k--*', 'LineWidth', 2);
+h = plot(len_1 + len_2 + len_3 + 1:num_videos, mod_4_data_GB_buffer(:,3), 'r--*', 'LineWidth', 2);
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off'); % Exclude from legend
 
 grid on;
@@ -396,24 +396,24 @@ ylabel('View Duration (s)', 'FontName', 'Times New Roman', 'FontSize', 24);
 % Subplot 2
 subplot(1, 2, 2);
 % Plot Group A data and set the legend 'IconDisplayStyle' to 'off' for lines after the first
-h1 = plot(1:len_1, mod_1_data_GA(:,4), 'ko-', 'LineWidth', 2); % Group A solid blue with open circle
+h1 = plot(1:len_1, mod_1_data_GA(:,4), 'bo-', 'LineWidth', 2); % Group A solid blue with open circle
 set(get(get(h1,'Annotation'),'LegendInformation'),'IconDisplayStyle','on'); % Include in legend
 hold on;
-h = plot(len_1 + 1:len_1 + len_2, mod_2_data_GA(:,4), 'ko-', 'LineWidth', 2);
+h = plot(len_1 + 1:len_1 + len_2, mod_2_data_GA(:,4), 'bo-', 'LineWidth', 2);
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off'); % Exclude from legend
-h = plot(len_1 + len_2 + 1:len_1 + len_2 + len_3, mod_3_data_GA(:,4), 'ko-', 'LineWidth', 2);
+h = plot(len_1 + len_2 + 1:len_1 + len_2 + len_3, mod_3_data_GA(:,4), 'bo-', 'LineWidth', 2);
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off'); % Exclude from legend
-h = plot(len_1 + len_2 + len_3 + 1:len_1 + len_2 + len_3 + len_4, mod_4_data_GA(:,4), 'ko-', 'LineWidth', 2);
+h = plot(len_1 + len_2 + len_3 + 1:len_1 + len_2 + len_3 + len_4, mod_4_data_GA(:,4), 'bo-', 'LineWidth', 2);
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off'); % Exclude from legend
 
 % Plot Group B data and set the legend 'IconDisplayStyle' to 'off' for lines after the first
-h2 = plot(1:len_1, mod_1_data_GB(:,4), 'k--*', 'LineWidth', 2); % Group B dashed blue with filled star
+h2 = plot(1:len_1, mod_1_data_GB(:,4), 'r--*', 'LineWidth', 2); % Group B dashed blue with filled star
 set(get(get(h2,'Annotation'),'LegendInformation'),'IconDisplayStyle','on'); % Include in legend
-h = plot(len_1 + 1:len_1 + len_2, mod_2_data_GB(:,4), 'k--*', 'LineWidth', 2);
+h = plot(len_1 + 1:len_1 + len_2, mod_2_data_GB(:,4), 'r--*', 'LineWidth', 2);
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off'); % Exclude from legend
-h = plot(len_1 + len_2 + 1:len_1 + len_2 + len_3, mod_3_data_GB(:,4), 'k--*', 'LineWidth', 2);
+h = plot(len_1 + len_2 + 1:len_1 + len_2 + len_3, mod_3_data_GB(:,4), 'r--*', 'LineWidth', 2);
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off'); % Exclude from legend
-h = plot(len_1 + len_2 + len_3 + 1:len_1 + len_2 + len_3 + len_4, mod_4_data_GB(:,4), 'k--*', 'LineWidth', 2);
+h = plot(len_1 + len_2 + len_3 + 1:len_1 + len_2 + len_3 + len_4, mod_4_data_GB(:,4), 'r--*', 'LineWidth', 2);
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off'); % Exclude from legend
 
 grid on;
@@ -511,15 +511,15 @@ figure;
 
 % Subplot 1
 subplot(1, 2, 1);
-plot(1:len_1, 32*mod_1_data_GA_Final(:,2), 'ko-', 'LineWidth', 2);
+plot(1:len_1, 32*mod_1_data_GA_Final(:,2), 'bo-', 'LineWidth', 2);
 hold on;
-plot(len_1 + 1:len_1 + len_2, 32*mod_2_data_GA_Final(:,2), 'ko-', 'LineWidth', 2);
-plot(len_1 + len_2 + 1:len_1 + len_2 + len_3, 32*mod_3_data_GA_Final(:,2), 'ko-', 'LineWidth', 2);
-plot(len_1 + len_2 + len_3 + 1:num_videos, 32*mod_4_data_GA_Final(:,2), 'ko-', 'LineWidth', 2);
-plot(1:len_1, 25*mod_1_data_GB_Final(:,2), 'k--*', 'LineWidth', 2);
-plot(len_1 + 1:len_1 + len_2, 25*mod_2_data_GB_Final(:,2), 'k--*', 'LineWidth', 2);
-plot(len_1 + len_2 + 1:len_1 + len_2 + len_3, 25*mod_3_data_GB_Final(:,2), 'k--*', 'LineWidth', 2);
-plot(len_1 + len_2 + len_3 + 1:num_videos, 25*mod_4_data_GB_Final(:,2), 'k--*', 'LineWidth', 2);
+plot(len_1 + 1:len_1 + len_2, 32*mod_2_data_GA_Final(:,2), 'bo-', 'LineWidth', 2);
+plot(len_1 + len_2 + 1:len_1 + len_2 + len_3, 32*mod_3_data_GA_Final(:,2), 'bo-', 'LineWidth', 2);
+plot(len_1 + len_2 + len_3 + 1:num_videos, 32*mod_4_data_GA_Final(:,2), 'bo-', 'LineWidth', 2);
+plot(1:len_1, 25*mod_1_data_GB_Final(:,2), 'r--*', 'LineWidth', 2);
+plot(len_1 + 1:len_1 + len_2, 25*mod_2_data_GB_Final(:,2), 'r--*', 'LineWidth', 2);
+plot(len_1 + len_2 + 1:len_1 + len_2 + len_3, 25*mod_3_data_GB_Final(:,2), 'r--*', 'LineWidth', 2);
+plot(len_1 + len_2 + len_3 + 1:num_videos, 25*mod_4_data_GB_Final(:,2), 'r--*', 'LineWidth', 2);
 grid on;
 axis square;
 
@@ -550,26 +550,26 @@ ylabel('Views', 'FontName', 'Times New Roman', 'FontSize', 24);
 
 % Subplot 2
 subplot(1, 2, 2);
-h1 = plot(1:len_1, mod_1_data_GA_Final(:,3), 'ko-', 'LineWidth', 2); % Group A solid black with open circle
+h1 = plot(1:len_1, mod_1_data_GA_Final(:,3), 'bo-', 'LineWidth', 2); % Group A solid black with open circle
 set(get(get(h1,'Annotation'),'LegendInformation'),'IconDisplayStyle','on'); % Include in legend
 hold on;
 % For the rest of Group A data, exclude lines from legend
-h = plot(len_1 + 1:len_1 + len_2, mod_2_data_GA_Final(:,3), 'ko-', 'LineWidth', 2);
+h = plot(len_1 + 1:len_1 + len_2, mod_2_data_GA_Final(:,3), 'bo-', 'LineWidth', 2);
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off'); % Exclude from legend
-h = plot(len_1 + len_2 + 1:len_1 + len_2 + len_3, mod_3_data_GA_Final(:,3), 'ko-', 'LineWidth', 2);
+h = plot(len_1 + len_2 + 1:len_1 + len_2 + len_3, mod_3_data_GA_Final(:,3), 'bo-', 'LineWidth', 2);
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off'); % Exclude from legend
-h = plot(len_1 + len_2 + len_3 + 1:num_videos, mod_4_data_GA_Final(:,3), 'ko-', 'LineWidth', 2);
+h = plot(len_1 + len_2 + len_3 + 1:num_videos, mod_4_data_GA_Final(:,3), 'bo-', 'LineWidth', 2);
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off'); % Exclude from legend
 
 % Plot Group B data and set the legend 'IconDisplayStyle' to 'off' for lines
-h2 = plot(1:len_1, mod_1_data_GB_Final(:,3), 'k--*', 'LineWidth', 2); % Group B dashed black with filled star
+h2 = plot(1:len_1, mod_1_data_GB_Final(:,3), 'r--*', 'LineWidth', 2); % Group B dashed black with filled star
 set(get(get(h2,'Annotation'),'LegendInformation'),'IconDisplayStyle','on'); % Include in legend
 % For the rest of Group B data, exclude lines from legend
-h = plot(len_1 + 1:len_1 + len_2, mod_2_data_GB_Final(:,3), 'k--*', 'LineWidth', 2);
+h = plot(len_1 + 1:len_1 + len_2, mod_2_data_GB_Final(:,3), 'r--*', 'LineWidth', 2);
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off'); % Exclude from legend
-h = plot(len_1 + len_2 + 1:len_1 + len_2 + len_3, mod_3_data_GB_Final(:,3), 'k--*', 'LineWidth', 2);
+h = plot(len_1 + len_2 + 1:len_1 + len_2 + len_3, mod_3_data_GB_Final(:,3), 'r--*', 'LineWidth', 2);
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off'); % Exclude from legend
-h = plot(len_1 + len_2 + len_3 + 1:num_videos, mod_4_data_GB_Final(:,3), 'k--*', 'LineWidth', 2);
+h = plot(len_1 + len_2 + len_3 + 1:num_videos, mod_4_data_GB_Final(:,3), 'r--*', 'LineWidth', 2);
 set(get(get(h,'Annotation'),'LegendInformation'),'IconDisplayStyle','off'); % Exclude from legend
 
 grid on;
@@ -648,4 +648,12 @@ for i = 2:size(results,1)
     fprintf('%-15s %-15.4f %-15s\n', results{i,:});
 end
 
+first_vid_avg_GA = mean([mod_1_data_GA_buffer(1,1), mod_2_data_GA_buffer(1,1), mod_3_data_GA_buffer(1,1), mod_4_data_GA_buffer(1,1)]);
+first_vid_avg_GB = mean([mod_1_data_GB_buffer(1,1), mod_2_data_GB_buffer(1,1), mod_3_data_GB_buffer(1,1), mod_4_data_GB_buffer(1,1)]);
 
+
+avg_mods_GA = mean([mod_1_data_GA_buffer(2:end,1); mod_2_data_GA_buffer(2:end,1); mod_3_data_GA_buffer(2:(end-1),1); mod_4_data_GA_buffer(2:end,1)]);
+avg_mods_GB = mean([mod_1_data_GB_buffer(2:end,1); mod_2_data_GB_buffer(2:end,1); mod_3_data_GB_buffer(2:(end-1),1); mod_4_data_GB_buffer(2:end,1)]);
+
+end_vid_avg_GA = mean([mod_1_data_GA_buffer(end,1), mod_2_data_GA_buffer(end,1), mod_3_data_GA_buffer(end,1), mod_4_data_GA_buffer(end,1)]);
+end_vid_avg_GB = mean([mod_1_data_GB_buffer(end,1), mod_2_data_GB_buffer(end,1), mod_3_data_GB_buffer(end,1), mod_4_data_GB_buffer(end,1)]);

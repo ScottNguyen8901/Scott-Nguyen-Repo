@@ -1,4 +1,4 @@
-function [v_1_vec, v_2_vec] = lambert_solver(root_solver, r_1_vec, r_2_vec, dt, mu, orbit)
+function [v_1_vec, v_2_vec, p_vec] = lambert_solver(root_solver, r_1_vec, r_2_vec, dt, mu, orbit)
 %
 % DESCRIPTION
 %   Solve Lambert's problem for a two-body orbital transfer between two position vectors
@@ -25,7 +25,7 @@ function [v_1_vec, v_2_vec] = lambert_solver(root_solver, r_1_vec, r_2_vec, dt, 
 %   the initial and final velocity vectors given the position vectors and time of flight.
 %   The function supports two methods for root solving: linear and bisection. 
 %
-
+    
     % Normalize position vectors
     r_1 = norm(r_1_vec);
     r_2 = norm(r_2_vec);
@@ -69,11 +69,14 @@ function [v_1_vec, v_2_vec] = lambert_solver(root_solver, r_1_vec, r_2_vec, dt, 
     iter = 1;
     n_max = 1000;
     
+    p_vec = zeros(1,n_max);
+
     % Root solving based on the selected method
     switch root_solver
         case 'linear'
             % Linear Method
             while abs(f_p_2) > tol && iter < n_max
+                p_vec(iter) = p_2;
                 p_3 = p_2 - f_p_2 * (p_2 - p_1) / (f_p_2 - f_p_1);
                 p_1 = p_2;
                 p_2 = p_3;
@@ -98,6 +101,7 @@ function [v_1_vec, v_2_vec] = lambert_solver(root_solver, r_1_vec, r_2_vec, dt, 
                     p_2 = p_3;
                     f_p_2 = f_p_3;
                 end
+                p_vec(iter) = p_3;
                 p_3 = (p_1 + p_2) / 2;
                 [f_p_3, ~] = tof_gauss_lambert(p_3, r_1_vec, r_2_vec, dt, mu, orbit);
                 iter = iter + 1;
@@ -110,6 +114,8 @@ function [v_1_vec, v_2_vec] = lambert_solver(root_solver, r_1_vec, r_2_vec, dt, 
         otherwise
             error('Unknown root solver method.')
     end
+    
+    p_vec = p_vec(p_vec ~= 0);
 
     % Calculate orbit parameters using solved value of p
     a = (m * k * p) / ((2 * m - l^2) * p^2 + 2 * k * l * p - k^2);
