@@ -45,7 +45,7 @@ function [r_2_vec, v_2_vec] = orbit_prop_fg(r_1_vec, v_1_vec, tof, mu)
     cosE = (a * e + r * cos(nu)) / a;
     E = acos(cosE);  % Eccentric anomaly
     M = E - e * sin(E);  % Mean anomaly
-    t_1 = M / n;  % Time since periapsis
+    t_1 = M / n ; % Time since periapsis
     
     % #7: True anomaly after the given time of flight
     t_2 = t_1 + tof;  % Total time after periapsis passage

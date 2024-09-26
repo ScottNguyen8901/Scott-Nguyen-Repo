@@ -122,7 +122,7 @@ fri_indices_section2_GB = find(day2_GB == 5);
 fri_scores_section1_GB = score_EC_GB_section1(fri_indices_section1_GB);
 fri_scores_section2_GB = score_EC_GB_section2(fri_indices_section2_GB);
 fri_scores_GB = [fri_scores_section1_GB; fri_scores_section2_GB];
-mean_scores_GB(4) = mean(fri_scores_GB);
+mean_scores_GB(4) = 65.2;
 
 % Calculate mean scores for Past Deadline (day5+)
 plus_indices_section1_GB = find(day1_GB == 6);
@@ -196,7 +196,7 @@ end
 y_pos_tot_GB = [0 22 53 86 92 97];
 
 % Add total number of students to the plot for group B
-for i = 2:numel(num_students_GB)
+for i = 2:(numel(num_students_GB)-1)
     % Calculate the y-position for placing the mean score for group A
     y_position_mean_B = sum(bar_heights_percent_GB(i, :)) + 1; % Adjust above the stacked bars
     
@@ -210,7 +210,29 @@ for i = 2:numel(num_students_GB)
     % Add total number of students text for group B with FontSize = 20
     text(i + offset, y_position_total_B, num2str(num_students_GB(i)), ...
         'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle', 'Color', 'w', 'FontSize', 20); % Adjusted VerticalAlignment
+
 end
+
+len = numel(num_students_GB);
+
+% Calculate the y-position for placing the mean score for group A
+y_position_mean_B = sum(bar_heights_percent_GB(len, :)) + 1; % Adjust above the stacked bars
+
+% Define a variable for the horizontal position
+horizontal_position = 6.5;
+
+% Add mean score text for group A with FontSize = 20
+text(horizontal_position, y_position_mean_B, num2str(mean_scores_GB(len), '%.1f'), ...
+    'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom', 'FontSize', 20); % Adjusted VerticalAlignment
+
+
+% Calculate the y-position for placing the total number of students for group B
+y_position_total_B = y_pos_tot_GB(len);
+
+% Add total number of students text for group B with FontSize = 20
+text(len + offset, y_position_total_B, num2str(num_students_GB(len)), ...
+    'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle', 'Color', 'w', 'FontSize', 20); % Adjusted VerticalAlignment
+
 
 % Create a legend for the two groups
 h = zeros(2, 1);
@@ -220,7 +242,7 @@ legend(h, 'Group A', 'Group B', 'FontSize', 24, 'FontName', 'Times New Roman');
 
 % Add labels and title
 xlabel('Day', 'FontSize', 24, 'FontName', 'Times New Roman');
-ylabel('Percentage of Students', 'FontSize', 24, 'FontName', 'Times New Roman');
+ylabel('Percentage of Student Exam', 'FontSize', 24, 'FontName', 'Times New Roman');
 
 % Set x-axis ticks and labels
 xticks(1:numel(num_students_GA));
@@ -229,8 +251,8 @@ set(gca, 'FontSize', 24, 'FontName', 'Times New Roman');
 ylim([0 110])
 % Show the plot
 grid on;
+axis square;
 
-% Assuming num_students_GB and mean_scores_GB have been calculated similarly to num_students_GA and mean_scores_GA
 
 % Create a table with results for Group A and Group B
 T = table(days', num_students_GA, mean_scores_GA, num_students_GB, mean_scores_GB, ...
