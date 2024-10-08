@@ -2,7 +2,7 @@ function [dv_1, dv_2, dv_t] = patch_conic_transfer(mu_sun, mu_earth, mu_mars, R_
     %
     % DESCRIPTION
     %   Calculate the delta-Vs for a mission from Earth to Mars 
-    %   using a Hohmann transfer orbit.
+    %   given the semi-major axis of the transfer orbit.
     %
     % INPUTS         size    Type
     %   mu_sun      (1,1)   Double  Gravitational parameter of the Sun [DU^3/TU^2]

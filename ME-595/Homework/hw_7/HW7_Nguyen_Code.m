@@ -1,22 +1,23 @@
 clear
 clc
+close all
 
 % Define constants and parameters
 mu_sun = 1.3271244e11;  % Gravitational parameter of the Sun (km^3/s^2)
-mu_earth = 3.986e5;     % Gravitational parameter of Earth (km^3/s^2)
-mu_mars = 4.2828e4;     % Gravitational parameter of Mars (km^3/s^2)
+mu_earth = 3.986e5;     % Gravitational parameter of Earth   (km^3/s^2)
+mu_mars = 4.2828e4;     % Gravitational parameter of Mars    (km^3/s^2)
 
 R_earth_sun = 1.4959787e8;  % Distance from the Sun to Earth (km)
-R_mars_sun = 2.279391e8;    % Distance from the Sun to Mars (km)
+R_mars_sun = 2.279391e8;    % Distance from the Sun to Mars  (km)
 
 R_earth = 6378;  % Radius of Earth (km)
-R_mars  = 3400;  % Radius of Mars (km)
+R_mars  = 3400;  % Radius of Mars  (km)
 
 alt_earth = 300;  % Altitude of parking orbit around Earth (km)
-alt_mars  = 200;  % Altitude of parking orbit around Mars (km)
+alt_mars  = 200;  % Altitude of parking orbit around Mars  (km)
 
 r_p_earth = R_earth + alt_earth;  % Radius of the parking orbit around Earth (km)
-r_p_mars  = R_mars + alt_mars;    % Radius of the parking orbit around Mars (km)
+r_p_mars  = R_mars + alt_mars;    % Radius of the parking orbit around Mars  (km)
 
 % Define eccentricity range and semi-latus rectum range (p = r(1 + e))
 e_range = linspace(0.207, 0.523, 100);
@@ -59,6 +60,7 @@ tof_days = tof / 86400;
 figure;
 plot(nu_2_range, dv_total_pc, 'b-', 'LineWidth', 2);
 grid on;
+axis square;
 xlabel('\Delta\nu [degrees]', 'FontSize', 12);
 ylabel('Total \Delta V [km/s]', 'FontSize', 12);
 title('Patched Conics Transfer', 'FontSize', 14);
@@ -67,6 +69,7 @@ set(gca, 'FontSize', 12);
 figure;
 plot(nu_2_range, dv_total_gt, 'b-', 'LineWidth', 2);
 grid on;
+axis square;
 xlabel('\Delta\nu [degrees]', 'FontSize', 12);
 ylabel('Total \Delta V [km/s]', 'FontSize', 12);
 title('Heliocentric Transfer', 'FontSize', 14);
@@ -75,6 +78,7 @@ set(gca, 'FontSize', 12);
 figure;
 plot(nu_2_range, tof_days, 'b-', 'LineWidth', 2);
 grid on;
+axis square;
 xlabel('\Delta\nu [degrees]', 'FontSize', 12);
 ylabel('Time of Flight [days]', 'FontSize', 12);
 title('Time of Flight vs. True Anomaly', 'FontSize', 14);
