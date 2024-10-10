@@ -10,15 +10,15 @@ function [v_1_vec, v_2_vec, p_vec] = lambert_solver(root_solver, r_1_vec, r_2_ve
 % INPUTS         size         Type    Description                               Units
 %   root_solver  (1,1)        Char    Root solving method: 'bisection' or       [n/a]
 %                                     'linear'
-%   r_1_vec      (3,1)        Double  Initial position vector                   [km]
-%   r_2_vec      (3,1)        Double  Final position vector                     [km]
-%   dt           (1,1)        Double  Time of flight                            [s]
-%   mu           (1,1)        Double  Gravitational parameter                   [km^3/s^2]
-%   orbit        (1,1)        Char    Orbit type: 'short' or 'long' transfer    [n/a]
+%   r_1_vec      (3,1)        Double  Initial position vector                   [DU]
+%   r_2_vec      (3,1)        Double  Final position vector                     [Du]
+%   dt           (1,1)        Double  Time of flight                            [TU]
+%   mu           (1,1)        Double  Gravitational parameter                   [DU^3/TU^2]
+%   orbit        (1,1)        Char    Orbit type: 'short' or 'long' transfer    []
 %
 % OUTPUTS        size         Type    Description                               Units
-%   v_1_vec      (3,1)        Double  Initial velocity vector                   [km/s]
-%   v_2_vec      (3,1)        Double  Final velocity vector                     [km/s]
+%   v_1_vec      (3,1)        Double  Initial velocity vector                   [DU/TU]
+%   v_2_vec      (3,1)        Double  Final velocity vector                     [DU/TU]
 %
 % NOTES
 %   This function solves Lambert's problem using the f and g method. It computes 
