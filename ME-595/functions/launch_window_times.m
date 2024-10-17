@@ -28,12 +28,12 @@ function [LW_AN, LW_DN] = launch_window_times(tle_epoch, i, W, w, M, e, n, lat, 
     % FUNCTION
 
     % Constants
-    mu = 398600; % Earth's gravitational parameter in km^3/s^2
+    mu = 398600;            % Earth's gravitational parameter in km^3/s^2
     w_earth = 7.2921159e-5; % Earth angular velocity in rad/s
 
     % Convert input angles from degrees to radians
     L_s = deg2rad(lat);      % Launch site latitude
-    lambda = deg2rad(lon);  % Launch site longitude (east +, west -)
+    lambda = deg2rad(lon);   % Launch site longitude (east +, west -)
 
     % Convert TLE epoch to Julian date
     tle_epoch_date_vec = tle_epoch_2_datetime(tle_epoch);
