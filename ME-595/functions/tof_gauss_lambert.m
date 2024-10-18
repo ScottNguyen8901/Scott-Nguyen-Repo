@@ -1,83 +1,54 @@
-function [LW_AN, LW_DN] = launch_window_times(tle_epoch, i, W, w, M, e, n, lat, lon)
+function [f_p, df_dp] = tof_gauss_lambert(p, r_1_vec, r_2_vec, dt, mu, orbit)
     %
     % DESCRIPTION
-    %   Calculate launch window times at the ascending and descending nodes based on the
-    %   orbital elements and launch site location. This function computes the times when 
-    %   the satellite passes over the launch site, providing two possible launch windows.
+    %   Compute the time of flight between two position vectors using the Gauss-Lambert method.
+    %   The function takes the variable 'p', position vectors at the initial and final points,
+    %   time of flight, gravitational parameter, and the orbit type (short or long) as inputs to
+    %   compute the residual for the time of flight.
     %
-    % INPUTS         size         Type    Description                        Units
-    %   tle_epoch     (1,1)       Double  TLE epoch time (decimal days)      [days]
-    %   i             (1,1)       Double  Orbital inclination                [deg]
-    %   W             (1,1)       Double  Right Ascension of Ascending Node  [deg]
-    %   w             (1,1)       Double  Argument of perigee                [deg]
-    %   M             (1,1)       Double  Mean anomaly                       [deg]
-    %   e             (1,1)       Double  Orbital eccentricity               []
-    %   n             (1,1)       Double  Mean motion (revolutions/day)      [rev/day]
-    %   lat           (1,1)       Double  Latitude of the launch site        [deg]
-    %   lon           (1,1)       Double  Longitude of the launch site       [deg]
+    % INPUTS         size         Type    Description                   Units
+    %   p            (1,1)        Double  Iterative variable            []
+    %   r_1_vec      (3,1)        Double  Initial position vector       [DU]
+    %   r_2_vec      (3,1)        Double  Final position vector         [DU]
+    %   dt           (1,1)        Double  Desired time of flight        [TU]
+    %   mu           (1,1)        Double  Gravitational parameter       [DU^3/TU^2]
+    %   orbit        (1,1)        Char    Orbit type ('short'/'long')   []
     %
-    % OUTPUTS        size         Type    Description                        Units
-    %   LW_AN         (1,1)       Datetime Launch window at ascending node   [datetime]
-    %   LW_DN         (1,1)       Datetime Launch window at descending node  [datetime]
+    % OUTPUTS        size         Type    Description                   Units
+    %   f_p          (1,1)        Double  Residual between desired TOF  [TU]
+    %   df_dp        (1,1)        Double  Derivative of f_p w.r.t p     [DU/TU]
     %
     % NOTES
-    %   This function assumes a circular Earth model and uses basic Keplerian orbital mechanics
-    %   to compute launch windows. The function does not account for perturbations or 
-    %   other dynamic effects that could affect the launch window timings.
     %
     % FUNCTION
 
-    % Constants
-    mu = 398600; % Earth's gravitational parameter in km^3/s^2
-    w_earth = 7.2921159e-5; % Earth angular velocity in rad/s
+    r_1 = norm(r_1_vec);
+    r_2 = norm(r_2_vec);
+    
+    switch orbit
+        case 'short'
+            delta_nu = acos(dot(r_1_vec, r_2_vec) / (r_1 * r_2));
+        case 'long'
+            delta_nu = 2*pi - acos(dot(r_1_vec, r_2_vec) / (r_1 * r_2));
+    end
+    
+    k = r_1 * r_2 * (1 - cos(delta_nu));
+    l = r_1 + r_2;
+    m = r_1 * r_2 * (1 + cos(delta_nu));
+    
+    a = (m * k *p) / ((2 * m - l^2)*p^2 + 2 * k * l * p - k^2);
+    
+    f = 1 - (r_2 / p) * (1 - cos(delta_nu));
+    delta_E = acos(1 - (r_1 / a) * (1 - f));
+    g = r_1 * r_2 * sin(delta_nu) / sqrt(mu * p);
+    
+    dt_p = g + sqrt(a^3 / mu)*(delta_E - sin(delta_E));
+    f_p = dt - dt_p;
 
-    % Convert input angles from degrees to radians
-    L_s = deg2rad(lat);      % Launch site latitude
-    lambda = deg2rad(lon);  % Launch site longitude (east +, west -)
+    dt_dp = -(g/(2 * p)) - ...
+            (3 / 2) * a * (dt_p - g) * ((k^2 + (2 * m - l^2) * p^2) / (m * k * p^2)) + ...
+            sqrt(a^3 / mu) * ((2 * k * sin(delta_E)) / (mu * p * (k - l * p)));
 
-    % Convert TLE epoch to Julian date
-    tle_epoch_date_vec = tle_epoch_2_datetime(tle_epoch);
-    tle_epoch_JD = juliandate(tle_epoch_date_vec);
+    df_dp = -dt_dp;
 
-    % Convert orbital elements from degrees to radians
-    i = deg2rad(i);  
-    W = deg2rad(W);          
-    w = deg2rad(w);   
-    M = deg2rad(M);  
-
-    % Orbital parameters
-    e = e;
-    n = n * (2 * pi / 86400);  % Mean motion in rad/s
-    a = (mu / n^2)^(1 / 3);  % Semi-major axis
-
-    % Launch direction angles
-    alpha = i;
-    gamma = asin(cos(alpha) / cos(L_s));
-    delta = acos(cos(gamma) / sin(alpha));
-
-    % Ascending and descending node opportunities
-    LWST_AN = W + delta;
-    beta_AN = gamma;
-
-    LWST_DN = W + pi - delta;
-    beta_DN = pi - gamma;
-
-    % Calculate sidereal time at epoch
-    [theta_g, ~] = siderealTime(tle_epoch_JD);
-
-    % Local sidereal time
-    theta = deg2rad(theta_g) + lambda;
-
-    % Wrap angles between 0 and 2*pi
-    LWST_AN = mod(LWST_AN, 2*pi);
-    LWST_DN = mod(LWST_DN, 2*pi);
-    theta = mod(theta, 2*pi);
-
-    % Calculate wait times at nodes
-    delta_t_AN = (LWST_AN - theta) / w_earth;
-    delta_t_DN = (LWST_DN - theta) / w_earth;
-
-    % Calculate launch windows at nodes
-    LW_AN = datetime(tle_epoch_JD + delta_t_AN / 86400, 'ConvertFrom', 'juliandate');
-    LW_DN = datetime(tle_epoch_JD + delta_t_DN / 86400, 'ConvertFrom', 'juliandate');
 end
