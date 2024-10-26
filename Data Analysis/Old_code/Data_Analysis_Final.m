@@ -1,4 +1,4 @@
-clear, clc, close all
+sclear, clc, close all
 
 data_extract_GA = importdata('Group A\GA [8.0] Total.xlsx');
 data_extract_GB = importdata('Group B\GB [8.0] Total.xlsx');
