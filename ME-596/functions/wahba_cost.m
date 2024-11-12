@@ -23,6 +23,6 @@ function J = wahba_cost(v_b, v_i, R_bi_q, w_k)
     % Loop over each vector pair and accumulate the weighted squared differences
     for i = 1:n
         diff = v_b(:,i) - R_bi_q * v_i(:,i);  % Difference between the vectors
-        J = J + w_k(i) * (diff' * diff)      % Weighted sum of squared differences
+        J = J + w_k(i) * (diff' * diff);      % Weighted sum of squared differences
     end
 end
