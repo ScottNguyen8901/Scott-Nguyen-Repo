@@ -180,24 +180,58 @@ def rv_to_koe(r_vec, v_vec, mu):
         w_true        # True Argument of Perigee for elliptical equatorial cases
     ]
 
-tol = 1e-6
+def koe_2_rv(a, e, i, W, w, nu, mu):
+    tol = 1e-6  # Tolerance for checking near-zero values
+    p = a * (1 - e**2)  # Semi-latus rectum
 
-# Circular Equatorial case
-if np.abs(e - 0) < tol and np.abs(i - 0) < tol:
-    W = 0
-    w = 0
-    nu = lambda_true
-elif np.abs(e - 0) < tol and i > 0:
-    w = 0
-    nu = u 
-elif 0 < e < 1 and np.abs(i - 0) < tol:
-    W = 0
-    w = w_true
+    # Define nu based on orbital configurations
+    if np.abs(e - 0) < tol and np.abs(i - 0) < tol:
+        # Circular equatorial case
+        W = 0
+        w = 0
+    elif np.abs(e - 0) < tol and i > 0:
+        # Circular inclined case
+        w = 0
+    elif 0 < e < 1 and np.abs(i - 0) < tol:
+        # Elliptic equatorial case
+        W = 0
 
-r_PQW
+    # Position vector in PQW frame
+    r_PQW = np.array([
+        [p * np.cos(nu) / (1 + e * np.cos(nu))],
+        [p * np.sin(nu) / (1 + e * np.cos(nu))],
+        [0]
+    ])
 
+    # Velocity vector in PQW frame
+    v_PQW = np.array([
+        [-np.sqrt(mu / p) * np.sin(nu)],
+        [np.sqrt(mu / p) * (e + np.cos(nu))],
+        [0]
+    ])
 
+    # Rotation matrix from IJK to PQW frame
+    R_IJK_to_PQW = np.array([
+        [np.cos(W) * np.cos(w) - np.sin(W) * np.sin(w) * np.cos(i),
+         -np.cos(W) * np.sin(w) - np.sin(W) * np.cos(w) * np.cos(i),
+         np.sin(W) * np.sin(i)],
+        
+        [np.sin(W) * np.cos(w) + np.cos(W) * np.sin(w) * np.cos(i),
+         -np.sin(W) * np.sin(w) + np.cos(W) * np.cos(w) * np.cos(i),
+         -np.cos(W) * np.sin(i)],
+        
+        [np.sin(w) * np.sin(i),
+         np.cos(w) * np.sin(i),
+         np.cos(i)]
+    ])
 
+    # Convert PQW vectors to IJK frame
+    r_IJK = R_IJK_to_PQW @ r_PQW
+    v_IJK = R_IJK_to_PQW @ v_PQW
 
+    return [
+        r_IJK.flatten(),
+        v_IJK.flatten()
+    ]
 
 
