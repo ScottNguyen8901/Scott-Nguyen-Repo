@@ -13,14 +13,14 @@ function [phi, a] = rot_to_eul(R)
     %
     % FUNCTION
     %   The function calculates:
-    %     phi = acos((1/2) * (trace(R) - 1))
-    %     a = 1 / (2 * sin(phi)) * (R' - R)
+    %     phi = acos((trace(R) - 1) / 2)
+    %     a = 1 / (2 * sin(phi)) * (R - R')
     
     % Calculate the rotation angle
-    phi = acos((1/2) * (trace(R) - 1));
+    phi = acos((trace(R) - 1) / 2);
     
     % Calculate the skew-symmetric matrix for axis vector a
-    a_skew = (1 / (2 * sin(phi))) * (R' - R);
+    a_skew = (1 / (2 * sin(phi))) * (R - R');
     
     % Extract the axis vector a from the skew-symmetric matrix
     a = [a_skew(3,2); a_skew(1,3); a_skew(2,1)];
