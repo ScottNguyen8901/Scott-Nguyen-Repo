@@ -39,4 +39,5 @@ function I_sc_c = comp_intertia(theta, m_rp, d, h, a, rho)
     
     % Total inertia of the system (spacecraft)
     I_sc_c = I_rp_c + 2 * I_p_c;
+    
 end
