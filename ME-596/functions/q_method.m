@@ -1,4 +1,4 @@
-function [q, R_bi_q, J] = q_method(v_b, v_i, w_k)
+function [q, R_bi_q, J, eig_max] = q_method(v_b, v_i, w_k)
     % DESCRIPTION
     %   Compute the quaternion q that transforms vectors from the body frame (b) 
     %   to the inertial frame (i) using the q-method. The function first computes 
@@ -17,6 +17,7 @@ function [q, R_bi_q, J] = q_method(v_b, v_i, w_k)
     %   q          (4, 1)  Double  Quaternion representing the rotation from body to inertial frame
     %   R_bi_q     (3, 3)  Double  Rotation matrix corresponding to the quaternion q
     %   J          (1, 1)  Double  Cost function representing the alignment of transformed vectors
+    %   eig_max    (1, 1)  Double  Maximum eigen value from K matrix
     %
     % FUNCTION
 
@@ -45,7 +46,7 @@ function [q, R_bi_q, J] = q_method(v_b, v_i, w_k)
     [D, V] = eig(K);
 
     % Eigenvector corresponding to the largest eigenvalue
-    [~, idx] = max(diag(V));
+    [eig_max, idx] = max(diag(V));
     q = D(:, idx);
     
     R_bi_q = quat_to_rot(q);
