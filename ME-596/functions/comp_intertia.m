@@ -19,25 +19,28 @@ function I_sc_c = comp_intertia(theta, m_rp, d, h, a, rho)
     A = a^2;   
     m_p = rho * A; 
     
-    R_1 = rot_1(theta);
+    R_pb = rot_1(theta);
     
-    r = [(d + a) / 2;
+    r = [(a + d) / 2;
          0;
          0];
     
     % Inertia tensors
-    I_rp_c = m_rp / 12 * diag([d^2 + h^2; ...
-                                2 * d^2; ...
-                                d^2 + h^2]);
+    I_box_c_b = m_rp / 12 * diag([d^2 + h^2; ...
+                               d^2 + h^2; ...
+                               2 * d^2]);
     
-    I_p_o = m_p / 12 * diag([a^2; ...
-                             a^2; ...
-                             2 * a^2]);
+    I_pan_c_p = m_p / 12 * diag([a^2; ...
+                             2 * a^2; ...
+                             a^2]);
     
+    I_pan_c_b = R_pb' * I_pan_c_p * R_pb;
+
     % Inertia of the payload component in the center of mass frame
-    I_p_c = R_1 * I_p_o * R_1' - m_p * (r' * r * eye(3) - r * r');
-    
+    I_pan_o_b = I_pan_c_b - m_p * (r' * r * eye(3) - r * r');
+    I_box_o_b = I_box_c_b;
+
     % Total inertia of the system (spacecraft)
-    I_sc_c = I_rp_c + 2 * I_p_c;
+    I_sc_c = I_box_o_b + 2 * I_pan_o_b;
     
 end
