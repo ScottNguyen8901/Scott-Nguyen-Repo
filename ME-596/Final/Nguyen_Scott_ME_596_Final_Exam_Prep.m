@@ -105,7 +105,7 @@ I = [50.0124, -0.0471, 0.4966;
 
 fprintf('\nProblem 4: I_2 %.4f\n', mois_new(2,2))
 
-% Problem 5
+%% Problem 5
 
 % A low-accuracy attitude determination system has determined that
 % mi = [ 0.2 0.8 0.4 ]T, mb = [ 0.6 0.6 0.3 ]T, si = [0.5 0.7 0.9 ]T, and sb = [0.4 0.7 0.5 ]T
