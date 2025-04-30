@@ -1,26 +1,20 @@
 function jd = julian_date(yy, mm, dd, hh, min, ss)
-    %
-    % DESCRIPTION
-    %   Calculate the Julian Date (JD) corresponding to the Gregorian date/time.
-    %
-    % INPUTS    
-    %   yy    (1,1)   Year (e.g., 2023) [integer]    
-    %   mm    (1,1)   Month (1-12) [integer]
-    %   dd    (1,1)   Day of the month [integer]
-    %   hh    (1,1)   Hour (0-23) [integer]
-    %   min   (1,1)   Minute (0-59) [integer]
-    %   ss    (1,1)   Second (0-59) [integer]
-    %
-    % OUTPUTS
-    %   jd    (1,1)   Julian Date corresponding to the input date/time [days]
-    %
-    % NOTES
-    %   The calculation assumes the Gregorian calendar is in use.
-    %   The Julian Date is returned as a decimal value representing the number of
-    %   days since the Julian epoch (January 1, 4713 BCE, 12:00 UT).
-    %
-    % FUNCTION
-    %
+%
+% DESCRIPTION
+%   Calculate the Julian Date (JD) corresponding to the Gregorian date/time.
+%
+% INPUTS       size     Type       Description         Units
+%   yy         (1,1)    Integer    Year (e.g., 2023)   []
+%   mm         (1,1)    Integer    Month (1-12)        []
+%   dd         (1,1)    Integer    Day of the month    []
+%   hh         (1,1)    Integer    Hour (0-23)         []
+%   min        (1,1)    Integer    Minute (0-59)       []
+%   ss         (1,1)    Integer    Second (0-59)       []
+%
+% OUTPUTS      size     Type       Description         Units
+%   jd         (1,1)    Double     Julian Date         [days]
+%
+% FUNCTION
 
     % Adjust month and year for calculation
     m = fix((mm - 14) / 12);

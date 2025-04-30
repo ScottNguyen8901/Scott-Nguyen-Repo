@@ -1,19 +1,22 @@
 function [x_ECI, theta] = geocentric_to_ECI(r_TH, lat, lon, date)
-    % GEOCENTRIC_TO_ECI Converts the sensor's geocentric position and velocity
-    % to Earth-centered inertial (ECI) coordinates and calculates the Greenwich 
-    % Mean Sidereal Time (GMST) for a given location at a specified time.
-    %
-    % Inputs:
-    %   lat    - Latitude of the sensor in radians (North positive)
-    %   lon    - Longitude of the sensor in radians (East positive)
-    %   date_0 - datetime object specifying the date and time
-    %
-    % Outputs:
-    %   r_sensor_ECI - 9x1 state vector containing the sensor's position, velocity, 
-    %                  and acceleration in ECI coordinates [position; velocity; acceleration]
-    %   theta        - Local mean sidereal time (LST) in radians
-    %
-    % Notes:
+%
+% DESCRIPTION
+%   Converts the sensor's geocentric position and velocity to Earth-Centered Inertial (ECI) 
+%   coordinates and calculates the Greenwich Mean Sidereal Time (GMST) for a given location 
+%   and time.
+%
+% INPUTS         size     Type       Description                      Units
+%   lat          (1,1)    Double     Sensor latitude (North positive) [rad]
+%   lon          (1,1)    Double     Sensor longitude (East positive) [rad]
+%   date_0       (1,1)    datetime   Date and time                    []
+%
+% OUTPUTS        size     Type       Description                      Units
+%   r_sensor_ECI (9,1)    Double     Sensor ECI state [pos; vel; acc] [DU, DU/TU, DU/TU^2]
+%   theta        (1,1)    Double     Local mean sidereal time         [rad]
+%
+% NOTES
+%
+% FUNCTION
 
     % Constants
     constants;
@@ -31,9 +34,9 @@ function [x_ECI, theta] = geocentric_to_ECI(r_TH, lat, lon, date)
     x_ECI = Q_TH_ECI' * r_TH;
     
     % Calculate the sensor's velocity and acceleration in ECI coordinates
-    p = R_E * cos(lat);  % Projection of the sensor's distance in the ECI plane
-    ct = cos(theta);   % Cosine of the local sidereal time
-    st = sin(theta);   % Sine of the local sidereal time
+    p = R_E * cos(lat);
+    ct = cos(theta);
+    st = sin(theta);
     
     % Velocity of the sensor in ECI coordinates
     x_ECI(4:6,1) = [-st; ct; 0] * p * w_E;

@@ -1,20 +1,18 @@
 function theta_g = calc_GST(date)
-    %
-    % DESCRIPTION
-    %   Calculate Greenwich Sidereal Time (GST) for a given date (in datetime format)
-    %   and return it in radians.
-    %
-    % INPUTS       size     Type
-    %   date       (1,1)    datetime  Date and time for the calculation (in UTC)
-    %
-    % OUTPUTS
-    %   theta_g    (1,1)    Double  Greenwich Sidereal Time [deg]
-    %
-    % NOTES
-    %   The GST is calculated using the Julian Date, Julian Century, and a correction for the 
-    %   Earth's rotation. The result is returned in radians.
-    %
-    % FUNCTION 
+%
+% DESCRIPTION
+%   Calculate Greenwich Sidereal Time (GST) for a given date (in datetime format)
+%   and return it in radians.
+%
+% INPUTS     size     Type       Description                         Units
+%   date     (1,1)    datetime   Date and time for the calculation   []
+%
+% OUTPUTS    size     Type       Description                     Units
+%   theta_g  (1,1)    Double     Greenwich Sidereal Time         [rad]
+%
+% NOTES
+%
+% FUNCTION
     
     % Convert the datetime to Julian Date (JD)
     Y = year(date);

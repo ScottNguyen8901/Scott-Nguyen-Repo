@@ -4,23 +4,21 @@ function [r_vec, v_vec] = koe_to_rv(koe, mu)
 %   Convert classical orbital elements into state vectors (position and velocity)
 %   using normalized units (DU/TU).
 %
-% INPUTS    
-%   koe   (struct) Struct containing the orbital elements:
-%                 - koe.a  : Semi-major axis [DU]
-%                 - koe.e  : Eccentricity []
-%                 - koe.i  : Inclination [rad]
-%                 - koe.W  : Right Ascension of Ascending Node (RAAN) [rad]
-%                 - koe.w  : Argument of Periapsis [rad]
-%                 - koe.f  : True anomaly [rad]
-%   mu    (1,1)    Gravitational parameter [DU³/TU²]
+% INPUTS  Size   Type    Desciption                              Units
+%   koe   (1,6)  (Struct) Struct containing the orbital elements:      
+%         (1,1)  (Double) - koe.a  : Semi-major axis             [DU]
+%         (1,1)  (Double) - koe.e  : Eccentricity                []
+%         (1,1)  (Double) - koe.i  : Inclination                 [rad]
+%         (1,1)  (Double) - koe.W  : RAAN                        [rad]
+%         (1,1)  (Double) - koe.w  : Argument of Periapsis       [rad]
+%         (1,1)  (Double) - koe.f  : True anomaly                [rad]
+%   mu    (1,1)  (Double) Gravitational parameter                [DU³/TU²]
 %
-% OUTPUTS
-%   r_vec (3,1)    Position vector in ECI frame [DU]
-%   v_vec (3,1)    Velocity vector in ECI frame [DU/TU]
+% OUTPUTS    Size     Type       Description                     Units
+%   r_vec    (3,1)    (Double)   Position vector in ECI frame    [DU]
+%   v_vec    (3,1)    (Double)   Velocity vector in ECI frame    [DU/TU]
 %
 % NOTES
-%   All angles must be in radians.
-%   Output vectors are expressed in the Earth-Centered Inertial (ECI) frame.
 %
 
 % Extract orbital elements from the struct
