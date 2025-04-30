@@ -186,7 +186,7 @@ view(3);
 [XS, YS, ZS] = sphere(50);  % 50 is the resolution of the sphere
 
 % Load the PNG image of Earth
-earth_image = imread('C:\Users\scott\Documents\Folder\ME-594\Midterm\earth_image.jpg');
+earth_image = imread('C:\Users\scott\Documents\Folder\ME-594\Midterm\plots\earth_image.jpg');
 
 % Plot Earth sphere with the texture
 hold on;

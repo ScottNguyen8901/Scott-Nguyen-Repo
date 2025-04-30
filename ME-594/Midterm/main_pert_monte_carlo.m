@@ -102,6 +102,7 @@ for run = 1:num_runs
     state_errors(run, :) = error;
 
     % Print progress
+    clc
     fprintf('Progress: %.2f%%\n', (run / num_runs) * 100);
 end
 

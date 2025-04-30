@@ -1,24 +1,24 @@
 function [koe] = rv_to_koe(r_vec, v_vec, mu)
-    %
-    % DESCRIPTION
-    %   Convert state vector (position and velocity) into Keplerian orbital elements
-    %
-    % INPUTS    
-    %   r_vec (3,1)   Position vector [DU]   
-    %   v_vec (3,1)   Velocity vector [DU^3/TU^2]
-    %   mu    (1,1)   Gravitational parameter [DU^3/TU^2]
-    %
-    % OUTPUTS
-    %   koe     {struct}   Keplerian orbital elements structure
-    %    .a     (1,1)      Semi-major axis [DU]
-    %    .e     (1,1)      Eccentricity []
-    %    .i     (1,1)      Inclination [rad]
-    %    .W     (1,1)      RAAN [rad]
-    %    .w     (1,1)      Argument of periapsis [rad]
-    %    .f     (1,1)      True anomaly [rad]
-    %    .fpa   (1,1)      Flight path angle [rad]
-    %
-    % FUNCTION IMPLEMENTATION
+%
+% DESCRIPTION
+%   Convert state vector (position and velocity) into Keplerian orbital elements
+%
+% INPUTS       Size    Type      Description                    Units
+%   r_vec      (3,1)   (Double)   Position vector               [DU]
+%   v_vec      (3,1)   (Double)   Velocity vector               [DU^3/TU^2]
+%   mu         (1,1)   (Double)   Gravitational parameter       [DU^3/TU^2]
+%
+% OUTPUTS      Size    Type      Description                          Units
+%   koe        (struct) {Struct}  Keplerian orbital elements struct   []
+%      .a      (1,1)   (Double)   Semi-major axis                     [DU]
+%      .e      (1,1)   (Double)   Eccentricity                        []
+%      .i      (1,1)   (Double)   Inclination                         [rad]
+%      .W      (1,1)   (Double)   RAAN                                [rad]
+%      .w      (1,1)   (Double)   Argument of periapsis               [rad]
+%      .f      (1,1)   (Double)   True anomaly                        [rad]
+%      .fpa    (1,1)   (Double)   Flight path angle                   [rad]
+%
+% FUNCTION IMPLEMENTATION
     
     % Unit vectors for i, j, k axes
     I = [1 0 0];
