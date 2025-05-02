@@ -1,4 +1,4 @@
-function [r_vec, v_vec] = koe_to_rv(koe, mu)
+function x_vec = koe_to_rv(koe, mu)
 %
 % DESCRIPTION
 %   Convert classical orbital elements into state vectors (position and velocity)
@@ -14,9 +14,8 @@ function [r_vec, v_vec] = koe_to_rv(koe, mu)
 %         (1,1)  (Double) - koe.f  : True anomaly                [rad]
 %   mu    (1,1)  (Double) Gravitational parameter                [DU³/TU²]
 %
-% OUTPUTS    Size     Type       Description                     Units
-%   r_vec    (3,1)    (Double)   Position vector in ECI frame    [DU]
-%   v_vec    (3,1)    (Double)   Velocity vector in ECI frame    [DU/TU]
+% OUTPUTS    Size     Type       Description                    Units
+%   r_vec    (6,1)    (Double)   State vector in ECI frame      [DU; DU/TU]
 %
 % NOTES
 %
@@ -54,5 +53,7 @@ R = [cos(W)*cos(w) - sin(W)*sin(w)*cos(i), ...
 % Transform to ECI frame
 r_vec = R * r_perifocal; % [DU]
 v_vec = R * v_perifocal; % [DU/TU]
+
+x_vec = [r_vec; v_vec]; % [DU; DU/TU];
 
 end

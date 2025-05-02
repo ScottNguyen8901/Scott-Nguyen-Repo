@@ -1,4 +1,4 @@
-function R_IJK_SEZ = rot_ijk_sez(L, theta)
+function R_ECI_SEZ = rot_eci_sez(L, theta)
 %
 % DESCRIPTION
 %   Calculate rotation matrix from IJK to SEZ frame
@@ -12,7 +12,7 @@ function R_IJK_SEZ = rot_ijk_sez(L, theta)
 %
 % FUNCTION
 
-    R_IJK_SEZ = [sin(L)*cos(theta), sin(L)*sin(theta), -cos(L);
+    R_ECI_SEZ = [sin(L)*cos(theta), sin(L)*sin(theta), -cos(L);
                  -sin(theta), cos(theta), 0;
                  cos(L)*cos(theta), cos(L)*sin(theta), sin(L)];
 end

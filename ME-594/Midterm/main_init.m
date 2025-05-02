@@ -18,26 +18,19 @@ date_0 = datetime('2025-04-25 17:56:00', 'InputFormat', 'yyyy-MM-dd HH:mm:ss');
 date_f = datetime('2025-05-06 00:00:00', 'InputFormat', 'yyyy-MM-dd HH:mm:ss');
 
 % Latitude longitude for Albuqurque, New Mexico
-L = deg2rad(35.0844);   
-lon = deg2rad(-106.6504);
-r_s_TH = [0; 0; R_E]; % Location of sensor in TH (SEZ) frame      
-
-% Compute x, y, z on the sphere
-x = R_E * cos(L) * cos(lon);
-y = R_E * cos(L) * sin(lon);
-z = R_E * sin(L);
+L   = deg2rad(35.0844);   % [rad] 
+lon = deg2rad(-106.6504); % [rad]
 
 % Converting orbital elements to state vector
-[r_0_ISS_ECI, v_0_ISS_ECI] = koe_to_rv(koe, mu_E);
-x_0_ISS_ECI = [r_0_ISS_ECI; v_0_ISS_ECI];
+x_0_ISS_ECI = koe_to_rv(koe, mu_E); % [km; km/s]
 
 % Specifying time since epoch to numerically integrate
 tf = seconds(date_f - date_0);
-t_span = linspace(0, tf, 1000);%
+t_span = linspace(0, tf, 1000);
 
 % Integrate the ODEs
 options = odeset('RelTol',1e-12,'AbsTol',1e-12);
-[t, x_ISS_ECI] = ode45(@(t, y) two_body_ode(t, y, mu_E), t_span, x_0_ISS_ECI, options);
+[t, x_ISS_ECI] = ode45(@(t, y) two_body_ode(t, y), t_span, x_0_ISS_ECI, options);
 
 r_ISS_ECI = x_ISS_ECI(:,1:3); %Extracting ISS position
 
@@ -77,31 +70,31 @@ for i = 1:N
     end
     Dec = asin(u_s_ISS_ECI(3));                         % Declination: arcsin(z)
 
-    LOS_meas(i,:) = [RA, Dec];                         % Store RA/Dec
+    LOS_meas(i,:) = [RA, Dec];                          % Store RA/Dec
 end
 
 % Find the maximum elevation and its corresponding time
 [max_el, max_el_idx] = max(AzEl_meas(:,2));  % max elevation and its index
-t_max_el = t(max_el_idx);                % time at which max elevation occurs
+t_max_el = t(max_el_idx);                    % time at max elevation
 
 % Display result
 fprintf('Maximum Elevation: %.6f radians (%.3f deg)\n', max_el, rad2deg(max_el));
 fprintf('Time since Epoch at Max Elevation: %.3f seconds\n', t_max_el);
 
 % Extract the corresponding state from x_ISS_ECI
-state_at_dt = x_ISS_ECI(max_el_idx, :);  % State vector at time dt
+state_at_dt = x_ISS_ECI(max_el_idx, :);
 
 % Extract position and velocity components
-position = state_at_dt(1:3);  % Position (x, y, z) in km
-velocity = state_at_dt(4:6);  % Velocity (vx, vy, vz) in km/s
+position = state_at_dt(1:3);
+velocity = state_at_dt(4:6);
 
 % Extract azimuth and elevation at dt
 RA_Dec_at_dt = LOS_meas(max_el_idx, :);  % [Azimuth, Elevation] at dt
-RA = RA_Dec_at_dt(1);             % Right Ascension in degrees
-Dec = RA_Dec_at_dt(2);            % Declination in degrees
+RA = RA_Dec_at_dt(1);                    % Right Ascension in degrees
+Dec = RA_Dec_at_dt(2);                   % Declination in degrees
 
 % Calculate the corresponding date for dt
-date_at_dt = date_0 + seconds(t_max_el);  % Add seconds to the starting date
+date_at_dt = date_0 + seconds(t_max_el);
 
 % Display the state vector in a neat format
 disp('State at dt:');
@@ -113,7 +106,7 @@ fprintf('x = %.4f km\n', position(1));
 fprintf('y = %.4f km\n', position(2));
 fprintf('z = %.4f km\n', position(3));
 
-disp(' ');  % Adding a space for better readability
+disp(' ');
 
 % Display velocity
 fprintf('Velocity (vx, vy, vz) [km/s]:\n');
@@ -121,14 +114,14 @@ fprintf('vx = %.4f km/s\n', velocity(1));
 fprintf('vy = %.4f km/s\n', velocity(2));
 fprintf('vz = %.4f km/s\n', velocity(3));
 
-disp(' ');  % Adding a space for better readability
+disp(' ');
 
 % Display azimuth and elevation
 fprintf('Right Ascension and Declination [deg]:\n');
 fprintf('Right Ascension = %.4f rad\n', RA);
 fprintf('Declination = %.4f rad\n', Dec);
 
-disp(' ');  % Adding a space for better readability
+disp(' ');
 
 % Display the corresponding date
 fprintf('Corresponding date: %s\n', datestr(date_at_dt));
@@ -136,10 +129,10 @@ fprintf('Corresponding date: %s\n', datestr(date_at_dt));
 %% Plotting
 
 % Set the desired font size
-fs = 24;  % Change this value to your preferred font size
+fs = 24;
 
 % Create time vector as datetime
-time_vec = date_0 + seconds(t); % datetimes matching each measurement
+time_vec = date_0 + seconds(t);
 
 % Convert Right Ascension and Declination to degrees
 RA_deg = rad2deg(LOS_meas(:,1));
@@ -150,8 +143,8 @@ Az_deg = rad2deg(AzEl_meas(:,1));
 El_deg = rad2deg(AzEl_meas(:,2));
 
 % Create grids for interpolation
-time_grid = linspace(0, seconds(time_vec(end) - time_vec(1)), 200); % time in seconds
-Az_grid = linspace(min(Az_deg), max(Az_deg), 200);                  % azimuth degrees
+time_grid = linspace(0, seconds(time_vec(end) - time_vec(1)), 200);
+Az_grid = linspace(min(Az_deg), max(Az_deg), 200);
 [TIME_GRID, Az_GRID] = meshgrid(time_grid, Az_grid);
 
 % Interpolate elevation data onto this grid
@@ -159,11 +152,16 @@ El_grid = griddata(seconds(time_vec - time_vec(1)), Az_deg, El_deg, TIME_GRID, A
 
 %% Plotting ISS Trajectory
 
+% Compute x, y, z on the sphere
+x = R_E * cos(L) * cos(lon);
+y = R_E * cos(L) * sin(lon);
+z = R_E * sin(L);
+
 % Create a figure
 figure;
 
 % Plot the ISS trajectory in 3D
-plot3(r_ISS_ECI(:,1), r_ISS_ECI(:,2), r_ISS_ECI(:,3), 'LineWidth', 1.5);
+plot3(r_ISS_ECI(:,1), r_ISS_ECI(:,2), r_ISS_ECI(:,3), 'LineWidth', 2);
 
 % Set axis labels
 xlabel('X [km]', 'FontName', 'Times New Roman', 'FontSize', fs, 'FontWeight', 'bold');
@@ -186,7 +184,7 @@ view(3);
 [XS, YS, ZS] = sphere(50);  % 50 is the resolution of the sphere
 
 % Load the PNG image of Earth
-earth_image = imread('C:\Users\scott\Documents\Folder\ME-594\Midterm\plots\earth_image.jpg');
+earth_image = imread('C:\Users\scott\Documents\Folder\ME-594\earth_image.jpg');
 
 % Plot Earth sphere with the texture
 hold on;
@@ -210,7 +208,7 @@ legend(h_star, 'Sensor Location: Albuquerque, New Mexico', 'FontSize', 14, 'Font
 figure;
 
 % Subplot 1: Right Ascension vs Declination
-subplot(1,2,1); % 1 row, 2 columns, plot 1
+subplot(1,2,1);
 plot(RA_deg, Dec_deg, 'k.', 'LineWidth', 2)
 xlabel('Right Ascension [deg]', 'FontName', 'Times New Roman', 'FontSize', fs, 'FontWeight', 'bold')
 ylabel('Declination [deg]', 'FontName', 'Times New Roman', 'FontSize', fs, 'FontWeight', 'bold')
@@ -219,7 +217,7 @@ grid on;
 axis square;
 
 % Subplot 2: Azimuth vs Elevation
-subplot(1,2,2); % 1 row, 2 columns, plot 2
+subplot(1,2,2);
 plot(Az_deg, El_deg, 'k.', 'LineWidth', 2)
 xlabel('Azimuth [deg]', 'FontName', 'Times New Roman', 'FontSize', fs, 'FontWeight', 'bold')
 ylabel('Elevation [deg]', 'FontName', 'Times New Roman', 'FontSize', fs, 'FontWeight', 'bold')
@@ -239,18 +237,18 @@ grid on;
 axis square;
 
 % Adjust x-axis to display datetime labels
-xticks = linspace(0, seconds(time_vec(end) - time_vec(1)), 8); % 8 ticks
+xticks = linspace(0, seconds(time_vec(end) - time_vec(1)), 8);
 xticklabels = datestr(date_0 + seconds(xticks), 'mmm dd HH:MM');
 set(gca, 'XTick', xticks, 'XTickLabel', xticklabels, 'FontName', 'Times New Roman', 'FontSize', fs, 'FontWeight', 'bold')
 
 % Plot the point of maximum elevation as a red star
 hold on;
-az_max = rad2deg(AzEl_meas(max_el_idx,1));         % Azimuth in degrees
-el_max_deg = rad2deg(max_el);                      % Max elevation in degrees
-plot(t_max_el, az_max, 'r*', 'MarkerSize', 20, 'LineWidth', 2);  % Red star
+az_max = rad2deg(AzEl_meas(max_el_idx,1));
+el_max_deg = rad2deg(max_el);
+plot(t_max_el, az_max, 'r*', 'MarkerSize', 20, 'LineWidth', 2);
 
 % Display annotation text above the point with elevation value and date
-date_at_max_el = datestr(date_0 + seconds(t_max_el), 'mmm dd, yyyy HH:MM:SS');  % Convert time to date string
+date_at_max_el = datestr(date_0 + seconds(t_max_el), 'mmm dd, yyyy HH:MM:SS');
 text(t_max_el - 200000, az_max + 5, ...
     sprintf('Max Elevation\n%.2f°\nDate: %s', el_max_deg, date_at_max_el), ...
     'Color', 'black', 'FontSize', fs, 'FontWeight', 'bold', ...

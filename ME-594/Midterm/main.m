@@ -11,28 +11,29 @@ date_0 = datetime('2025-05-05 03:18:34', 'InputFormat', 'yyyy-MM-dd HH:mm:ss');
 % Latitude longitude for Albuquerque, New Mexico
 L = deg2rad(35.0844);   
 lon = deg2rad(-106.6504);
-r_s_TH = [0; 0; R_E]; % Location of sensor in TH (SEZ) frame      
 
+% ISS Initial State
 r_0_ISS_ECI = [5165.8127; 
               -1938.2678;
-              -3951.6672];  % Position in km
+              -3951.6672];  % Position [km]
 v_0_ISS_ECI = [4.7525;
                4.4652;
-               4.0249];  % Velocity in km/s
-x_0_ISS_ECI = [r_0_ISS_ECI; v_0_ISS_ECI];
+               4.0249];     % Velocity [km/s]
+x_0_ISS_ECI = [r_0_ISS_ECI; v_0_ISS_ECI]; % [km; km/s]
 
 % Specifying time since epoch to numerically integrate
-t_span = 0:60*2;%
+t_span = 0:60*2;
 
 % Integrate the ODEs
 options = odeset('RelTol',1e-12,'AbsTol',1e-12);
-[t, x_ISS_ECI] = ode45(@(t, y) two_body_ode(t, y, mu_E), t_span, x_0_ISS_ECI, options);
+[t, x_ISS_ECI] =...
+    ode45(@(t, y) two_body_ode(t, y), t_span, x_0_ISS_ECI, options);
 
 r_ISS_ECI = x_ISS_ECI(:,1:3); %Extracting ISS position
 
-N = length(t);         % Number of measurements
-RA_Dec = zeros(N,2); % Allocating matrix for LOS measurements
-Az_El = zeros(N,2);    % Allocating matrix for Az/El measurements
+N        = length(t);           % Number of measurements
+RA_Dec   = zeros(N,2);          % Allocating matrix for LOS measurements
+Az_El    = zeros(N,2);          % Allocating matrix for Az/El measurements
 date_vec = date_0 + seconds(t); % Create an array of datetime objects based on time span
 
 for i = 1:N
@@ -52,7 +53,7 @@ for i = 1:N
     if az < 0
         az = az + 2*pi;                                % Ensure Azimuth is in [0, 2pi]
     end
-    Az_El(i,:) = [az, el];                         % Store Azimuth and Elevation
+    Az_El(i,:) = [az, el];
 
     % Convert r_s_TH back to ECI to compute RA/Dec
     r_s_ECI = Q_TH_ECI' * r_s_TH;                      % Position of sensor in ECI
@@ -123,13 +124,13 @@ disp(T);
 
 %% Propogating further in time
 
-P = 2*pi * sqrt((6785.6^3) / mu_E);  % Orbital period
+P = 2*pi*sqrt((6785.6^3) / mu_E);  % Orbital period
 
 t_span_prop = [0 5*P];
 [t_prop, x_ISS_ECI_OD_Prop] = ...
-    ode45(@(t, y) two_body_ode(t, y, mu_E), t_span_prop, x_ISS_ECI_OD, options);
+    ode45(@(t, y) two_body_ode(t, y), t_span_prop, x_ISS_ECI_OD, options);
 [~, x_ISS_ECI_OD_True] = ...
-    ode45(@(t, y) two_body_ode(t, y, mu_E), t_prop, x_ISS_ECI_2, options);
+    ode45(@(t, y) two_body_ode(t, y), t_prop, x_ISS_ECI_2, options);
 
 error_prop = x_ISS_ECI_OD_True - x_ISS_ECI_OD_Prop;
 
