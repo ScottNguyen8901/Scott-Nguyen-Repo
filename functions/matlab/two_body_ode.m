@@ -10,7 +10,7 @@ function dydt = two_body_ode(t, y)
 % OUTPUTS  Size   Type      Description                    Units
 %   dydt   (6,1)  (Double)  Derivative of the state vector:[DU/TU, DU/TU^2]
 %
-% FUNCTION IMPLEMENTATION
+% FUNCTION
 
     constants;
     
