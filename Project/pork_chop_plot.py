@@ -6,6 +6,9 @@ from poliastro.bodies import Sun, Earth, Mars
 from poliastro.ephem import get_body_ephem
 from poliastro import iod
 from numpy.linalg import norm
+from tqdm import tqdm
+import warnings
+warnings.filterwarnings('ignore')
 
 # Constants
 mu_sun = Sun.k.to(u.km**3 / u.s**2).value  # Sun gravitational parameter (km^3/s^2)
@@ -31,22 +34,15 @@ arr_dates = np.linspace(arr_start, arr_end, num_points)
 # Initialize delta-V matrix
 delta_v_matrix = np.full((num_points, num_points), np.nan)
 
-total_steps = num_points * num_points
-step_count = 0
-
 print("Computing porkchop plot delta-V values:")
 
-for i, t_dep in enumerate(dep_dates):
+for i, t_dep in enumerate(tqdm(dep_dates, desc="Computing Porkchop Data", unit="dep dates")):
     # Get Earth state once per departure date
     r_earth_astropy, v_earth_astropy = get_body_ephem("earth", Time(t_dep, format='jd', scale='tdb'))
     r_earth = r_earth_astropy.to(u.km).value
     v_earth = v_earth_astropy.to(u.km / u.s).value
 
     for j, t_arr in enumerate(arr_dates):
-        step_count += 1
-        progress = (step_count / total_steps) * 100
-        print(f"\rProgress: {progress:.1f}%", end='', flush=True)
-
         if t_arr <= t_dep:
             continue  # invalid case
 
@@ -80,10 +76,9 @@ for i, t_dep in enumerate(dep_dates):
         delta_v_arr = abs(v_hyp_mars - v_circ_mars)
 
         total_delta_v = delta_v_dep + delta_v_arr
-        
         delta_v_matrix[i, j] = total_delta_v
 
-print("\nPorkchop plot generation complete!")
+print("Porkchop plot generation complete!")
 
 # Find minimum ΔV and its indices
 min_index = np.nanargmin(delta_v_matrix)
