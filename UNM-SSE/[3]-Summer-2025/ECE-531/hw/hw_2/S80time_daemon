@@ -1,0 +1,42 @@
+#!/bin/sh
+
+DAEMON_PATH="/usr/sbin"
+DAEMON=time_daemon
+DAEMON_NAME=time_daemon
+
+PIDFILE=/var/run/$DAEMON_NAME.pid
+LOGFILE=/var/log/$DAEMON_NAME.log
+
+. /etc/init.d/functions
+
+do_start() {
+    echo "Starting $DAEMON_NAME..."
+    start-stop-daemon --start --background --make-pidfile --pidfile $PIDFILE \
+        --exec $DAEMON_PATH/$DAEMON
+}
+
+do_stop() {
+    echo "Stopping $DAEMON_NAME..."
+    start-stop-daemon --stop --pidfile $PIDFILE
+    rm -f $PIDFILE
+}
+
+case "$1" in
+    start)
+        do_start
+        ;;
+    stop)
+        do_stop
+        ;;
+    restart)
+        do_stop
+        sleep 1
+        do_start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+        ;;
+esac
+
+exit 0
