@@ -86,9 +86,11 @@ int main(int argc, char *argv[]) {
         curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "PUT");
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);
     } else if (strcmp(method, "DELETE") == 0) {
-        if (strlen(data) == 0) return ARG_ERR;
         curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "DELETE");
-        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);
+        if (strlen(data) > 0) {
+        // Removed request to body in DELETE request
+        fprintf(stderr, "Warning: DELETE requests typically do not send a body. Ignoring message.\n");
+        }
     }
 
     res = curl_easy_perform(curl);
