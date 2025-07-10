@@ -1,0 +1,7 @@
+.playkit-player .playkit-top-bar {
+ background: linear-gradient(0deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.9) 100%);
+}
+
+.playkit-player .playkit-bottom-bar {
+ background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 1) 100%);
+}

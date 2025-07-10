@@ -1,0 +1,16 @@
+
+/* Hide Collaborations from left course menu */
+#section-tabs .collaborations {
+    display: none;
+}
+
+/* Hide the full batch update checkbox and its label */
+input[data-testid="batch_mode"],
+input[data-testid="batch_mode"] + label {
+    display: none !important;
+}
+
+/* Hide the link "See some LTI tools that work great with Canvas" on Settings > Apps */
+a[href='https://www.eduappcenter.com/'] {
+    display: none;
+ }

@@ -1,0 +1,257 @@
+$(document).ready(function() {
+
+    /* Changes the username and password labels on login/canvas from default to "Canvas Username" and "Canvas Password" */
+    $("#login_form label:contains('Login')").text("Canvas Username");
+    $("#login_form label:contains('Password')").text("Canvas Password");
+
+    /* Removes the ability for anyone other than admins to add an access token in /profile/settings */
+    if (window.location.href.pathname = "/profile/settings" && window.ENV.current_user_roles.includes("admin")) {} else {
+        $('.add_access_token_link').remove();
+    }
+
+    /* Replaces the Report/Remove inappropriate picture functionality with a link to documentation */
+    var str = '<a id="report_avatar_link_to_oeeo" href="https://canvasinfo.unm.edu/support/reporting-inappropriate-profile-pictures.html" target="_blank" rel="noopener noreferrer">Report inappropriate picture</a>';
+    $('#report_avatar_link').replaceWith(str);
+
+    var str = '<a id="report_avatar_link_to_oeeo" href="https://canvasinfo.unm.edu/support/reporting-inappropriate-profile-pictures.html" target="_blank" rel="noopener noreferrer">Report inappropriate picture</a>';
+    $('#remove_avatar_link').replaceWith(str);
+
+    /* The function below checks to see that an element has rendered. When called
+    the function will look for a particular selector. Do not remove. */
+    function onElementRendered(selector, cb, _attempts) {
+        var el = $(selector);
+        _attempts = ++_attempts || 1;
+        if (el.length) return cb(el);
+        if (_attempts == 60) return;
+        setTimeout(function() {
+            onElementRendered(selector, cb, _attempts);
+        }, 250);
+    }
+
+    /* Add Ferpa language to Add People modal after instructors click +People */
+    onElementRendered('#addUsers', function() {
+
+        var addAlert = function() {
+            var neededElem = document.getElementsByClassName('addpeople__peoplesearch')[0];
+            var newNode = document.createElement("div");
+            newNode.id = 'custom-addPeople-Notice';
+            newNode.className = 'alert alert-warning';
+            var space = neededElem.parentNode.insertBefore(newNode, neededElem);
+            space.insertAdjacentHTML('afterbegin', '<p><b>WARNING:</b> Providing anyone with <u><a href="https://canvasinfo.unm.edu/instructors/roles-in-canvas.html" target="_blank">course assistant</a></u> access to your course should be approached with great caution and only be done to support course delivery. This means they are helping the instructor with the course in some way (e.g., adding materials, grading, providing student support, etc.). To further protect student data from being unnecessarily shared, pick the lowest <u><a href="https://canvasinfo.unm.edu/instructors/roles-in-canvas.html" target="_blank">role</a></u> needed to perform their duties in the course. If the assistant does not need to access student grades, quiz results, and assignment submissions, select the Designer role below.</p><p><b>When a student is registered/will register for this course, adding them as a course assistant is not a best practice and may violate <u><a href="https://registrar.unm.edu/privacy-rights/ferpa.html" target="_blank">FERPA</a></u></b>. If you have any questions, please contact <a href="mailto:canvas@unm.edu" target="_blank">canvas@unm.edu</a> for more information and guidance.</p><p><b>Important:</b> Users in the <b>Teacher, TA</b> and <b>Designer</b> roles have access to private student data that is protected by FERPA (Family Educational Rights and Privacy Act). We strongly recommend that any user who has any of these roles complete the AACRAO FERPA Training for UNM Personnel, EOD course number 795, in <u><a href="https://learningcentral.unm.edu/" target="_blank">Learning Central</a></u>.</p>');
+        }
+
+        var startObserver = function() {
+            var mcb = function() {
+                var findModal = document.getElementById('add_people_modal');
+                if (findModal) {
+                    addAlert();
+                    observer.disconnect();
+                }
+            };
+
+            var observer = new MutationObserver(mcb);
+            observer.observe(document.body, {
+                attributes: true,
+                childList: true,
+                subtree: true
+            });
+        }
+        document.getElementById('addUsers').onclick = startObserver;
+    });
+
+    /* Insert TimelyCare Link in Global Navigation Menu */
+    (function() {
+        'use strict';
+
+        // configure links
+        const links = [{
+            title: 'TimelyCare',
+            icon_svg: `<svg version="1.1" class="ic-icon-svg ic-icon-svg--lti menu-item__icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64">
+          <path d="M12.2,8.9v48.7l18.3-18.3H19.6v-23L12.2,8.9z M44.4,37.6l7.4,7.4V7.1H13.9l7.4,7.4h23V37.6z M26.5,46.8h23.6l-7.4-7.4h-8.7 L26.5,46.8z"></path>
+        </svg>`,
+            href: 'https://launcher.myapps.microsoft.com/api/signin/fa0ecd7a-ff0b-41a0-893f-276d413d3a2c?tenantId=25aa9830-e0f9-482b-897e-1a3b3c855e5c',
+            target: '_blank',
+            position: '1'
+        }];
+
+        // leave this alone
+        const globalNavCustomLinks = () => {
+            const lang_dir = document.querySelector('html').getAttribute('dir') ?? 'ltr';
+            const global_nav_sel = '#menu';
+            const hamb_menu_sel = `span[dir="${lang_dir}"] div[role="dialog"] ul`;
+            if (!document.querySelector(global_nav_sel) && !document.querySelector(hamb_menu_sel)) return;
+
+            const nav_item_append = (item, hamb = true) => {
+                const tidle = item.title.replace(/\W/g, '_').toLowerCase();
+
+                // clone and create the icon
+                const target_ul = hamb ? hamb_menu_sel : global_nav_sel;
+                const target_li = document.querySelector(`${target_ul} li:last-child`);
+                const dash_icon = hamb ? `${hamb_menu_sel} svg[name="IconDashboard"]` : `#global_nav_dashboard_link`;
+                const dash_icon_li = document.querySelector(dash_icon).closest('li');
+
+                // replace contents
+                var icon = dash_icon_li.cloneNode(true);
+                icon.setAttribute('id', (hamb ? 'rspv-' : '') + `global_nav_${tidle}_link-item`);
+                icon.querySelector('svg').parentElement.classList.add((hamb ? 'rspv-' : '') + `svg-${tidle}-holder`);
+                icon.querySelector('a').setAttribute('id', (hamb ? 'rspv-' : '') + `global_nav_${tidle}_link`);
+                icon.querySelector('a').href = item.href;
+                if (item.target !== undefined && item.target.includes('_blank', '_self', '_parent')) {
+                    icon.querySelector('a').setAttribute('target', item.target);
+                }
+                try {
+                    // inst-ui 7 or 8 or global or hamb
+                    var icon_text_el = icon.querySelector('span[letter-spacing="normal"]') || (icon.querySelector('.menu-item__text') || icon.querySelector('span[class$="text"]'));
+                    icon_text_el.textContent = item.title;
+                } catch (e) {
+                    console.log(e)
+                }
+
+                // prepare for svg
+                const svg_holder = icon.querySelector((hamb ? '.rspv-svg' : '.svg') + `-${tidle}-holder`);
+                var svg_class;
+                if (hamb == true) {
+                    svg_class = icon.querySelector('svg').classList;
+                } else {
+                    icon.classList.remove('ic-app-header__menu-list-item--active');
+                    //var svg_class = icon.querySelector('svg').classList;
+                    svg_class = ['ic-icon-svg', 'menu-item__icon', 'ic-icon-svg--apps', 'ic-icon-svg-custom-tray', 'gnct_icon_svg'];
+                }
+                // remove cloned svg
+                icon.querySelector('svg').remove();
+
+                // import svg
+                if (/^icon-[a-z]/.test(item.icon_svg) == true) {
+                    // instructure icon
+                    svg_holder.insertAdjacentHTML('afterbegin', `<div id="${(hamb ? 'rspv-' : '') + `global_nav_${tidle}_svg`}" role="presentation"><i class="icon-line ${item.icon_svg} gnct_inst_menu_icon"></i></div>`);
+
+                } else if (/^http/.test(item.icon_svg)) {
+                    // externally hosted svg, you must handle cors policies locally
+                    fetch(item.icon_svg, {
+                            mode: 'cors',
+                            method: 'GET',
+                            headers: {
+                                'Access-Control-Request-Method': 'GET',
+                                'Accept': 'text/plain',
+                                'Content-Type': 'text/plain',
+                            }
+                        })
+                        .then(r => r.text())
+                        .then(svg => {
+                            svg_holder.insertAdjacentHTML('afterbegin', svg);
+                            icon.querySelector('svg').setAttribute('id', (hamb ? 'rspv-' : '') + `global_nav_${tidle}_svg`);
+                            svg_class.forEach(c => {
+                                icon.querySelector('svg').classList.add(c)
+                            })
+                        })
+                        .catch(console.error.bind(console));
+
+                } else if (/^<svg/.test(item.icon_svg)) {
+                    // inline/script svg
+                    svg_holder.insertAdjacentHTML('afterbegin', item.icon_svg);
+                    icon.querySelector('svg').setAttribute('id', `rspv-global_nav_${tidle}_svg`);
+                    svg_class.forEach(c => {
+                        icon.querySelector('svg').classList.add(c)
+                    })
+                }
+                // nav item placement
+                if (item.position !== undefined && typeof item.position === 'number') {
+                    // positioned
+                    var sel = (hamb == true ? hamb_menu_sel : '#menu') + ` > li:nth-of-type(${item.position})`;
+                    document.querySelector(sel).after(icon);
+                } else if (item.position !== undefined && item.position == 'after') {
+                    // after
+                    target_li.after(icon);
+                } else {
+                    // before
+                    target_li.before(icon);
+                }
+            }
+            const append_links = (links, hamb = true) => {
+                links.forEach(link => {
+                    nav_item_append(link, hamb);
+                });
+            }
+            const watch_burger_tray = function(mtx, observer) {
+                let rspv_nav = document.querySelector(hamb_menu_sel);
+                if (!rspv_nav) {
+                    if (typeof observer === 'undefined') {
+                        var obs = new MutationObserver(watch_burger_tray);
+                        obs.observe(document.body, {
+                            childList: true,
+                            subtree: true
+                        });
+                    }
+                    return;
+                }
+
+                //if (rspv_nav != null) {
+                if (rspv_nav != null && (document.querySelector('.mobile-header-hamburger').offsetParent != null)) {
+                    observer.disconnect();
+                    append_links(links, true);
+                    exit_burger_tray();
+                }
+            }
+
+            const exit_burger_tray = function(mtx, observer) {
+                let rspv_nav = document.querySelector(hamb_menu_sel);
+                if (rspv_nav != null) {
+                    if (typeof observer === 'undefined') {
+                        var obs = new MutationObserver(exit_burger_tray);
+                        obs.observe(document.body, {
+                            childList: true,
+                            subtree: true
+                        });
+                    }
+                    return;
+                }
+                if (rspv_nav == null) {
+                    observer.disconnect();
+                    watch_burger_tray();
+                }
+            }
+            watch_burger_tray();
+            append_links(links, false);
+        }
+
+        // handle css, remove or comment if you're also using Global Nav Custom Tray
+        (function() {
+            if (document.querySelectorAll('[data-global-nav-custom-css="set"]').length == 0) {
+                let styles = {
+                    'i.gnct_inst_menu_icon:before': 'font-size: 32px; width: 32px; line-height: 32px;',
+                    'i.gnct_inst_menu_icon': 'width: 32px; height: 32px; font-style: bold;',
+                    '.gnct_icon_svg': 'width: 32px !important; height: 32px !important; font-style: bold;',
+                };
+                if (typeof styles !== 'undefined' && Object.keys(styles).length > 0) {
+                    let style = document.createElement('style');
+                    style.setAttribute('data-global-nav-custom-css', 'set');
+                    document.head.appendChild(style);
+                    let sheet = style.sheet;
+                    Object.keys(styles).forEach(function(key) {
+                        sheet.insertRule(`${key} { ${styles[key]} }`, sheet.cssRules.length);
+                    });
+                }
+            }
+        })();
+
+        // add items to menu
+        globalNavCustomLinks();
+
+    })();
+
+    /* Hide Turnitin Similarity Admin Settings for non-root admins */
+    var rootAdminCheck = ENV.current_user_roles.includes("root_admin");
+    var acctAdminCheck = ENV.current_user_types.includes("AccountAdmin");
+    var turnitinMenuItem = document.getElementsByClassName("lti/message_handler_10")[0].parentNode;
+
+    if (rootAdminCheck === false || acctAdminCheck === false) {
+        turnitinMenuItem.remove();
+    };
+});
+
+window.ALLY_CFG = {
+    'baseUrl': 'https://prod.ally.ac',
+    'clientId': 12775,
+    'lti13Id': '200220000000000009'
+};
+$.getScript(ALLY_CFG.baseUrl + '/integration/canvas/ally.js');
