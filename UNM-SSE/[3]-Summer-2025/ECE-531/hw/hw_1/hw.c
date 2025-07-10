@@ -88,7 +88,7 @@ int main(int argc, char *argv[]) {
     } else if (strcmp(method, "DELETE") == 0) {
         curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "DELETE");
         if (strlen(data) > 0) {
-        // Removed request to body in DELETE request
+        // Removed request to body in DELETE request. Added print statement for previous misunderstanding on my part
         fprintf(stderr, "Warning: DELETE requests typically do not send a body. Ignoring message.\n");
         }
     }
