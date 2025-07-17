@@ -1,0 +1,11 @@
+This is a simple thermocouple simulation. To make for x86:
+
+make -f makefile-tc-x86_64
+
+To make for ARM:
+
+make -f makefile-tc-arm
+
+Enjoy!
+
+- c.
