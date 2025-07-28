@@ -100,3 +100,91 @@ def required_eirp(flux_density_dBW_m2, total_losses_dB):
         float: Required EIRP in dBW.
     """
     return flux_density_dBW_m2 + total_losses_dB
+
+def calc_fdma_carriers(sat_eirp_dBW, backoff_dB, carrier_eirp_dBW, transponder_bw_MHz, carrier_bw_MHz):
+    """
+    Calculates the number of FDMA carriers a satellite transponder can support.
+
+    Parameters:
+        sat_eirp_dBW (float): Saturation EIRP of the transponder in dBW.
+        backoff_dB (float): Output backoff in dB.
+        carrier_eirp_dBW (float): EIRP required per carrier in dBW.
+        transponder_bw_MHz (float): Total transponder bandwidth in MHz.
+        carrier_bw_MHz (float): Bandwidth per carrier in MHz.
+
+    Returns:
+        int: Number of carriers the transponder can accommodate.
+    """
+    available_eirp_dBW = sat_eirp_dBW - backoff_dB
+    num_carriers_power = 10 ** ((available_eirp_dBW - carrier_eirp_dBW) / 10)
+    num_carriers_bw = transponder_bw_MHz / carrier_bw_MHz
+    return int(min(num_carriers_power, num_carriers_bw))
+
+def fdma_carrier_capacity(transponder_bw_MHz, carrier_bw_MHz, backoff_dB=0):
+    """
+    Calculates number of FDMA carriers with and without backoff.
+
+    Parameters:
+        transponder_bw_MHz (float): Total transponder bandwidth in MHz.
+        carrier_bw_MHz (float): Bandwidth required per carrier in MHz.
+        backoff_dB (float): Output backoff in dB (default is 0).
+
+    Returns:
+        tuple: (carriers_without_backoff, carriers_with_backoff)
+    """
+    carriers_no_backoff = int(transponder_bw_MHz // carrier_bw_MHz)
+
+    if backoff_dB > 0:
+        linear_loss = 10 ** (backoff_dB / 10)
+        effective_bw_per_carrier = carrier_bw_MHz * linear_loss
+        carriers_with_backoff = int(transponder_bw_MHz // effective_bw_per_carrier)
+    else:
+        carriers_with_backoff = carriers_no_backoff
+
+    return carriers_no_backoff, carriers_with_backoff
+
+def cascaded_amp_noise(G1_dB, G2_dB, Te1, Te2):
+    # Convert gains from dB to linear
+    G1 = 10**(G1_dB / 10)
+    G2 = 10**(G2_dB / 10)
+    
+    # Overall gain in dB and linear
+    G_total_dB = G1_dB + G2_dB
+    G_total = G1 * G2
+
+    # Friis formula for effective noise temperature
+    T_total = Te1 + Te2 / G1
+
+    return G_total_dB, G_total, T_total
+
+def fdma_downlink_cn(EIRP_sat_dB, G_T_dB, L_dB, B_Hz, backoff_dB, total_bw_Hz):
+    k_dB = -228.6
+    EIRP_actual = EIRP_sat_dB - backoff_dB
+    B_dBHz = 10 * math.log10(B_Hz)
+    
+    CN_dB = EIRP_actual - L_dB + G_T_dB - k_dB - B_dBHz
+
+    # Number of carriers
+    carrier_bw = B_Hz
+    N_total = total_bw_Hz / carrier_bw
+    power_ratio = 10**(-backoff_dB / 10)
+    N_with_backoff = int(N_total * power_ratio)
+    
+    return CN_dB, int(N_total), N_with_backoff
+
+def calc_cn(P_c_watts, T_sys_K, bandwidth_Hz):
+    k = 1.38e-23  # Boltzmann constant (J/K)
+    
+    cn0_linear = P_c_watts / (k * T_sys_K)
+    cn0_dBHz = 10 * math.log10(cn0_linear)
+    
+    B_dBHz = 10 * math.log10(bandwidth_Hz)
+    cn_dB = cn0_dBHz - B_dBHz
+    
+    return cn0_dBHz, cn_dB
+
+def calculate_cn0(eirp_dBW, fs_loss_dB, pointing_loss_dB, atm_loss_dB, feeder_loss_dB, gt_dB):
+    k_dB = -228.6  # 10*log10(k), Boltzmann's constant in dB
+    total_loss = fs_loss_dB + pointing_loss_dB + atm_loss_dB + feeder_loss_dB
+    cn0 = eirp_dBW - total_loss + gt_dB - k_dB
+    return cn0

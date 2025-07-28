@@ -1,0 +1,123 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[dvipsnames]{xcolor}
+
+% Define custom color
+\definecolor{mygreen}{HTML}{004225}
+\newcommand{\sectioncolor}{\color{mygreen}}
+
+\pagestyle{empty}
+
+% Line between sections (no spacing)
+\newcommand{\sectionline}{\noindent\rule{\linewidth}{0.4pt}}
+
+% No extra paragraph spacing
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0pt}
+
+% Tight bullet formatting
+\setlist[itemize]{left=1.25em, itemsep=0pt, topsep=0pt, parsep=0pt}
+
+% Tight section formatting with color
+\titleformat{\section}
+{\sectioncolor\bfseries\uppercase}
+{}{0pt}{}
+\titlespacing{\section}{0pt}{2pt}{2pt}
+
+\begin{document}
+	
+	\begin{center}
+		{\color{mygreen}
+			{\Huge \textbf{Scott Nguyen}} \\
+			\href{mailto:scott.nguyen8901@gmail.com}{scott.nguyen8901@gmail.com} \quad \textbar \quad 
+			(515) 943-6283 \quad \textbar \quad 
+			\href{https://www.linkedin.com/in/scottnguyen8901/}{linkedin.com/in/scottnguyen8901}
+		}
+	\end{center}
+	
+	\sectionline
+	
+	\section*{Education}
+	
+	\textbf{Master of Science in Electrical Engineering \textbar Space Systems Engineering} \hfill \textbf{Spring 2026} \\
+	University of New Mexico \hfill GPA: 4.00/4.00
+	
+	\textbf{Master of Science in Aerospace Engineering} \hfill \textbf{Fall 2024} \\
+	University of Illinois Urbana-Champaign
+	
+	\textbf{Bachelor of Science in Aerospace Engineering} \hfill \textbf{Spring 2022} \\
+	Iowa State University
+	
+	\sectionline
+	
+	\section*{Relevant Coursework}
+	Orbital Mechanics I–III \hfill
+	Spacecraft Attitude Dynamics and Control \hfill
+	Space Situational Awareness
+	
+	\sectionline
+	
+	\section*{Skills}
+	\textbf{Programming Languages:} MATLAB, Python, C/C++ \\
+	\textbf{Frameworks / Libraries / Tools:} NumPy, SciPy, Matplotlib, Astropy, Poliastro, bpy, git \\
+	\textbf{Applications:} Simulink, Blender
+	
+	\sectionline
+	
+	\section*{Work Experience}
+	
+	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill \textbf{May 2025 – Present} \\
+	\emph{Blue Canyon Technologies}
+	\begin{itemize}
+		\item Verified the functionality and polarity of IMU, Nano Star Tracker, Reaction Wheels, Torque Rods, and Sun Sensors; validated reaction wheel and control moment gyro test data against performance specs
+		\item Performed regression analysis on two-axis Solar Array Drive Assembly (SADA) momentum management and conducted command interface testing to ensure accurate control and reliability
+		\item Authored automated test scripts and mapped SADA telemetry channels to COSMOS to streamline testing, validation, and real-time monitoring
+	\end{itemize}
+
+
+	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill \textbf{January 2025 – April 2025} \\
+	\emph{Blue Origin}
+	\begin{itemize}
+		\item Implemented a novel, robust control approach by integrating Active Disturbance Rejection Control (ADRC) and Sliding Mode Control (SMC) in Simulink for highly nonlinear MIMO BE-7 engine dynamics.
+		\item Simulated disturbances were effectively rejected, improving accuracy and robustness in setpoint tracking
+		\item C code for S-function integration of flight software with Simulink models for testing and verification
+		\item Compiled findings into a technical report and presented control strategies, simulations, and integration insights
+	\end{itemize}
+	
+	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill \textbf{May 2024 – August 2024} \\
+	\emph{Varda Space Industries}
+	\begin{itemize}
+		\item Conducted trade studies to optimize gravity models for mission requirements and select the best filter (Extended Kalman Filter (EKF) vs. Unscented Kalman Filter (UKF)) for nonlinear dynamics
+		\item Created Monte Carlo simulations to perform flight safety analysis and develop reentry criteria for capsule reentry
+		\item Developed a UKF for state estimation, optimizing ground station data timing to minimize residuals and enable precise delta-v planning
+		\item Validated GPS error using hardware-in-the-loop testing with Spirent simulation
+		\item Implemented unit testing for the code base and introduced CI/CD pipelines using Bamboo
+	\end{itemize}
+	
+	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill \textbf{May 2023 – August 2023} \\
+	\emph{Space Dynamics Laboratory}
+	\begin{itemize}
+		\item Implemented a UKF with range iteration and least squares orbit determination methods using optical navigation
+		\item Simulated high-fidelity dynamic models with J2 perturbations, third-body dynamics, and solar radiation pressure
+		\item Performed Monte Carlo analysis on relative orbits to identify challenging scenarios and refine the algorithm
+		\item Programmed and developed unit tests for Lambert Solver to be utilized with Initial Orbit Determination (IOD)
+	\end{itemize}
+	
+	\sectionline
+	
+	\section*{Research Projects}
+	
+	\textbf{Delta-V Minimization from Geostationary Orbit to Mars}
+	\begin{itemize}
+		\item Applied trajectory optimization techniques to minimize delta-v for an Earth-to-Mars transfer orbit, enhancing fuel efficiency
+		\item Generated pork-chop plots using Lambert solutions and cross-validated optimizer results with the plot’s global and local minimum regions to ensure consistency
+		\item Utilized Blender’s Python API to visualize the optimized trajectory and animate planetary motion
+	\end{itemize}
+	
+\end{document}
