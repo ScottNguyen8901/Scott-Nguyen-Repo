@@ -7,3 +7,6 @@ qemu-system-arm \
   -serial stdio \
   -net nic,model=rtl8139 \
   -net user,hostfwd=tcp::2222-:22
+
+
+export PATH=$(echo "$PATH" | tr ':' '\n' | grep -v " " | tr '\n' ':' | sed 's/:$//')
