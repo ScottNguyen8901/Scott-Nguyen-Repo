@@ -1,0 +1,81 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          thermostat
+# Required-Start:    $network $local_fs
+# Required-Stop:     $network $local_fs
+# Default-Start:     S
+# Default-Stop:      0 6
+# Short-Description: Smart thermostat client with simulator
+### END INIT INFO
+
+CONFIG_FILE="/etc/thermostat/config.cfg"
+BINARY="/usr/sbin/thermostat_client"
+SIMULATOR="/usr/sbin/tcsimd"
+LOG_DIR="/var/log"
+TEMP_FILE="$LOG_DIR/temperature"
+HEATER_FILE="$LOG_DIR/heater"
+STATUS_FILE="/tmp/status"
+PID_DIR="/var/run"
+THERMO_PID="$PID_DIR/thermostat_client.pid"
+SIM_PID="$PID_DIR/tcsimd.pid"
+
+start() {
+    echo "[INIT] Thermostat init script starting..."
+
+    mkdir -p "$LOG_DIR" "$PID_DIR"
+    [ -e "$TEMP_FILE" ] || touch "$TEMP_FILE"
+    [ -e "$HEATER_FILE" ] || touch "$HEATER_FILE"
+    [ -e "$STATUS_FILE" ] || touch "$STATUS_FILE"
+    chmod 666 "$TEMP_FILE" "$HEATER_FILE" "$STATUS_FILE"
+
+    if [ ! -x "$BINARY" ]; then
+        echo "[ERROR] Thermostat binary not found at $BINARY"
+        exit 1
+    fi
+    if [ ! -x "$SIMULATOR" ]; then
+        echo "[ERROR] Thermocouple simulator not found at $SIMULATOR"
+        exit 1
+    fi
+    if [ ! -f "$CONFIG_FILE" ]; then
+        echo "[ERROR] Config file not found at $CONFIG_FILE"
+        exit 1
+    fi
+
+    echo "[INIT] Starting tcsimd..."
+    start-stop-daemon --start --quiet --background --make-pidfile \
+        --pidfile "$SIM_PID" --exec "$SIMULATOR"
+
+    echo "[INIT] Starting thermostat_client..."
+    start-stop-daemon --start --quiet --background --make-pidfile \
+        --pidfile "$THERMO_PID" --exec "$BINARY" -- -c "$CONFIG_FILE"
+
+    echo "[INIT] Thermostat daemon launched successfully."
+}
+
+stop() {
+    echo "[INIT] Stopping thermostat services..."
+    start-stop-daemon --stop --quiet --pidfile "$THERMO_PID"
+    start-stop-daemon --stop --quiet --pidfile "$SIM_PID"
+    rm -f "$THERMO_PID" "$SIM_PID"
+    echo "[INIT] Stopped."
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  restart)
+    stop
+    sleep 1
+    start
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
+    ;;
+esac
+
+exit 0

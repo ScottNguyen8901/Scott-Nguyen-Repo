@@ -1,0 +1,72 @@
+==============================
+SMART THERMOSTAT PROJECT SUMMARY
+==============================
+
+You are building an IoT client (smart thermostat) that:
+- Reads simulated temperature data from a file that mimics a thermocouple.
+- Controls a heater (on/off) based on a configurable schedule of temperature setpoints.
+- Allows remote programming of temperature setpoints via an HTTP interface (REST API).
+- Reports current status and actions (e.g., temperature, heater state) to a remote server via HTTP.
+- Runs as a daemon that launches automatically on boot.
+- Processes a configuration file, accepts command-line arguments, and logs to specified files.
+- Is bundled into a QEMU VM image that can be launched with a script and connects to your server.
+
+Your goal is to build a robust daemonized C program that can interact with simulated hardware and a cloud backend, emulating the behavior of a real-world smart thermostat.
+
+==============================
+FULL REQUIREMENTS CHECKLIST
+==============================
+
+CORE FUNCTIONALITY
+------------------
+[x] Read current temperature as a float (°C) from /var/log/temperature
+[x] Write heater on/off status to /var/log/heater using format:
+      <on|off> : <POSIX timestamp>
+
+DAEMON BEHAVIOR
+---------------
+[x] Run as a daemon that also works from the command line
+[ ] Start automatically on system boot
+[x] Accept command-line arguments:
+      -c <config_file> or --config_file <config_file>
+      -h or --help to print usage/help
+
+CONFIGURATION FILE
+------------------
+[x] Must support the following settings:
+      - Service endpoint URL (e.g. http://host:8000)
+      - Log file paths
+      - Any additional config files
+
+PROGRAM SCHEDULING
+------------------
+[x] Accept programming of at least 3 temperature setpoints per day
+[x] Setpoints defined by time + temperature
+[ ] (Optional for extra credit): Support weekends, calendars, weekly programs
+
+HTTP SERVER INTERACTIONS
+------------------------
+[x] Accept temperature program via HTTP (POST or PUT)
+[x] Report to server:
+      - Current temperature and heater status
+      - Actions taken (e.g., heater turned on)
+
+FILE HANDLING
+-------------
+[x] Read temperature from: /var/log/temperature
+[x] Write heater control to: /var/log/heater with proper timestamp format
+
+SUBMISSION DELIVERABLES
+------------------------
+[ ] Submit an archive named project.tgz containing:
+      - project.sh : Script to launch QEMU VM
+      - credentials.txt : Root and user account credentials
+      - All dependencies: source code, config files, init files, etc.
+[ ] VM must:
+      - Boot successfully using project.sh
+      - Automatically run the thermostat client on startup
+      - Correctly communicate with your HTTP server
+
+EXTRA CREDIT (110% grade)
+-------------------------
+[ ] Use HTTPS instead of HTTP to communicate with the cloud
