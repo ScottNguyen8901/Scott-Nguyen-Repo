@@ -1,0 +1,81 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\title{ECE 506: Homework \#1: Basic Optimization}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\noindent
+	To get help with the homework, please join the Saturday morning discussion sessions starting at 9am at
+	\url{https://unm.zoom.us/j/99977790315}.
+	
+	\section*{Problem \#1. An Introduction to Linear Programming}
+	
+	This problem is focused on manipulating the basic Linear Programming equation:
+	\begin{equation}
+		\min_{x}\; c^{\top}x
+		\quad \text{subject to } Ax = b \text{ and } x \ge 0.
+		\label{eq:lp}
+	\end{equation}
+	(Here, $x \ge 0$ is understood componentwise.)
+	
+	\begin{enumerate}[label=\textbf{1(\alph*)}]
+		\item \textbf{We begin with the simplest possible example.} Consider the 1D problem:
+		\begin{equation}
+			\min_{x}\; c \cdot x
+			\quad \text{subject to } a x = b \text{ and } x \ge 0.
+			\label{eq:1d}
+		\end{equation}
+		From this case, answer the following:
+		\begin{enumerate}[label=\roman*)]
+			\item \textbf{Example with no solution.}
+			With the constraints \(ax=b\) and \(x\ge 0\), if \(a\neq 0\) then the only candidate is
+			\(x^\star=\tfrac{b}{a}\).
+			If \(b/a<0\), the nonnegativity constraint is violated, so the problem is infeasible; e.g.,
+			\(a=1,\ b=-1 \Rightarrow x^\star=-1\) (infeasible).
+			(Also infeasible when \(a=0,\ b\neq 0\) since \(0=b\) cannot hold.)
+			
+			\item \textbf{Example with a simple solution.}
+			Take \(a=2,\ b=0\). Then \(x^\star=\tfrac{b}{a}=0\), which satisfies \(x\ge 0\), and the objective value is \(c\,x^\star=0\).
+			
+			\item \textbf{Did you minimize anything? Explain.}
+			No. When \(a\neq 0\), the equality constraint pins down a single feasible point \(x^\star\);
+			if it is feasible, it is automatically optimal—there is no tradeoff to optimize over.
+		\end{enumerate}
+
+		\item \textbf{Invertible case.} If $A$ is invertible, the constraint $Ax=b$ has the unique solution $x^\star=A^{-1}b$. If $x^\star\ge 0$ (componentwise), it is the only feasible—and thus optimal—point with value $c^\top x^\star$; otherwise the problem is infeasible. No minimization needed.
+
+		\item \textbf{Underdetermined case.} The only case that is interesting is when we have many solutions to $Ax = b$.
+		We then get to pick the one that minimizes $c^{\top}x$. This can only happen when
+		the number of equations is smaller than the number of unknowns. Here is an example:
+		\[
+		\begin{bmatrix} 1 & 2 \end{bmatrix}
+		\begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = 2.
+		\]
+		Note that we have one equation in two unknowns. We have more unknowns
+		than we have equations! It may be possible to set up a proper optimization
+		problem.
+		
+		\medskip
+		To have a proper solution, we must also satisfy $x_1, x_2 \ge 0$. These are called
+		\emph{feasible solutions}. They satisfy the constraints, and the optimal solution needs
+		to satisfy them.
+		
+		\medskip
+		\textbf{Task:} Plot all possible solutions of $Ax = b$ satisfying $x_1, x_2 \ge 0$ for this case.
+		
+		\item \textbf{Optimization over the feasible set.} For the case when $Ax = b$ described in 1(c), solve the proper optimization
+		problem. For this case, solve:
+		\begin{equation}
+			\min_{x}\; [\,1\;\;1\,]\,x \quad \text{subject to } Ax = b \text{ and } x \ge 0.
+			\label{eq:obj11}
+		\end{equation}
+		Is the solution at the endpoints? Explain.
+	\end{enumerate}
+	
+\end{document}
