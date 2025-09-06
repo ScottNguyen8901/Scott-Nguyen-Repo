@@ -1,0 +1,243 @@
+%&latex
+\documentclass[12pt,legalpaper]{article}
+\usepackage[plain]{fullpage}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[lined,algonl,boxed]{algorithm2e}
+
+\begin{document}
+
+\vspace{2in}
+\begin{center}
+  {\Huge\bf ECE 506 Optimization Theory}
+\end{center}
+\vspace{0.5in}
+%  
+{\bf\large
+\begin{flushleft}
+ \hspace{0.3in} Name: \qquad \underline{\hspace{3in}}\\[0.5in]
+ \hspace{1.5in}Problem 1: \underline{\hspace{0.3in}} /15 \\[0.1in]
+ \hspace{1.5in}Problem 2: \underline{\hspace{0.3in}} /20 \\[0.1in]
+ \hspace{1.5in}Problem 3: \underline{\hspace{0.3in}} /10 \\[0.1in]
+ \hspace{1.5in}Problem 4: \underline{\hspace{0.3in}} /30 \\[0.1in]
+ \hspace{1.5in}Problem 5: \underline{\hspace{0.3in}} /25 \\[0.5in]
+ \hspace{1.5in}Total: \phantom{\hspace{0.4 true in}}
+                     \underline{\hspace{0.3in}} /100
+\end{flushleft}}
+\vspace{2in}
+{\bf\Huge
+\begin{center}
+  Good Luck!
+\end{center}}
+\newpage
+%
+%
+\noindent{\bf Problem 1 ({\bf 15 points})}\\
+\noindent 1(a)({\bf 5 points}) Consider the cubic function given by
+        $$f(x_1, x_2) = a (x_1-1)^3 + b (x_2-2)^3. $$
+Give expressions for $\nabla f$ and $\nabla^2 f$.\\
+\vspace{3.5 true in}
+
+\noindent 1(b)({\bf 5 points}) When is $f$ stationary?\\
+\vspace{1.0 true in}
+
+\noindent 1(c)({\bf 5 points} At the stationary point, is it possible to
+ gave a strict minimum? If yes, when?
+\newpage
+%
+%
+\noindent{\bf Problem 2 (20 points)}\\
+We begin by restating theorem 4.1 from your text.
+The vector $p^*$ is a global solution of the trust-region problem:
+$$ \min_{p\in R^n} m(p) = f+g^T p + \frac{1}{2} p^T B p, 
+   \quad s.t. \quad ||p||\leq \Delta,$$
+if and only if $p^*$ is feasible and there is a scalar $\lambda\geq 0$
+such that the following conditions are satisfied:
+\begin{enumerate}
+\item $(B+\lambda I)p^* = -g$ 
+\item $\lambda (\Delta - ||p^*||)=0$
+\item $(B+\lambda I)$ \quad is positive semidefinite.
+\end{enumerate}
+
+\noindent 2(a)({\bf 5 points}) First, let us consider the unconstrained problem.
+Give an optimal expression for $p^*$ by solving $\nabla m(p^*)=0$.
+\vspace{1.0 true in}
+
+\noindent 2(b)({\bf 5 points}) Suppose that $||p^*||<\Delta$ lies inside the feasible region. Show that this can only happen if $B$ is positive
+semidefinite. Furthermore, how does the optimal $p^*$ compare with the 
+one found in 2(a)?
+\vspace{1.0 true in}
+
+\noindent 2(c)({\bf 5 points}) Suppose that the solution is on the boundary:
+$||p^*||=\Delta$ and $\lambda>0$. Derive an expression for $p^*$ in 
+terms of $\nabla m(p)$.
+\vspace{1.0 true in}
+
+
+\noindent 2(d)({\bf 5 points}) Based on your answer in 2(c), sketch $p^*$, the trust region, and the contours of $m(p)$.
+\newpage
+
+
+\vspace{1.0 true in}
+
+
+
+
+
+%
+
+\noindent{\bf Problem 3 (10 points)}.\\
+Suppose that $f$ is twice differentiable and that the Hesian $\nabla^2 f(x)$ is Lipschitz continuous
+   in a neighborhood of the solution $x^*$, at which the second order 
+   sufficient conditions for a strict
+   minimum are satisfied.
+Consider the Newton algorithm:
+\begin{align*}
+  x_{k+1} &= x_k + p_k \\
+  p_k^N   &= -\nabla^2 f_k^{-1} \nabla f_k.
+\end{align*}      
+Assuming that the starting point is sufficiently close to $x^$, 
+  we can show that $\{x_k\}$ converges to $x^*$ quadratically. You
+are not asked to prove this. You need to show that
+ $\{||\nabla f_k||\}$ converges quadratically to zero.\\~\\   
+{\it Hint}: Start from:
+       $$||\nabla f(x_{k+1})||=||\nabla f(x_{k+1}) - 0||,$$
+replace $0$ by a suitable expression and then use the mean-value theorem
+for the gradient:
+ $$\nabla f(x+p) = \nabla f(x)
+            + \int\limits_0^1 \nabla^2 f(x+tp)p \, dt, \quad t\in(0,1).$$
+\newpage
+
+\noindent{\bf Problem 4 (30 points)}\\
+\noindent{\bf 4(a)(4 points)} Consider $a^T b$ where $a,\, b$ are 
+  $n$-dimensional vectors. Give:
+  \begin{itemize}
+\item $M:$ the number of multiplications. 
+\item $A:$ the number of additions.
+\item $S:$ the storage requirements for $B$-bytes per vector element
+           (only for $a,b$).
+\item $m:$ the number of memory accesses to the elements of $a,b$.      
+\end{itemize}
+\vspace{2.0 true in}
+
+\noindent{\bf 4(b)} Consider the following algorithm:
+\incmargin{1em}
+\restylealgo{boxed}\linesnumbered
+\begin{algorithm}
+  $q \leftarrow \nabla f_k$\\
+  \For{i=k-1, \, k-2, \dots, \, k-m}{
+   $\alpha_i \leftarrow \rho_i s_i^T q;$\\
+   $q \leftarrow q - \alpha_i y_i$
+  }
+  $r \leftarrow H_k^0 q;$\\
+  \For{i=k-m,\, k-m+1, \, \dots, \, k-1}{
+    $\beta\leftarrow \rho_i y_i^T r;$\\
+    $r\leftarrow r+s_i(\alpha_i-\beta);$
+  }  
+\caption{L-BFGS two-loop recursion for computing $r=H_k\nabla f_k$.}
+\end{algorithm}
+\decmargin{1em}\\
+Give a list of all of the input variables (2 points):\\~\\
+
+\noindent What are the storage requirements for representing $H_k$ (4 points)?:
+
+\newpage
+\noindent Without considering the cost of computing $r\leftarrow H_k^0 q$, based on your answer in (a), give the following (10 points):
+\begin{itemize}
+ \item $T_M:$ the total number of multiplications
+ \item $T_A:$ the total number of additions
+ \item $Tsub:$ the total number of subtractions
+ \item $Tmem:$ the number of memory accesses
+\end{itemize} 
+\vspace{6.0 true in}
+
+\noindent{\bf 4(c)(5 points)} Assume that we initialize using 
+$H_k^0=\gamma_k I$, where $\gamma_k=s_{k-1}^T y_{k-1}/(y_{k-1}^T y_{k-1})$.
+Based on (a), give the number of multiplications and additions needed to compute $r\leftarrow H_k^0 q$.\\
+\newpage
+
+\incmargin{1em}
+\restylealgo{boxed}\linesnumbered
+\begin{algorithm}
+Choose starting point $x_0$, integer $m>0;$\\
+$k\leftarrow 0;$\\
+\Repeat(){convergence}{
+Choose $H_k^0$\\
+Compute $p_k=-H_k\nabla f_k$ using L-BFGS two-loop recursion algorithm.\\
+Compute $x_{k+1}\leftarrow x_k + \alpha_k p_k,$ where $\alpha_k$ is \\
+$\qquad$  chosen so as to satisfy the Wolfe conditions;\\
+\If{$k>m$}{Discard the vector pair $\{s_{k-m},\, y_{k-m}\}$ from storage;}
+Compute and save 
+$s_k\leftarrow x_{k+1}-x_k,\, y_k\leftarrow\nabla f_{k+1}-\nabla f_k, \, \rho_k\leftarrow 1/(y_k^T s_k)$.\\
+$k\leftarrow k+1;$
+}
+\caption{L-BFGS.}
+\end{algorithm}
+\decmargin{1em}
+\noindent{\bf 4(d)} In the L-BFGS algorithm given above, assume
+that it takes $P$ function evaluations for $f_k$ and $Q$ function evaluations
+for $\nabla f_k$ to find $\alpha_k$ that satisfies the Wolfe conditions.
+Please
+note that $\alpha_k=1$ is expected to work. For each iteration, give (3 points):
+\begin{itemize}
+ \item $A_f:$ the average number of  function evaluations
+ \item $A_{Df}:$ the average number of $\nabla f_k$ evaluations
+\end{itemize}\\
+\vspace{2.0 true in}
+
+\noindent{4(e)(2 points)} Assume that each gradient component is estimated
+using
+ $$\frac{f_i}{\partial x_i}(x) \approx \frac{f(x+\epsilon e_i)-f(x)}{\epsilon},$$
+where $\epsilon$ is chosen as discussed on page 196 of your book (not discussed here). In this case, give $A_f$ accounting for the average number of function
+evaluations in 4(d).
+
+\newpage
+\noindent{\bf Problem 5 (25 points) Stochastic Optimization}\\
+\noindent {\bf 5(a)(4 points)} We want to minimize $f(x)$
+  where $x$ is a vector of {\bf non-negative integers}:
+      $$(x_1, x_2, \dots, x_p).$$
+  Let each integer $x_i$ be represented with $b$-bits.
+  For $p$-dimensional vectors, how many possible integer vectors do we
+  have? Give an example for $p=64$, $b=8$.\\
+  \vspace{3.0 true in}
+
+
+      
+\noindent {\bf 5(b)(4 points)} Define a neighborhood system that changes
+  a {\bf single} variable at a time by adding or subtracting $1$. Thus, 
+  the following three vectors will be neighbours of $(x_1, x_2, \dots, x_p)$:
+      $$(x_1+1, x_2, \dots, x_p), (x_1-1, x_2, \dots, x_p).$$
+  Here, for simplicity, we assume wrap-around at the edges (eg: in $8$-bits, $255+1$ gets mapped to $0$). Give $|N(x)|$, the number of neighboring
+  vectors for $x$. Will this neighborhood system reach all possible vectors?
+  Explain briefly. Note that it is clear how to expand this approach to arbitrary regions by simply mapping the results from the current approach to any other range.\\
+  \vspace{4.0 true in}
+  \newpage
+  
+%  
+\noindent{\bf 5(c)(4 points)} Recall the Markov-chain transition probability expression: 
+  \begin{equation*}
+      p = \min \left\{1, \,
+                 \frac{\exp{(\lambda_n f(y))}/|N(y)|}{
+                          \exp{(\lambda_n f(x))}/|N(x)|}
+              \right\}.
+  \end{equation*}
+Provide a simplified expression for $p$ for this case.\\
+\vspace{3.0 true in}
+
+\noindent{\bf 5(d)(4 points)} Provide a simple {\bf for}-loop
+that can be used to maximize $f(.)$ {\it without storing} all
+of the generated values. Your code should terminate after 
+{\it MaxIterations} and also specify $\lambda_n$.
+\vspace{3.0 true in}   
+\newpage
+
+\noindent {\bf 5(e)(9 points)} Suppose that you are asked to provide a more
+ global approach that will be used to generate $Q$ starting integer vectors,
+ based on a 1-D uniform distribution on each component. {\it Hint:} Generate
+ each $x=(x_1, x_2, \dots, x_p)$ by generating each component in the sequence: $x_1, x_2, \dots, x_p$.
+ 
+ Give the pseudo-code for generating the integer vectors {\bf and} how to
+ combine the results from each of the $Q$-runs to get the global maximum.
+\end{document}

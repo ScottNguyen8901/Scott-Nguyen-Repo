@@ -1,0 +1,585 @@
+%&latex
+%\documentclass{beamer}
+\documentclass[handout]{beamer}
+
+\usepackage{amsmath}
+\usetheme[hideothersubsections]{PaloAlto} % Sections on the left hand side
+
+% The following command will show an outline slide
+% prior to each section. It also displays the subsections.
+\AtBeginSection[]{
+ \begin{frame}
+   \frametitle{Outline}
+   \tableofcontents[currentsection]
+ \end{frame}
+ }
+
+% Puts the right page numbers for the presentation
+\setbeamertemplate{footline}[frame number]
+
+% Show uncovered items: 0 is invisible, 100 is fully visible
+\setbeamercovered{transparent=3}
+
+ % Title slide information
+\title[Opt Methods]{An Introduction to Stochastic Methods in Optimization
+                     (Revised, Oct. 24th, 2012)}
+\author[Pattichis]{Marios S. Pattichis}
+
+\begin{document}
+
+\date[Adv Opt Methods]{UNM}
+     % This kills the date. You can type anything for the date.
+
+\frame{ \titlepage}
+ \frame{
+  \frametitle{Outline}
+  \tableofcontents
+  %\tableofcontents[pausesections]
+  }
+%
+%\section{Goals}
+%\frame{
+% \frametitle{Goals}
+% \begin{itemize}[<+->]
+%  \item ??
+% \end{itemize}
+% }
+
+\section{Introduction}
+\frame{\frametitle{Where to begin ...}
+ A nice introduction to Simulation and Simulated Annealing is
+ given by Sheldon Ross in {\it Simulation}. We will refer to
+ this book by [SR]. \pause \\~\\
+
+ A more advanced introduction with answers to many basic questions
+ is given in Brian D. Ripley's {\it Stochastic Simulation}. We will refer
+ to this book by [BR]. \pause \\~\\
+
+ For image processing students, we need [BR] , who
+ is also an authority in Spatial Statistics. He brings examples from image processing also.
+}
+
+\frame{\frametitle{Why use Stochastic Methods?}
+We have the following two reasons from [BR]:
+ \frametitle{Goals}
+ \begin{itemize}[<+->]
+  \item Optimization from noisy observations.:\\
+          The basic idea is that we can only approximate the function to be optimized.
+          Here, let us note that we now also have more methods to deal with noisy measurements.
+
+         Many researchers suggest using Stochastic Methods when the optimization function is not
+         differentiable. This is similar to this category.
+
+  \item Efficient Exploratory Optimization:\\
+         The basic idea is to define a probability distribution over the space that we
+         are optimizing and then draw random samples over that space and evaluate the function.
+         For example, the standard practice of uniform sampling is very similar to drawing samples from a
+         uniform distribution.
+ \end{itemize}
+Stochastic Optimization is not recommended when we know a lot about the problem [BR].
+}
+
+\section{Optimization Based on Differentiable Functions}
+\frame{\frametitle{Optimization Problem Definition Without Derivatives}
+   Without requiring differentiability, the basic optimization problem is given by:\pause \\
+   Find $x^* \in D$ for some domain $D \subset R^n$ such that:
+   \begin{equation*}
+        f(x^*) = \sup\limits_{x\in D} f(x).
+   \end{equation*}\pause \\~\\
+
+   A local maximum is found when $\hat{x}$ satisfies
+   $f(x)<f(\hat{x})$ for all $x\in D$ for some neighborhood
+   defined by $0<\| x - \hat{x} \| \leq \delta$, some $\delta$.
+}
+
+\frame{\frametitle{Stochastic Optimization With Derivatives [BR] (I of III)}
+   Suppose that $f(.)$ is differentiable with derivative $g(.)$. \pause \\~\\
+
+We can approximate the derivatives using finite differences in a random direction
+   (like gradient ascent):\pause \\
+\,\, Step 1. Generate vector $V_i$ randomly distributed over
+ \phantom{Step 1.} the unit sphere: $||V_i||=1$.   \pause \\
+\,\, Step 2. Move in this random direction using: \\
+ $x_{i+1} = x_i + \alpha_i \left\{ [ f(x_i + c_i V_i) - f(x_i - c_i V_i)]/(2 c_i)]\right\} V_i$ \\~\\
+
+ Here, \quad$\alpha_i$\quad represents the step size and
+          \quad$ c_i$ \quad represents a displacement for finite differencing
+}
+
+\frame{\frametitle{Stochastic Optimization With Derivatives [BR] (II of III)}
+A modified approach will move to the most promising point: \pause \\
+ \,\, Step 1. Generate $N$ vectors $V_{iq} $ randomly distributed over
+  \phantom{Step 1.} the unit sphere: $||V_{iq}||=1$.   \pause \\
+ \,\, Step 2. Choose the $k$ that maximizes $f(x_i + c_i V_{ik})$. \pause \\
+ \,\, Step 3. Move to this point:
+     $x_{i+1} = x_i + \alpha_i \left\{ [ f(x_i + c_i V_{ik}) - f(x_i - c_i V_{ik})]/(2 c_i)]\right\} V_{ik}$
+}
+
+\frame{\frametitle{Most Common Global Optimization Approach [BR] (III of III)}
+
+A very promising global + local approach will combine approaches: \pause \\~\\
+\,\, Step 1. Select $N$ starting points $x_i \in D$ based on some distribution over $D$ \pause \\
+\,\, Step 2. Run a local optimization algorithm from each $x_i$ to reach $\hat{x}_i$.   \pause \\
+\,\, Step 3. Choose $x^*$ as the $\hat{x}_i$ with the largest $f(\hat{x}_i)$. \pause \\
+~\\~\\
+{\bf How do we pick an appropriate distribution?}
+}
+
+\frame{\frametitle{A Monte-Carlo Approach to Picking the Distribution}
+Ripley proves the following result on page 180.\\ \pause ~\\
+
+Suppose that $f(.)$ is continuous with a unique global maximum at $x^*$ and $D$ is compact.\pause \\~\\
+We have that:
+\begin{equation*}
+   x^* = \lim\limits_{\lambda \rightarrow \infty} \frac{\int_D x \exp [\lambda f(x)] dx}{
+                                                                                    \int_D    \exp[\lambda f(x)]dx }
+\end{equation*} \pause \\~\\
+
+We will follow Ross in taking a discrete approach to the problem (Section 10.4).
+}
+
+\section{Optimization Over a Discrete Number of Points}
+\frame{\frametitle{Optimization Over a Finite Number of Points}
+ Let ${\cal A}$ be a finite set of vectors. \pause\\
+ Let $f(.)$ be the function that we want to optimize. \pause \\~\\
+
+ We want to find at-least one $x^* \in {\cal M}$ where we have that:
+ \begin{align*}
+   {\cal M} &= \left\{ x\in {\cal A}\quad\text{such that:}\quad f(x)=f^* \right\} \\
+   \intertext{and:}
+    f^* &= \max\limits_{x \in {\cal A}} f(x).
+ \end{align*}
+}
+
+\frame{\frametitle{A Discrete Distribution that will work}
+  For $\lambda>0$, define the probability mass function given by
+  \begin{equation*}
+      p_{\lambda} (x) = \frac{e^{\lambda f(x)}}{
+                                              \sum_{x\in {\cal A}} e^{\lambda f(x)} }
+  \end{equation*}\pause
+   After multiplying both the numerator and the denominator by $e^{-\lambda f^*}$,
+   and letting $|{\cal M}$ be the number of element in ${\cal M}$, we get:
+   \begin{equation*}
+        p_{\lambda} (x) = \frac{e^{\lambda (f(x) - f^*)}}{
+                                                 |{\cal M}| + \sum_{x\not \in{\cal M}}  e^{\lambda (f(x) - f^*)}}
+   \end{equation*} \pause
+   Please note that $f(x) - f^* <0$ for $x \not\in{\cal M}$. Thus, as $\lambda\rightarrow\infty$, we get
+   \begin{equation*}
+       p_\lambda (x) \rightarrow \frac{\delta(x, {\cal M})}{|{\cal M}|}.
+   \end{equation*}
+   where $\delta(x, {\cal M})=1$ if $x\in{\cal M}$ and $0$ otherwise.
+}
+
+\section{Simulated Annealing}
+\frame{\frametitle{Generate a Markov Chain}
+  {\bf Define a neighborhood system.} \pause \\
+  For example, two vectors are neighbors if they differ by $1$ in one coordinate. \pause
+  Eg: $x=(x_1, x_2)$ has four neighbors: $(x_1, x_2\pm 1)$, $(x_1\pm 1, x_2)$. \pause \\~\\
+
+  Define a Markov Chain on how to move from one vector to its neighbors. \pause
+  Let $|N(x)|$ denote the number of neighbors of $x$. \pause \\~\\
+  At step $n$ of a simulated Markov Chain, we move from $x$, to a neighbor $y$
+  with probability
+  \begin{equation*}
+      p = \min \left\{1, \,
+                 \frac{\exp{(\lambda_n f(y))}/|N(y)|}{
+                          \exp{(\lambda_n f(x))}/|N(x)|}
+              \right\}
+  \end{equation*}
+  Else, we stay at $x$ with probability $1-p$.
+}
+
+\frame{\frametitle{Simulated Annealing Algorithm}
+  For convergence, we need $\lambda_n = C \log(1+n)$ with $C>0$. \pause \\
+
+  The algorithm is summarized into two steps:\pause \\
+  \,\, Step 1. Generate Markov Chain states \quad$X_1, \, X_2, \, \dots, \, X_m$. \pause \\
+  \,\, Step 2. Estimate $f^*_M$ and $x^*_M$ using: \pause \\
+   \begin{align*}
+      f^*_M &= \max \left\{f(X_1), \, f(X_2), \, \dots, \, f(X_m)\right\}
+      \intertext{and}
+      x^*_M  &= X_i \quad\text{for the maximum point:}\quad f(X_i)=f^*_M.
+   \end{align*}
+}
+
+\section{Combinatorial Optimization Example}
+\frame{\frametitle{Combinatorial Optimization: TSP}
+For the Traveling Salesman Problem (TSP), we want to find
+  the optimal city ordering, so that the reward from visiting all the cities is
+  maximized.
+Assume that we will return to the originating city. \pause \\~\\
+
+This is a combinatorial optimization problem which can only be
+solved after we evaluate all possibilities. \pause
+Simulated annealing provides for an approximate solution method. \pause \\~\\
+
+Let $0,1, 2, \, \dots, \, r$ denote all the possible cities. \pause \\
+Then, a permutation $x_1, \, \dots, \, x_r$ of $1, 2, \dots, r$ represents
+a possible tour. Then, define the cost function to maximize is the sum of all rewards
+\begin{equation*}
+  f(x) = \sum\limits_{i=1}^r g (x_{i-1}, x_i), \qquad x_0=0.
+\end{equation*}
+}
+
+\frame{\frametitle{Working with a TSP neighborhood}
+ A neighbor is defined by the swap operation. \pause \\
+ Thus, $1, 2, 3$ is a neighbor of $3, 2, 1$ since $1$ and $3$ have
+   switched positions. \pause \\ ~\\
+
+ To generate a neighbor, simply pick a pair in two steps:\\
+ \,\, Step 1. Pick a $I$ from  $1, \, \dots, r$. \pause \\
+ \,\, Step 2. Pick a $J$ from  $1, \, \dots, I-1, I+1, \dots, r$, avoiding $I$. \pause \\
+ We then exchange the $I$-th with the $J$-th city to generate a new, neighboring tour. \pause \\~\\
+
+Here, we would not have to count the number of neighbors in order to build the probability distributions. \pause \\~\\
+To count them, note that we have $r \times (r-1) / (1 \times 2)$ or
+$r \choose 2$   possible neighbors.
+}
+
+\frame{\frametitle{TSP Solution}
+Use $\lambda_n = \log(1+n)$ to get:
+$p = \min \left\{1, \,
+                 \frac{\exp{(\lambda_n f(y))}/|N(y)|}{
+                          \exp{(\lambda_n f(x))}/|N(x)|}
+              \right\} = \min \left\{1, \,  (n+1)^{f(y) - f(x)}\right\}.$ \pause \\~\\
+
+{\bf If}  $f(y)>f(x)$, {\bf then} $p=1$ and we {\bf Set} $X_{n+1}=y$. \\
+{\bf Else} \pause \\
+\qquad  {\bf Set}  $X_{n+1}=y$ with probability   $p=(n+1)^{f(y) - f(x)}$. \\
+\qquad {\bf Else} Set $X_{n+1}=x$ with probability $1-p$.
+}
+
+\frame{\frametitle{Remaining Questions}
+ \begin{itemize}[<+->]
+  \item How do we generate a discrete random number?
+  \item How do we generate a continuous random number?
+  \item How do we relate the Markov Chain to the multivariate PDF?
+ \end{itemize}
+}
+
+\section{Fundamentals of Simulation}
+\frame{\frametitle{Pseudorandom Number Generation}
+\begin{align*}
+  \intertext{The simplest uniformly distributed random number generator uses:}
+  X_n &=  (a X_{n-1} + c) \bmod{m } \\
+  \intertext{where:}
+   X_0  &\quad \text{denotes an initial value.} \\
+   m    &\quad \text{determines the period of repetition.} \\
+   a     &\quad\text{multiplicative constant to be fixed.}   \\
+   c     &\quad\text{additive constant that can also be zero.}
+\end{align*}\pause
+Ripley recommends the widely used (page 46):
+\begin{equation*}
+   X_n = (69069 X_{n-1} + 1) \bmod{2^{32}}, \quad U_n = 2^{-32} X_i \quad\text{is}\quad [0,1)
+\end{equation*}
+}
+
+\frame{\frametitle{Discrete Random Number Generation}
+\begin{align*}
+  \intertext{We want to generate the discrete variable $X$:}
+   P\{X=x_j \}=p_j, \quad \sum_j p_j=1
+\end{align*}\pause
+\begin{align*}
+  \intertext{Generate a uniformly distributed RV: $U~ (0,1)$.} \pause
+  X &= \begin{cases}
+           x_0 & \text{if\quad $U<p_0$} \\
+           x_1 & \text{if\quad $p_0 \leq U < p_0 + p_1$} \\
+           \vdots \\
+           x_j  & \text{if\quad $\sum_{i=1}^{j-1} p_i \leq U < \sum_{i=1}^j p_i$} \\
+           \vdots
+         \end{cases}
+\end{align*}
+}
+
+\frame{\frametitle{Box-Muller for Continuous Normal Random Variables}
+Ripley gives the following "exact" method for $N(0,1)$ [page 54]:\\~\\
+\,\, Step 1. Generate $U_1$. Set $\Theta = 2\pi U_1$. \pause \\
+\,\, Step 2. Generate $U_2$. Set $E = -\ln U_2, \, R= \sqrt{2 E}$. \pause \\
+\,\, Step 3. Set $X = R \cos \Theta, \, Y= R \sin \Theta$. \pause \\~\\
+The algorithm generates two normally distributed random numbers.
+If we only need one, then we do not need to compute $Y$.
+}
+
+\frame{\frametitle{Continuous Random Number Generation [SR]}
+A general method for generating continuous random variables
+is based on the {\bf rejection method}.\pause
+
+Suppose that we have a method for generating random variables
+from density $g(.)$. We want a method that has density $f(.)$.\pause \\~\\
+
+Here is the basic algorithm:\pause \\
+$\,\,$ Step 1. Generate $Y$ based on $g(.)$ \pause \\
+$\,\,$ Step 2. Generate a uniformly distributed $U$  \pause \\
+$\,\,$ Step 3. {\bf If} \quad$U \leq f(Y)/ (c g(Y))$\quad Set $X=Y$, {\bf (accept)}. \pause \\
+$\,\,$ \phantom{Step 4.} {\bf Else} repeat step 1, {\bf(reject)}.\\~\\
+
+We need to select $c$ so that:
+\begin{equation*}
+   \frac{f(y)}{g(y)} \leq c \quad \text{for all} \quad y
+\end{equation*}
+}
+
+
+\subsection{Mapping M-D Prob to 1-D Discrete Prob}
+\frame{\frametitle{Mapping M-D Arrays to 1-D Arrays}
+Note that we can come up with simple ways to map discrete variables of two or
+more dimensions to the integers:\quad $1, \, 2, \, \dots, \, R$. \pause \\~\\
+
+{\bf Example}: Consider the simplest case of mapping a two-dimensional array of
+points: $A[i,\, j]$. Let $A$ be of size $N \times M$. \pause
+We can map every 2-D index $(i, \, j)$ to a 1-D index using $r=N*(j-1)+i$ (column-wise) and
+also set $R=N\cdot M$. \pause \\~\\
+Also, we can map every 1-D index to 2-D using:
+\begin{align*}
+    i &= r \bmod{N} \\
+    j &= (r-i)/N + 1. \pause   \\
+\end{align*}
+This idea is easy to extend to any finite number of dimensions. \pause
+Use {\tt sub2ind(.)} and {\tt ind2sub} in {\tt Matlab}.
+}
+
+\frame{\frametitle{Mapping M-D Transitional Probabilities to 1-D}
+For the transition probabilities, we can make them a function of distance between the points. \pause \\
+Start from:
+\begin{equation*}
+      q(r_1,\, r_2)  = q((i_1\, j_1), \,\,(i_2, \, j_2))
+\end{equation*}
+where $r_1, \, r_2$ correspond to $(i_1\, j_1), \,\,(i_2, \, j_2)$. \pause \\~\\
+
+Then set the distance using:
+\begin{equation*}
+     q(r_1,\, r_2) =  f \left( d=\sqrt{(i_1-i_2)^2 + (j_1-j_2)^2} \right)/C_{r_1}.
+\end{equation*}
+for some $f(.)>0$ and $C_{r_1}$ to be determined.
+}
+
+\frame{\frametitle{Mapping M-D Transitional Probabilities to 1-D (Contd)}
+To determine $C_{r_1}$, we note that for the transition probability to be valid,
+it must add up to $1$ along each row: \\
+    $\sum\limits_{j=1}^R q_{ij}=1, \quad i=1,\,2, \,3,\,\dots, \,R$. \pause \\~\\
+
+Thus, starting from any $f(.)>0$, we need to set all the $C_{r_1}$ using:
+   $C_{r_1} = \sum\limits_{r_2=1}^{r_2=R} f(d(r_1, \, r_2)), \quad r_1=1,\, \dots, \, R.$   \pause \\~\\
+
+For $f(.)$, we can use $f(d)=\exp{(-d^2)}$. \pause
+However, it is very common to simply consider probabilities on the neighbors and
+set the rest of them to zero.
+}
+
+\frame{\frametitle{Mapping M-D Transitional Probabilities to 1-D (Contd)}
+How about using discrete arrays for continuous random variables? \pause \\~\\
+
+We can sample using:\\
+\begin{equation*}
+   A_d [i, \, j] = A_a (i \delta x, \, j \delta y)
+\end{equation*}
+where $\delta x, \, \delta y$ can be determined based on the level of accuracy
+that is required. \pause \\~\\
+
+Thus, after the algorithm terminates, the accuracy will be at-most $\delta x$ in the
+first direction and $\delta y$ in the second direction.
+}
+
+\frame{\frametitle{Defining M-D Probability functions over an M-D Grid}
+The basic idea is to put larger likelihoods over the points that we would like to
+put more emphasis on. \pause \\~\\
+
+For the Hastings-Metropolis algorithm, we will not even need to normalize
+our probability function. \pause In this case, put larger positive numbers over
+the regions that we want to sample more densely.  To normalize, we simply
+add up all the values and divide by the total sum so that all the probabilities add up to 1.\pause \\~\\
+
+If we have a collection of points where we expect the solution to be, we can use distance functions
+from these points to set up the probability functions.
+}
+
+\frame{\frametitle{Defining M-D Probability functions over an M-D Grid (Contd)}
+In 2-D, we can try $\exp[-a (i - i_0)^2 - b(j - j_0)^2]$ where we can use $a,\, b>0$ to define "attraction
+ranges" around each point $(i_0, \, j_0)$. \pause
+For  high confidence in $(i_0, \, j_0)$, we can use large values for $a, \, b$. \\ ~\\
+
+Note that if we have a large collection of points, we can use clustering to define the distance functions
+to the centroids. \pause \\~\\
+
+If we simply put Gaussian around each point, we can show that we can approximate any distribution
+as the number of points goes to infinity (see any "Pattern Recognition" book by Theodoridis et al, on the use of Parzen
+Windows in M-D, theorem was actually proven by Prof. Cacoullos  in 1962).
+}
+
+\section{Markov Chain Monte Carlo Methods}
+\frame{\frametitle{Markov Chains}
+Consider a collection of random variables:  $X_0, X_1, \dots$. \pause \\
+ Here,  $X_n$ represents the state of a system at time $n$.     \pause \\
+ Consider a finite number of states: $1, \dots, N$.                       \pause \\~\\
+
+ For transitions from state $i$ to state $j$, let $P_{ij}$ denote the probability
+ of transition. It is thus assumed to only be a function of the current state. \pause \\~\\
+
+ We have that $\{X_n, \, n\geq 0\}$ constitutes a Markov Chain with transition
+ probabilities $P_{ij}$.
+}
+
+\frame{\frametitle{Stationary Probabilities}
+A Markov Chain is said to be irreducible if we can reach every state
+from every other state. \pause \\~\\
+
+For an irreducible Markov chain, let $\pi_j$ denote the stationary probability
+that represents the long-run proportion of time that we spent at state $j$. \pause \\
+They can be found from:
+   $\pi_j =\sum\limits_{i=1}^N \pi_i P_{ij}, \quad j=1, \dots, N.$
+}
+
+\frame{\frametitle{Hastings-Metropolis Algorithm (I of II)}
+Suppose that we want to simulate a random variable with probability
+mass function given by: \\
+\begin{align*}
+    \pi(j) = b(j)/B, \quad j=1, \dots, m.
+  \intertext{Where:}
+    B=\sum_{j=1}^m b(j), \quad b(j)>0.
+\end{align*} \pause \\
+
+To accomplish this, we need to define an irreducible
+   Markov transition probability matrix over $j=1, \dots, m$. \pause
+Here,  $P\{X=j\}=q(X_n,j)$ gives the probability that we transition from
+   state $X_n$ to state $j$.
+}
+
+\frame{\frametitle{Choosing the transition probability ...}
+To define $q(X_n,j)$, we can simply define a neighborhood system
+  as before. 
+Then, we can simply go to each neighbor with equal probability. \pause ~\\~\\
+
+We do need to make sure that we can reach all the states! \pause ~\\~\\
+
+For constrained optimization problems, we need to start with a feasible point,
+make sure that the neighbors also satisfy the constraints, and we can reach all possible 
+points from the starting point. \pause ~\\~\\
+
+This can be done easily by simply looking at all the neighbors, counting the ones
+that satisfy the constraints, and picking one of them (with equal probability).
+}
+
+\frame{\frametitle{Hastings-Metropolis Algorithm (II of II)}
+Start at state $k$: \, $X_0=k$.  \pause \\
+{\tt While} (1) \{                      \pause \\
+\quad {\tt Generate} $X$ from $P\{X=j\}=q(X_n,j)$. \pause \\
+\quad {\tt Generate} a uniformly distributed $[0,1)$ random variable $U$. \pause \\
+\quad {\tt If}\quad $U < b(X) q(X,X_n) / [b(X_n) q (X_n, X)]$ \\
+\quad \quad {\tt Then}\quad $X_{n+1} = X$  \\
+\quad \quad {\tt Else}\quad  $X_{n+1} = X_n$. \\
+ \quad \} \\~\\
+ Make sure to throw away the first set of samples.
+}
+
+\frame{\frametitle{The Gibbs Sampler (I of III)}
+Suppose that we want to generate a multivariate random variable
+   ${\bf X} = (X_1, \, X_2, \dots, \, X_n)$ with probability
+   density function $p({\bf x})$, known up to a multiplicative constant. \pause \\~\\
+
+For example, we know (or specify) $g({\bf x})$  and we do know that
+$p({\bf x}) = C g({\bf x})$, for some unknown $C>0$. \pause \\ ~\\
+
+So $g({\bf x})$ can simply be a positive function that we specify! \pause \\ ~\\
+
+We can do this using a Markov chain, where the transition probabilities are
+the one-dimensional (!)  conditional probabilities $P\{X=x\}$ given by:
+\begin{equation*}
+  P\{X_i=x \,|\, X_1=x_1, \dots, \, X_{i-1}=x_{i-1}, \, X_{i+1}=x_{i+1}, \, \dots, \, X_n=x_n \}.
+\end{equation*}
+}
+
+\frame{\frametitle{The Gibbs Sampler (II of III)}
+The key is to define the Markov chain transition probabilities to move
+to each conditional coordinate with equal probability:
+\begin{align*}
+  q({\bf x}, {\bf y}) & = \frac{1}{n} P\{X_i=x \,|\, X_j=x_j, \, j\not=i \}\pause \\
+                                &= \frac{p({\bf y})}{n P\{X_j=x_j, \, j\not=i\}} \pause \\
+  \intertext{where}
+     n &\quad\text{denotes the number of variables.}
+\end{align*}
+}
+
+
+\frame{\frametitle{The Gibbs Sampler (III of III)}
+Based on the transition probabilities, we use the Hastings-Metropolis
+algorithm and accept the generated variable: \pause \\ ~\\
+
+Start at state $k$: \, $X_0=k$.\pause \\
+{\tt For} $k=1, 2, \dots$ \{\pause \\
+\quad {\tt Generate} $i$ from a uniform distribution of $1, 2, \dots, n$.\pause \\
+\quad {\tt Let} $Y = X_k$ {\tt be the previous N-dim sample.}\pause\\
+\quad {\tt Generate $X$ from the 1-dim} $P\{X_i=x \,|\, X_j=y_j, \, j\not=i \}$\pause\\
+\quad  {\tt Set} $X_{k+1} = X$  \\
+ \quad \} \\~\\
+ Make sure to throw away a large number of the initial set of samples.
+}
+%\subsection{Alias Method}
+%\frame{\frametitle{The Alias Method for Simulating Discrete PDFs [Ross] (I of III)}
+%Let ${\bf P}$ denote an array of assigned discrete PDFs.
+%For example, we can have ${\bf P} = (P_1, \, P_2, \, \dots, \, P_n)$. \pause \\
+%Here is an example:\\
+%\begin{equation*}
+%  {\bf P} = \left( \frac{7}{16}, \, \frac{1}{2}, \, \frac{1}{16} \right)
+%\end{equation*} \pause
+%
+%For any such PDF, we can derive an iterative decomposition that expresses
+%  ${\bf P}$ as a mixture of simpler PDFs:
+%\begin{align*}
+%     {\bf P} &= \frac{1}{n-1} \sum\limits_{k=1}^{n-1} {\bf Q}^{(k)}. \\
+%   \intertext{Where:}
+%    {\bf Q} &\quad\text{is a vector with {\bf two or less} non-zero elements}.
+%\end{align*} \pause \\~\\
+%}
+
+%\frame{\frametitle{An Overview of the Alias Method for Simulating Discrete PDFs [Ross] }
+%Here, we want to think of the multiplication by $1/(n-1)$ independent of
+%the mixture PDFs. \pause
+%We want to simulate ${\bf P}$ by first selecting the index  $k$ of ${\bf Q}^{(k)}$
+%from a uniform distribution and then simulating from ${\bf Q}^{(k)}$. \pause \\~\\
+%
+%Then, the probability of the simulated random variable is the sum of all the products of
+%  $1/(n-1)$ by each ${\bf Q}^{(k)}$. To show this, simply consider all the possibilities
+%  in a two-step process of independent trials. \pause \\
+%
+%The mixture decomposition is computed iteratively using the Lemma that
+%for any ${\bf P}=\left(P_1, \, P_2, \, \dots, \, P_n\right)$, we can always find
+%\begin{equation*}
+%  i\not=j, \,P_i, \,P_j: \quad \text{such that:} \quad P_i < 1/(n-1) \quad \text{and} \quad P_i+P_j \geq 1/(n-1).
+%\end{equation*}
+%The simplest way to do this is to search through all $i,\, j$ with a double {\tt for} loop.
+%}
+%
+%\frame{\frametitle{The PDF Decomposition Algorithm (I of II)}
+%Here is the decomposition algorithm: \\
+%{\tt Set} ${\bf P}^{(n)} = {\bf P}$ . \pause \\
+%{\tt For} \quad $k=1$ \quad to \quad $n-1$: \quad $\{$ \pause \\
+%\quad {\tt Use} \quad ${\bf P}^{(n-k+1)}=(P_1, \, \dots, \, P_m)$\quad {\tt to find}\quad $i\not=j$\\
+%\quad such that:\quad $P_i < 1/(n-1)$ \quad and \quad $P_i+P_j \geq 1/(n-1).$ ~\pause \\
+%~\\
+%\quad {\tt Use}\quad $i,\,j$ \quad to define \quad ${\bf Q}^{(k)}, \, {\bf P}^{(n-k)}$. \\
+%$\}$
+%}
+%
+%\frame{\frametitle{The PDF Decomposition Algorithm (II of II)}
+%\quad For the two points $i,\, j$ set
+%\begin{align*}
+%  {\bf Q}^{(k)}     &= \left[Q_i^{(k)}, \, Q_j^{(k)}\right] \\
+%  P_i^{n-k}          &= 0, \\
+%  P_j^{(n-k)}       &= \frac{n-k}{n-k-1} \left(P_j = \frac{1}{n-k}Q^{(k)}_j \right) \\
+%  P_k^{(n-k)}       &= \frac{n-k}{n-k-1} P_k, \quad k \not=i, \, j
+%  \intertext{Where:}
+%    Q_i^{(k)} &= (n-k+1) P_i, \quad  Q_j^{(k)}=  1 - Q_i^{(k)}  \\
+%\end{align*} \pause
+%}
+%
+%\frame{\frametitle{The Alias Method}
+%\qquad {\tt Step 1.} Generate uniform $[0, \, 1)$ random $U_1$. \\
+%\qquad {\tt Step 2.} Pick a ${\bf Q}^{(N)}$ using  $N=1 + {\tt Int}[(n-1)U_1]$. \pause \\
+%\qquad {\tt Step 3.} Generate $U_2$. \\
+%\qquad {\tt Step 4.} {\bf If}\quad $U_2 < Q_{i_N}^{(N)}$ \quad {\bf Set} $X=i_N$\\
+%\qquad \phantom{{\tt Step 4}}\quad {\bf Else}\quad $X=j_N$. \pause \\~\\
+%
+%This is considered a very efficient method for generating discrete random variables.
+%Please note that this is efficient after (and if) the decomposition is computed.
+%}
+\end{document}
