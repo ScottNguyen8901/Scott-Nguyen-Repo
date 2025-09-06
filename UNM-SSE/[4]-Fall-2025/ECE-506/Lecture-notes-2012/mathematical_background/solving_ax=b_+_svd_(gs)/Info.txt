@@ -1,0 +1,7 @@
+Document Information
+  Title: Solving Ax=b + SVD (GS)
+  Date Added: 10/17/2005 10:56:27 AM
+
+Bibliographic Information
+  Copyright Status: Not Specified
+
