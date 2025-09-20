@@ -1,0 +1,130 @@
+\documentclass[11pt]{article}
+
+% Layout & header
+\usepackage[margin=1in,headheight=16pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{parskip} % no paragraph indents
+
+% Math, figures, lists
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{enumitem}
+
+% Code (Python)
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\lstdefinestyle{python}{
+	language=Python,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{NavyBlue}\bfseries,
+	commentstyle=\color{ForestGreen}\itshape,
+	stringstyle=\color{BrickRed},
+	numbers=left, numberstyle=\tiny, numbersep=8pt,
+	frame=single,
+	breaklines=true,
+	columns=fullflexible,
+	showstringspaces=false
+}
+\lstset{style=python}
+
+% Hyperlinks (load last)
+\usepackage{hyperref}
+
+% Header content
+\pagestyle{fancy}
+\fancyhf{} % clear defaults
+\fancyhead[L]{September 22, 2025}
+\fancyhead[C]{ECE 506: Homework \#2}
+\fancyhead[R]{Scott Nguyen}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\begin{document}
+	
+\textbf{Problem \#1. Quadratic models in 1-D Optimization.}
+		
+\begin{enumerate}[label=1(\alph*)]
+	\item Locally, optimization methods consider a local linear or quadratic model. Consider the quadratic model:
+	\[
+	f(x) = a \cdot x^{2} + b \cdot x + c
+	\]
+	Compute a general expression for the extreme point.
+	
+	\textbf{Solution:} 
+	Extreme points occur where the derivative equals zero. Differentiate $f(x) = a x^{2} + b x + c$:
+	\[
+	f'(x) = 2 a x + b.
+	\]
+	Set $f'(x) = 0$ and solve:
+	\[
+	x^* = -\frac{b}{2 a}.
+	\]
+	
+	\item When is $f$ convex?
+
+	\textbf{Solution:} 
+	A function is convex when its second derivative is nonnegative. Differentiate twice:
+	\[
+	f''(x) = 2 a.
+	\]
+	Set $f''(x) \ge 0$ and solve:
+	\[
+	a \ge 0.
+	\]
+	
+	\item When is $f$ concave?
+	
+	\textbf{Solution:} 
+	By flipping the inequality from the convex case, $f$ is concave when $a \le 0$.
+	
+	\item When is the extreme point an actual minimum?
+	\textbf{Solution:}  
+	The extreme point is a minimum when $f'(x) = 0$ and $f''(x) > 0$, i.e., when $a > 0$.
+	
+	\item When is the extreme point a maximum?
+	
+	\textbf{Solution:}  
+	The extreme point is a maximum when $f'(x) = 0$ and $f''(x) < 0$, i.e., when $a < 0$.
+	
+	\item Consider the constraint optimization problem:
+	\[
+	\min_{x} f(x) \quad \text{subject to: } d \le x \le e.
+	\]
+	where $-\infty < d < e < \infty$. Based on the KKT conditions, we know that the solution is either at $x = d$ or
+	$x = e$ or at the extremum point. Suppose that $a < 0$. Show that the solution is either at $x = d$ or $x = e$. In
+	this negative curvature example, the solution is always at the boundary.
+
+	\textbf{Solution:}  
+	For $a<0$, $f$ is concave, so any interior critical point is a maximum.  
+	From that peak the function decreases toward both ends, so the lowest value must occur at one of the endpoints:
+	\[
+	x^* \in \{d, e\}.
+	\]
+
+	\item For $a > 0$, show that all three cases are possible in (f).
+	
+	\textbf{Solution:}  
+	For $a>0$, $f$ is convex and has a minimum at $x^*=-\dfrac{b}{2a}$.  
+	Compare $x^*$ with the interval $[d,e]$:
+	\[
+	\begin{aligned}
+		&\text{If } d \le x^* \le e, && \text{the minimum is at } x^*.\\
+		&\text{If } x^* < d,        && \text{the minimum is at } x=d.\\
+		&\text{If } x^* > e,        && \text{the minimum is at } x=e.
+	\end{aligned}
+	\]
+	Since all three positional relationships can occur for suitable coefficients, every case is possible.
+	
+	\end{enumerate}
+	
+	\noindent\textbf{Notes:} A function $f$ is concave if $-f$ is convex. Use the fact that a function is convex if
+	\[
+	\frac{\partial^{2} f(x)}{\partial x^{2}} > 0
+	\]
+	everywhere. Furthermore, note the property of convex functions that
+	\[
+	f(t x_{1} + (1 - t) x_{2}) \le t f(x_{1}) + (1 - t) f(x_{2}), \quad 0 \le t \le 1.
+	\]
+	This property implies that convex functions stay below a line that connects the end-points at $x_{1}$ and $x_{2}$.
+
+\end{document}
