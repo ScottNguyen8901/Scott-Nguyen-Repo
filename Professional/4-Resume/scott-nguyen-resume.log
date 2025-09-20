@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.7.26)  9 SEP 2025 12:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.7.26)  20 SEP 2025 11:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -400,14 +400,14 @@ ii
 \everyMPtoPDFconversion=\toks23
 )
 LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 3
-8.
+9.
  (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/base\omscmr.fd
 File: omscmr.fd 2024/11/19 v2.5n Standard LaTeX font definitions
 )
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 38.
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 39.
 LaTeX Font Info:    Font shape `OMS/cmr/bx/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/b/n' tried instead on input line 48.
+(Font)              Font shape `OMS/cmsy/b/n' tried instead on input line 50.
 
 
 [1
@@ -422,11 +422,11 @@ Package rerunfilecheck Info: File `scott-nguyen-resume.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 10186 strings out of 468149
- 159959 string characters out of 5431082
+ 10192 strings out of 468149
+ 160001 string characters out of 5431082
  605781 words of memory out of 5000000
- 38705 multiletter control sequences out of 15000+600000
- 629034 words of font info for 47 fonts, out of 8000000 for 9000
+ 38708 multiletter control sequences out of 15000+600000
+ 629896 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  69i,5n,79p,1210b,437s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\scott\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
@@ -434,13 +434,16 @@ Here is how much of TeX's memory you used:
 ts/cm/cmbsy10.pfb><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/type1/pub
 lic/amsfonts/cm/cmbx10.pfb><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/
 type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/scott/AppData/Local/Programs/MiKT
-eX/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Users/scott/AppData/Local/Pr
-ograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/scott/AppData/
-Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/scott
-/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on scott-nguyen-resume.pdf (1 page, 111969 bytes).
+eX/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Users/scott/AppData/Local/Progr
+ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Users/scott/AppData/
+Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/scott/
+AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users
+/scott/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><
+C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmt
+i10.pfb>
+Output written on scott-nguyen-resume.pdf (1 page, 138327 bytes).
 PDF statistics:
- 53 PDF objects out of 1000 (max. 8388607)
+ 63 PDF objects out of 1000 (max. 8388607)
  2 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
