@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.7.26)  20 SEP 2025 11:44
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.7.26)  22 SEP 2025 19:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -503,7 +503,15 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 ]
 
-[2] (ECE-506-Nguyen-Scott-HW-2.aux)
+[2]
+
+[3]
+
+[4]
+
+[5]
+
+[6] (ECE-506-Nguyen-Scott-HW-2.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-07-19>
@@ -513,24 +521,31 @@ ed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 13442 strings out of 468149
- 208759 string characters out of 5431082
- 725479 words of memory out of 5000000
- 41879 multiletter control sequences out of 15000+600000
- 631781 words of font info for 59 fonts, out of 8000000 for 9000
+ 13484 strings out of 468149
+ 209269 string characters out of 5431082
+ 729479 words of memory out of 5000000
+ 41898 multiletter control sequences out of 15000+600000
+ 634939 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,11n,79p,520b,577s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
-cmbx10.pfb><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
-fonts/cm/cmmi10.pfb><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/type1/p
-ublic/amsfonts/cm/cmmi8.pfb><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts
-/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/scott/AppData/Local/Programs/MiKT
-eX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/scott/AppData/Local/Progra
-ms/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/scott/AppData/Loc
-al/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on ECE-506-Nguyen-Scott-HW-2.pdf (2 pages, 91564 bytes).
+ 69i,17n,79p,520b,664s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <C:\Users\scott\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
+1095.pk><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
+ts/cm/cmbx10.pfb><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/type1/publ
+ic/amsfonts/cm/cmex10.pfb><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/t
+ype1/public/amsfonts/cm/cmmi10.pfb><C:/Users/scott/AppData/Local/Programs/MiKTe
+X/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Users/scott/AppData/Local/Progra
+ms/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/scott/AppData/Loca
+l/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/scott/AppD
+ata/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/sco
+tt/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Us
+ers/scott/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmss8.pf
+b><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
+cmsy10.pfb><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
+fonts/cm/cmsy8.pfb><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/type1/pu
+blic/amsfonts/cm/cmti10.pfb>
+Output written on ECE-506-Nguyen-Scott-HW-2.pdf (6 pages, 169601 bytes).
 PDF statistics:
- 59 PDF objects out of 1000 (max. 8388607)
- 10 named destinations out of 1000 (max. 500000)
+ 119 PDF objects out of 1000 (max. 8388607)
+ 25 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
