@@ -1,0 +1,12 @@
+\frametitle{Algorithm (Python)}
+\begin{lstlisting}[style=py,caption={Pseudocode/Reference Implementation}]
+			import numpy as np
+			
+			def step(x, u, dt):
+			# TODO: fill in dynamics
+			return x_next
+			
+			def run_filter(y_seq, u_seq, Q, R):
+			# TODO: initialize, predict, update
+			return est_states
+		\end{lstlisting}

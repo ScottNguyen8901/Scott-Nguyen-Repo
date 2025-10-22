@@ -1,0 +1,256 @@
+%========================
+% Presentation Template
+%========================
+\documentclass[10pt,aspectratio=169]{beamer}
+
+%--- Theme & look ---
+\usetheme[numbering=fraction,progressbar=frametitle]{metropolis} % sleek beamer theme
+\metroset{block=fill} % filled blocks
+\setbeamertemplate{navigation symbols}{} % hide nav icons
+
+%--- Fonts (Times-like) ---
+\usepackage{newtxtext,newtxmath} % Times/Times Math
+\usefonttheme{professionalfonts}
+
+%--- Language & encoding ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[american]{babel}
+\usepackage{csquotes}
+
+%--- Graphics / figures ---
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\captionsetup[figure]{labelfont=bf}
+\usepackage{booktabs}
+\usepackage{tikz}
+
+%--- Math & helpers ---
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{siunitx}
+\sisetup{detect-all=true}
+
+%--- Code listings (Python style) ---
+\usepackage{listings}
+\usepackage{xcolor}
+\definecolor{codegray}{RGB}{240,240,240}
+\lstdefinestyle{py}{
+	language=Python,
+	basicstyle=\ttfamily\footnotesize,
+	backgroundcolor=\color{codegray},
+	frame=single,
+	rulecolor=\color{black},
+	showstringspaces=false,
+	tabsize=2,
+	breaklines=true,
+	keywordstyle=\bfseries,
+	commentstyle=\itshape,
+	numbers=left,
+	numberstyle=\tiny,
+	xleftmargin=1.2em
+}
+
+%--- Hyperlinks ---
+\usepackage{hyperref}
+
+%--- Title info ---
+\title[Short Title]{Full Presentation Title}
+\subtitle{Concise Subtitle (Optional)}
+\author[Your Name]{Your Name}
+\institute{Your Organization / Lab}
+\date{\today}
+
+%--- Custom commands (edit as needed) ---
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+
+%--- Theorem-like environments ---
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+%--- Bibliography (simple numeric) ---
+\usepackage[backend=biber,style=numeric,sorting=nyt,maxbibnames=6]{biblatex}
+\addbibresource{refs.bib}
+
+%========================
+\begin{document}
+	%========================
+	
+	%--- Title frame ---
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+	%--- Agenda / Outline ---
+	\begin{frame}{Agenda}
+		\tableofcontents
+	\end{frame}
+	
+	%================================
+	\section{Introduction}
+	%================================
+	
+	\begin{frame}{Motivation}
+		\begin{itemize}
+			\item Problem context in one or two lines.
+			\item Why it matters (impact, constraints).
+			\item Your key contribution in this talk.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{Key Takeaways}
+		\begin{enumerate}
+			\item Takeaway \#1 — one sentence.
+			\item Takeaway \#2 — one sentence.
+			\item Takeaway \#3 — one sentence.
+		\end{enumerate}
+	\end{frame}
+	
+	%================================
+	\section{Background}
+	%================================
+	
+	\begin{frame}{Core Definitions}
+		\begin{definition}
+			Let $x \in \R^n$. We call $x$ \emph{stable} if $\|x_k\|\to 0$ as $k\to\infty$.
+		\end{definition}
+		\begin{remark}
+			State your conventions/assumptions early.
+		\end{remark}
+	\end{frame}
+	
+	\begin{frame}{A Useful Theorem}
+		\begin{theorem}[Short Name]
+			If $A$ is Hurwitz, then the system $\dot{x}=Ax$ is exponentially stable.
+		\end{theorem}
+		\begin{proof}[Sketch]
+			Choose $V(x)=x^\top Px$ with $P\succ0$ solving $A^\top P+PA=-Q$. Then $\dot{V}=-x^\top Q x\le -\lambda_{\min}(Q)\|x\|^2$.
+		\end{proof}
+	\end{frame}
+	
+	%================================
+	\section{Method}
+	%================================
+	
+	\begin{frame}{System Model}
+		\begin{block}{Discrete-Time Dynamics}
+			\[
+			x_{k+1} = f(x_k,u_k) + w_k,\quad y_k = h(x_k) + v_k
+			\]
+			with $w_k\sim\mathcal{N}(0,Q)$ and $v_k\sim\mathcal{N}(0,R)$.
+			\]
+		\end{block}
+		\begin{itemize}
+			\item Specify states, inputs, and noise models.
+			\item Note approximations and sampling time.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}[fragile]{Algorithm (Python)}
+		\begin{lstlisting}[style=py,caption={Pseudocode/Reference Implementation}]
+			import numpy as np
+			
+			def step(x, u, dt):
+			# TODO: fill in dynamics
+			return x_next
+			
+			def run_filter(y_seq, u_seq, Q, R):
+			# TODO: initialize, predict, update
+			return est_states
+		\end{lstlisting}
+	\end{frame}
+	
+	\begin{frame}{Two-Column Layout}
+		\begin{columns}[T,onlytextwidth]
+			\column{0.52\textwidth}
+			\textbf{Idea}
+			\begin{itemize}
+				\item Point A
+				\item Point B
+				\item Point C
+			\end{itemize}
+			
+			\column{0.45\textwidth}
+			\textbf{Graphic}
+			\begin{figure}
+				\includegraphics[width=\linewidth]{figs/diagram.pdf}
+				\caption{System diagram (replace with yours).}
+			\end{figure}
+		\end{columns}
+	\end{frame}
+	
+	%================================
+	\section{Results}
+	%================================
+	
+	\begin{frame}{Experimental Setup}
+		\begin{itemize}
+			\item Hardware/Simulation details.
+			\item Datasets and metrics.
+			\item Train/val/test splits; seeds.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{Quantitative Results}
+		\begin{table}
+			\centering
+			\begin{tabular}{lccc}
+				\toprule
+				Method & Metric 1 & Metric 2 & Time \\
+				\midrule
+				Baseline & 0.72 & 0.55 & 12 ms \\
+				Ours     & \textbf{0.81} & \textbf{0.61} & 10 ms \\
+				\bottomrule
+			\end{tabular}
+			\caption{Replace with your actual numbers.}
+		\end{table}
+	\end{frame}
+	
+	\begin{frame}{Figures}
+		\begin{figure}
+			\includegraphics[width=0.8\linewidth]{figs/plot.png}
+			\caption{Main plot (insert your figure).}
+		\end{figure}
+	\end{frame}
+	
+	%================================
+	\section{Conclusion}
+	%================================
+	
+	\begin{frame}{Conclusion}
+		\begin{itemize}
+			\item One-line summary of contribution.
+			\item Biggest limitation / assumption.
+			\item Clear next step / future work.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{Acknowledgments}
+		\small
+		Thanks to collaborators and sponsors. \par
+		Contact: \href{mailto:you@school.edu}{you@school.edu} \quad
+		\href{https://your-site.example}{your-site.example}
+	\end{frame}
+	
+	%--- References (optional slide) ---
+	\begin{frame}[allowframebreaks]{References}
+		\printbibliography
+	\end{frame}
+	
+	%--- Backup / Appendix ---
+	\appendix
+	\section{Appendix}
+	
+	\begin{frame}{Extra Details}
+		Use appendix frames for questions: proofs, ablations, backups.
+	\end{frame}
+	
+	%========================
+\end{document}
+%========================
