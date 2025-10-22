@@ -1,0 +1,396 @@
+\documentclass[11pt]{article}
+
+% Layout & header
+\usepackage[margin=1in,headheight=16pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{parskip} % no paragraph indents
+
+% Math, figures, lists
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{enumitem}
+
+% Code (Python)
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\lstdefinestyle{python}{
+	language=Python,
+	basicstyle=\ttfamily\small,
+	keywordstyle=\color{NavyBlue}\bfseries,
+	commentstyle=\color{ForestGreen}\itshape,
+	stringstyle=\color{BrickRed},
+	numbers=left, numberstyle=\tiny, numbersep=8pt,
+	frame=single,
+	breaklines=true,
+	columns=fullflexible,
+	showstringspaces=false
+}
+\lstset{style=python}
+
+% Hyperlinks (load last)
+\usepackage{hyperref}
+
+% Header content
+\pagestyle{fancy}
+\fancyhf{} % clear defaults
+\fancyhead[L]{September 22, 2025}
+\fancyhead[C]{ECE 506: Homework \#2}
+\fancyhead[R]{Scott Nguyen}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\begin{document}
+	
+\textbf{Problem \#1. Quadratic models in 1-D Optimization.}
+		
+\begin{enumerate}[label=1(\alph*)]
+	\item Locally, optimization methods consider a local linear or quadratic model. Consider the quadratic model:
+	\[
+	f(x) = a \cdot x^{2} + b \cdot x + c
+	\]
+	Compute a general expression for the extreme point.
+	
+	\textbf{Solution:} 
+	Extreme points occur where the derivative equals zero. Differentiate $f(x) = a x^{2} + b x + c$:
+	\[
+	f'(x) = 2 a x + b.
+	\]
+	Set $f'(x) = 0$ and solve:
+	\[
+	x^* = -\frac{b}{2 a}.
+	\]
+	
+	\item When is $f$ convex?
+
+	\textbf{Solution:} 
+	A function is convex when its second derivative is nonnegative. Differentiate twice:
+	\[
+	f''(x) = 2 a.
+	\]
+	Set $f''(x) \ge 0$ and solve:
+	\[
+	a \ge 0.
+	\]
+	
+	\item When is $f$ concave?
+	
+	\textbf{Solution:} 
+	By flipping the inequality from the convex case, $f$ is concave when $a \le 0$.
+	
+	\item When is the extreme point an actual minimum?
+	
+	\textbf{Solution:}  
+	The extreme point is a minimum when $f'(x) = 0$ and $f''(x) > 0$, i.e., when $a > 0$.
+	
+	\item When is the extreme point a maximum?
+	
+	\textbf{Solution:}  
+	The extreme point is a maximum when $f'(x) = 0$ and $f''(x) < 0$, i.e., when $a < 0$.
+	
+	\item Consider the constraint optimization problem:
+	\[
+	\min_{x} f(x) \quad \text{subject to: } d \le x \le e.
+	\]
+	where $-\infty < d < e < \infty$. Based on the KKT conditions, we know that the solution is either at $x = d$ or
+	$x = e$ or at the extremum point. Suppose that $a < 0$. Show that the solution is either at $x = d$ or $x = e$. In
+	this negative curvature example, the solution is always at the boundary.
+
+	\textbf{Solution:}  
+	For $a<0$, $f$ is concave, so any interior critical point is a maximum.  
+	From that peak the function decreases toward both ends, so the lowest value must occur at one of the endpoints:
+	\[
+	x^* \in \{d, e\}.
+	\]
+
+	\item For $a > 0$, show that all three cases are possible in (f).
+	
+	\textbf{Solution:}  
+	For $a>0$, $f$ is convex and has a minimum at $x^*=-\dfrac{b}{2a}$.  
+	Compare $x^*$ with the interval $[d,e]$:
+	\[
+	\begin{aligned}
+		&\text{If } d \le x^* \le e, && \text{the minimum is at } x^*.\\
+		&\text{If } x^* < d,        && \text{the minimum is at } x=d.\\
+		&\text{If } x^* > e,        && \text{the minimum is at } x=e.
+	\end{aligned}
+	\]
+	Since all three positional relationships can occur for suitable coefficients, every case is possible.
+	
+	\end{enumerate}
+	
+	\noindent\textbf{Notes:} A function $f$ is concave if $-f$ is convex. Use the fact that a function is convex if
+	\[
+	\frac{\partial^{2} f(x)}{\partial x^{2}} > 0
+	\]
+	everywhere. Furthermore, note the property of convex functions that
+	\[
+	f(t x_{1} + (1 - t) x_{2}) \le t f(x_{1}) + (1 - t) f(x_{2}), \quad 0 \le t \le 1.
+	\]
+	This property implies that convex functions stay below a line that connects the end-points at $x_{1}$ and $x_{2}$.
+
+	\textbf{Problem \#2. Quadratic models in 2-D Optimization.}
+	
+	The goal of this problem is to make the connection between max pooling and optimization.  
+	Consider the constrained optimization problem
+	\[
+	\max_{x} \ \tfrac{1}{2} x^{T} A x + b^{T} x
+	\quad \text{subject to} \quad
+	l_1 \le x_1 \le u_1,\; l_2 \le x_2 \le u_2.
+	\]
+	
+	\begin{enumerate}[label=2(\alph*)]
+		\item Reformulate the problem as a constrained minimization problem that we studied in class.
+		
+		\textbf{Solution:}
+		Maximizing is equivalent to minimizing the negative. Define
+		\[
+		g(x)\;:=\;-\Big(\tfrac{1}{2}x^{\mathsf T} A x + b^{\mathsf T} x\Big)
+		= \tfrac{1}{2}x^{\mathsf T}(-A)x + (-b)^{\mathsf T}x.
+		\]
+		Then 2(a) becomes
+		\[
+		\min_{x}\ g(x)
+		\quad \text{subject to} \quad
+		\begin{cases}
+			x_1 - u_1 \le 0,\\
+			l_1 - x_1 \le 0,\\
+			x_2 - u_2 \le 0,\\
+			l_2 - x_2 \le 0.
+		\end{cases}
+		\]
+
+		\item Compute the Hessian and the gradient of the function that we are minimizing.
+		
+		\textbf{Solution:}  
+		Starting from 
+		\[
+		g(x) = -\Big[\tfrac{1}{2} x^{\mathsf T} A x + b^{\mathsf T} x\Big],
+		\]
+		and using that $\nabla_x \big(\tfrac{1}{2} x^{\mathsf T} A x\big) = A x$ when $A$ is symmetric, we obtain
+		\[
+		\nabla g(x) = -(A x + b), \qquad
+		\nabla^{2} g(x) = -A.
+		\]
+		
+		\item Derive conditions so as to have a unique solution inside the constrained region.
+		\textbf{Solution:}
+		For an interior solution (no active constraints), KKT reduces to stationarity:
+		\[
+		\nabla g(x^*)=0 \;\;\Longrightarrow\;\; -(A x^* + b)=0 \;\;\Longrightarrow\;\; A x^* + b = 0,
+		\]
+		so
+		\[
+		x^* = -A^{-1} b.
+		\]
+		Uniqueness inside the box holds if $g$ is \emph{strictly convex}, i.e.
+		\[
+		\nabla^2 g(x) = -A \succ 0 \quad (\text{equivalently } A \prec 0),
+		\]
+		and the unconstrained minimizer lies strictly within the bounds:
+		\[
+		l_1 < x^*_1 < u_1, \qquad l_2 < x^*_2 < u_2.
+		\]
+
+		\item Derive four KKT-based conditions so as to have a unique solution at any of the four corners.
+		\textbf{Solution:}
+		Let $g(x) = -\big(\tfrac{1}{2}x^{\mathsf T} A x + b^{\mathsf T} x\big)$ with box constraints
+		$x_1 \in [l_1,u_1],\; x_2 \in [l_2,u_2]$.
+		Introduce KKT multipliers $\lambda_i \ge 0$ for $x_i - u_i \le 0$ and $\mu_i \ge 0$ for $l_i - x_i \le 0$.
+		The Lagrangian is
+		\[
+		\mathcal{L}(x,\lambda,\mu)=g(x)+\lambda_1(x_1-u_1)+\mu_1(l_1-x_1)+\lambda_2(x_2-u_2)+\mu_2(l_2-x_2).
+		\]
+		Stationarity gives
+		\[
+		\nabla g(x) + 
+		\begin{bmatrix}
+			\lambda_1-\mu_1\\
+			\lambda_2-\mu_2
+		\end{bmatrix}
+		= 0,
+		\qquad\text{and}\qquad
+		\nabla g(x)=-(A x + b)\ \text{(for symmetric $A$)}.
+		\]
+		Complementary slackness at a corner forces the two active constraints to have positive multipliers and the inactive ones to be zero. Evaluated at each corner, uniqueness (with strict convexity $-A \succ 0$) follows if the gradient components point \emph{outward} of the feasible box, i.e. the signs below hold (strict for uniqueness):
+		
+		\[
+		\begin{aligned}
+			\textbf{Corner }(u_1,u_2):\quad 
+			&\partial_{x_1} g(u_1,u_2) \le 0,\ \ \partial_{x_2} g(u_1,u_2) \le 0 
+			\iff (A x + b)\big|_{x=(u_1,u_2)} \succeq \mathbf{0}.\\[4pt]
+			\textbf{Corner }(l_1,l_2):\quad 
+			&\partial_{x_1} g(l_1,l_2) \ge 0,\ \ \partial_{x_2} g(l_1,l_2) \ge 0 
+			\iff (A x + b)\big|_{x=(l_1,l_2)} \preceq \mathbf{0}.\\[4pt]
+			\textbf{Corner }(l_1,u_2):\quad 
+			&\partial_{x_1} g(l_1,u_2) \ge 0,\ \ \partial_{x_2} g(l_1,u_2) \le 0 
+			\iff \begin{cases}
+				(A x + b)_1\big|_{x=(l_1,u_2)} \le 0,\\
+				(A x + b)_2\big|_{x=(l_1,u_2)} \ge 0;
+			\end{cases}\\[6pt]
+			\textbf{Corner }(u_1,l_2):\quad 
+			&\partial_{x_1} g(u_1,l_2) \le 0,\ \ \partial_{x_2} g(u_1,l_2) \ge 0 
+			\iff \begin{cases}
+				(A x + b)_1\big|_{x=(u_1,l_2)} \ge 0,\\
+				(A x + b)_2\big|_{x=(u_1,l_2)} \le 0.
+			\end{cases}
+		\end{aligned}
+		\]
+		
+		With $-A \succ 0$ (strict convexity of $g$), the strict versions of these inequalities ensure a \emph{unique} minimizer located at the stated corner (the corresponding active multipliers are $\lambda_i=-\partial_{x_i} g>0$ for upper bounds and $\mu_i=\partial_{x_i} g>0$ for lower bounds).
+
+		\item Derive four KKT-based conditions so as to have a unique solution at any of the four sides.
+		\textbf{Solution:}
+		Assume $g(x)=-\big(\tfrac{1}{2}x^{\mathsf T}Ax+b^{\mathsf T}x\big)$ with symmetric $A$, so $\nabla g(x)=-(Ax+b)$, and $-A\succ0$ (strict convexity) for uniqueness.  
+		On a \emph{side}, one bound is active and the other coordinate is interior; KKT gives a normal sign condition and tangential stationarity:
+		
+		\[
+		\begin{aligned}
+			\text{Side }x_1=u_1 \ (l_2<x_2< u_2):\quad 
+			&\partial_{x_2} g(u_1,x_2)=0,\quad \partial_{x_1} g(u_1,x_2)\le 0.\\
+			\text{Side }x_1=l_1 \ (l_2<x_2< u_2):\quad 
+			&\partial_{x_2} g(l_1,x_2)=0,\quad \partial_{x_1} g(l_1,x_2)\ge 0.\\
+			\text{Side }x_2=u_2 \ (l_1<x_1< u_1):\quad 
+			&\partial_{x_1} g(x_1,u_2)=0,\quad \partial_{x_2} g(x_1,u_2)\le 0.\\
+			\text{Side }x_2=l_2 \ (l_1<x_1< u_1):\quad 
+			&\partial_{x_1} g(x_1,l_2)=0,\quad \partial_{x_2} g(x_1,l_2)\ge 0.
+		\end{aligned}
+		\]
+		
+		With $-A\succ0$, the strict versions of these inequalities (and interiority of the free coordinate) yield a \emph{unique} minimizer on the specified side (and not at a corner).
+
+		\item Suppose that the function is strictly convex. Show that the maximum is on the boundary.
+		\textbf{Solution:}
+		Let $f$ be strictly convex on the convex, compact box $[l_1,u_1]\times[l_2,u_2]$. 
+		If a maximizer were interior, then $\,\nabla f(x^*)=0\,$ and strict convexity ($\nabla^2 f \succ 0$) would make $x^*$ a \emph{minimum}, a contradiction. 
+		Hence any maximum over the box must occur on the boundary.
+
+		\item Suppose that the function is strictly concave. Show that the maximum is in the interior.
+		\textbf{Solution:}
+		If $f$ is strictly concave ($\nabla^2 f \prec 0$), it has a unique stationary point
+		\[
+		x^* \ \text{with}\ \nabla f(x^*)=0
+		\quad(\text{for } f(x)=\tfrac12 x^{\mathsf T}A x + b^{\mathsf T}x,\ \ A\ \text{neg.\ definite: } x^*=-A^{-1}b).
+		\]
+		If this $x^*$ lies in the open box $(l_1,u_1)\times(l_2,u_2)$, then by KKT (all multipliers zero) it is the unique maximizer and is \emph{interior}. 
+		If $x^*\notin [l_1,u_1]\times[l_2,u_2]$, the maximizer occurs on the boundary. 
+		Thus, the maximum is in the interior \emph{iff} $x^*$ lies inside the box.
+
+		\item Suppose that the function is both concave and convex. Show that the function is linear. Also, show that we can always find a solution at one of the corners. This is a basic result used in Linear Programming that holds true for all problems.\\
+		\textbf{Solution:}
+		If $f$ is both convex and concave on a convex set, then it is \emph{affine}:
+		\[
+		\nabla^2 f \equiv 0 \;\;\Longrightarrow\;\; f(x)=c^{\mathsf T}x+c_0
+		\quad\text{(i.e., linear up to a constant).}
+		\]
+		Maximizing a linear function over the box $[l_1,u_1]\times[l_2,u_2]$ attains an optimum at an extreme point (corner). 
+		Equivalently, with $c=(c_1,c_2)$,
+		\[
+		x_1^*=\begin{cases}
+			u_1,& c_1>0,\\
+			l_1,& c_1<0,\\
+			\text{any in }[l_1,u_1],& c_1=0,
+		\end{cases}
+		\qquad
+		x_2^*=\begin{cases}
+			u_2,& c_2>0,\\
+			l_2,& c_2<0,\\
+			\text{any in }[l_2,u_2],& c_2=0,
+		\end{cases}
+		\]
+		so at least one corner is optimal (fundamental LP result).
+
+	\end{enumerate}
+	
+	\newpage
+	\textbf{Problem \#3. Solutions to specific problems.}
+	
+	\begin{enumerate}[label=3(\alph*)]
+		
+		\item Consider the following equation:
+		\[
+		\max_{x}\; 5 (x_1 - 2)^2 + 100 (x_2 - 3)^2 + 100
+		\quad \text{subject to}\quad
+		0 \le x_1 \le 4,\;\; 1 \le x_2 \le 5.
+		\]
+		\begin{itemize}
+			\item Compute $x$ that solves this problem.
+			\item Is the function convex, concave, or neither? Explain.
+		\end{itemize}
+		\textbf{Solution}
+		Let 
+		\[
+		f(x_1,x_2)=5(x_1-2)^2+100(x_2-3)^2+100,\quad
+		0\le x_1\le 4,\ \ 1\le x_2\le 5.
+		\]
+		Since $\nabla^2 f=\mathrm{diag}(10,\,200)\succ0$, $f$ is (strictly) \emph{convex} (not concave). 
+		Maximizing a convex function over the convex box occurs on the boundary; here the objective increases with the squared distance from $(2,3)$, so we push each coordinate as far from $2$ and $3$ as allowed. Both ends are equally far in each coordinate, hence all four corners are maximizers:
+		\[
+		x^*\in\{(0,1),\ (0,5),\ (4,1),\ (4,5)\},
+		\qquad
+		f(x^*)=5\cdot 2^2+100\cdot 2^2+100=520.
+		\]
+
+		\item Consider the point $(x_1, x_2) = (0,0)$ for the function
+		\[
+		f(x_1,x_2) = 5 x_1^{2} - 100 x_2^{2}.
+		\]
+		\begin{itemize}
+			\item Is the function increasing or decreasing as $x_1 \to \infty$ for $x_2 = 0$?
+			\item Is the function increasing or decreasing as $x_2 \to \infty$ for $x_1 = 0$?
+			\item Is the function convex, concave, or neither? Explain.
+			\item Compute the eigen-decomposition of the Hessian of $f$ and rewrite $f$ in terms of that eigen-decomposition.
+		\end{itemize}
+		\noindent
+		Note that the results described here generalize along the eigenvectors, which are orthogonal.
+		\textbf{Solution}
+		Given
+		\[
+		f(x_1,x_2)=5x_1^2-100x_2^2.
+		\]
+		
+		\emph{Monotonicity along axes.}
+		For $x_2=0$, $f=5x_1^2 \to +\infty$ as $x_1\to\infty$ (increasing).
+		For $x_1=0$, $f=-100x_2^2 \to -\infty$ as $x_2\to\infty$ (decreasing).
+		
+		\emph{Convex/concave.}
+		\[
+		\nabla^2 f=\begin{bmatrix}10&0\\[2pt]0&-200\end{bmatrix}
+		\]
+		has eigenvalues $10$ and $-200$ (one $>0$, one $<0$) $\Rightarrow$ Hessian is indefinite $\Rightarrow$ $f$ is \textbf{neither} convex nor concave (saddle).
+		
+		\emph{Eigen-decomposition and rewrite.}
+		With $Q=I$ and $\Lambda=\operatorname{diag}(10,-200)$, we have
+		\[
+		\nabla^2 f = Q\Lambda Q^{\mathsf T},\qquad
+		f(x)=\tfrac12 x^{\mathsf T}(\nabla^2 f)\,x=\tfrac12\big(10x_1^2-200x_2^2\big)=5x_1^2-100x_2^2,
+		\]
+		so along the orthogonal eigenvectors $e_1,e_2$, the curvatures are $+10$ and $-200$, respectively.
+
+		\item Consider the point $(x_1, x_2) = (0,0)$ for the function
+		\[
+		f(x_1,x_2) = -5 x_1^{2} - 100 x_2^{2}.
+		\]
+		\begin{itemize}
+			\item Is the function increasing or decreasing as $x_1 \to \infty$ for $x_2 = 0$?
+			\item Is the function increasing or decreasing as $x_2 \to \infty$ for $x_1 = 0$?
+			\item Is the function convex, concave, or neither? Explain.
+		\end{itemize}
+		\textbf{Solution}
+		Given
+		\[
+		f(x_1,x_2) = -5x_1^2 - 100x_2^2.
+		\]
+		
+		\emph{Monotonicity along axes.}
+		For $x_2=0$, $f=-5x_1^2 \to -\infty$ as $x_1\to\infty$ (decreasing).
+		For $x_1=0$, $f=-100x_2^2 \to -\infty$ as $x_2\to\infty$ (decreasing).
+		
+		\emph{Convex/concave.}
+		\[
+		\nabla^2 f=\begin{bmatrix}-10&0\\[2pt]0&-200\end{bmatrix}
+		\]
+		is negative definite (both eigenvalues $<0$), hence $f$ is \textbf{strictly concave}.
+
+	\end{enumerate}
+
+\end{document}

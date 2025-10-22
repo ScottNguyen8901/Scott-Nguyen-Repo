@@ -1,0 +1,7 @@
+\babel@toc {american}{}\relax 
+\beamer@sectionintoc {1}{Introduction}{3}{0}{1}
+\beamer@sectionintoc {2}{Background}{6}{0}{2}
+\beamer@sectionintoc {3}{Method}{9}{0}{3}
+\beamer@sectionintoc {4}{Results}{13}{0}{4}
+\beamer@sectionintoc {5}{Conclusion}{17}{0}{5}
+\beamer@sectionintoc {6}{Appendix}{21}{1}{6}

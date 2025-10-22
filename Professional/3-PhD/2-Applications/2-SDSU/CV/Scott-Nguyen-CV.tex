@@ -1,0 +1,177 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{fancyhdr}
+\usepackage[dvipsnames]{xcolor}
+
+% Define custom color
+\definecolor{mygreen}{HTML}{004225}
+\newcommand{\sectioncolor}{\color{mygreen}}
+
+\pagestyle{empty}
+
+% Line between sections (no spacing)
+\newcommand{\sectionline}{\noindent\rule{\linewidth}{0.4pt}}
+
+% No extra paragraph spacing
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0pt}
+
+% Tight bullet formatting
+\setlist[itemize]{left=1.25em, itemsep=0pt, topsep=0pt, parsep=0pt}
+
+% Tight section formatting with color
+\titleformat{\section}
+{\sectioncolor\bfseries\uppercase}
+{}{0pt}{}
+\titlespacing{\section}{0pt}{2pt}{2pt}
+
+\begin{document}
+	
+	\begin{center}
+		{\color{mygreen}
+			{\Huge \textbf{Scott Nguyen}} \\
+			\small
+			\href{mailto:scott.nguyen8901@gmail.com}{scott.nguyen8901@gmail.com} \textbar
+			(515) 943-6283 \textbar
+			\textbf{Security Clearance: Interim Secret}
+		}
+	\end{center}
+	
+	\sectionline
+	
+	\section*{Education}
+	
+	\textbf{Master of Science in Electrical Engineering \textbar\ Space Systems Engineering} \hfill \textbf{Expected Summer 2026} \\
+	University of New Mexico \hfill GPA: 3.94/4.00
+	
+	\textbf{Master of Science in Aerospace Engineering} \hfill \textbf{Fall 2024} \\
+	University of Illinois Urbana–Champaign
+	
+	\textbf{Bachelor of Science in Aerospace Engineering} \hfill \textbf{Spring 2022} \\
+	Iowa State University
+	
+	\sectionline
+	
+	\section*{Relevant Coursework}
+	
+	\begingroup
+	\setlength{\tabcolsep}{8pt}
+	\renewcommand{\arraystretch}{1.05}
+	\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}} l l l}
+		Orbital Mechanics I/II/III & Spacecraft Systems & Space Situational Awareness \\
+		Spacecraft Attitude Dynamics and Control & Satellite Communications & Electronic Space Propulsion \\
+		Nonlinear Programming & Optimization Theory & \\
+	\end{tabular*}
+	\endgroup
+	
+	\sectionline
+	
+	\section*{Skills}
+	\textbf{Programming Languages:} MATLAB, Python, C/C++, Ruby \\
+	\textbf{Frameworks / Libraries / Tools:} NumPy, SciPy, Matplotlib, Astropy, Poliastro, bpy, git \\
+	\textbf{Applications:} Simulink, Blender
+	
+	\sectionline
+	
+	\section*{Work Experience}
+	
+	\textbf{Student Co-Op, Electronics for Contested Space Group} \hfill \textbf{September 2025 – Present} \\
+	\emph{MIT Lincoln Laboratory}
+	\begin{itemize}
+		\item Implemented an \textbf{\emph{Unscented Kalman Filter (UKF)}} for precise radio frequency measurements and state estimation
+		\item Built a probabilistic detection tool to compute observation likelihoods based on resident space object properties and optical sensor performance
+	\end{itemize}
+	
+	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill \textbf{May 2025 – August 2025} \\
+	\emph{Blue Canyon Technologies}
+	\begin{itemize}
+		\item Verified functionality and polarity of IMU, Nano Star Tracker, Reaction Wheels, Torque Rods, and Sun Sensors via hardware testing and data checks
+		\item Performed regression analysis of two-axis \textbf{\emph{Solar Array Drive Assembly (SADA)}} momentum management and validated command interfaces for precise control and reliability
+		\item Automated \textbf{\emph{SADA}} validation by developing \textbf{\emph{Ruby}} test scripts and mapping telemetry channels to \textbf{\emph{COSMOS}}
+	\end{itemize}
+	
+	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill \textbf{January 2025 – April 2025} \\
+	\emph{Blue Origin}
+	\begin{itemize}
+		\item Integrated \textbf{\emph{Active Disturbance Rejection Control (ADRC)}} and \textbf{\emph{Sliding Mode Control (SMC)}} to develop a robust algorithm for stabilizing nonlinear MIMO dynamics of the BE-7 engine
+		\item Evaluated control performance by injecting disturbances and demonstrated improved accuracy in setpoint tracking
+		\item Integrated flight software into \textbf{\emph{Simulink}} using \textbf{\emph{S-functions}} in \textbf{\emph{C}} to enable testing and verification
+	\end{itemize}
+	
+	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill \textbf{May 2024 – August 2024} \\
+	\emph{Varda Space Industries}
+	\begin{itemize}
+		\item Conducted trade studies to optimize gravity models for mission requirements and select optimal filter type (\textbf{\emph{EKF}} vs. \textbf{\emph{UKF}})
+		\item Built Monte Carlo simulations to quantify reentry uncertainty, generating latitude/longitude covariance ellipsoids and a reentry dispersion cloud for flight safety analysis and capsule recovery planning
+		\item Implemented an \textbf{\emph{EKF}} for state estimation, optimizing ground station timing for minimal residuals and precise delta-v planning
+		\item Added unit tests and CI/CD pipelines using Bamboo for continuous integration
+	\end{itemize}
+	
+	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill \textbf{May 2023 – August 2023} \\
+	\emph{Space Dynamics Laboratory}
+	\begin{itemize}
+		\item Implemented a UKF with range iteration and least-squares orbit determination methods using optical navigation
+		\item Performed Monte Carlo analysis on relative orbits to identify challenging scenarios and refine estimation algorithms
+		\item Developed unit tests for \textbf{\emph{Lambert Solver}} integrated with \textbf{\emph{Initial Orbit Determination (IOD)}} pipeline
+	\end{itemize}
+	
+	\newpage
+	
+	\sectionline
+	
+	\section*{Research Projects}
+	
+	\textbf{Global Trajectory Optimization Competition (GTOC 6 \& 11) – Modeling \& Simulation} 
+	\begin{itemize}
+		\item Developed high-fidelity simulations for interplanetary trajectory design and optimization problems under nonlinear dynamics
+		    \item Contributed to solution verification and analysis workflows; maintained analysis notebooks and documentation for team reproducibility
+	\end{itemize}
+	
+	\textbf{Delta-V Minimization from Geostationary Orbit to Mars}
+	\begin{itemize}
+		\item Applied trajectory optimization techniques to minimize delta-v for an Earth-to-Mars transfer, improving fuel efficiency
+		\item Generated pork-chop plots using Lambert solutions and validated optimizer results against global minima
+		\item Visualized optimized trajectories and planetary motion via Blender’s Python API
+	\end{itemize}
+	
+	\sectionline
+	
+	\section*{Teaching \& Mentoring Experience}
+	
+	\textbf{Youth Development Professional} \hfill \textbf{October 2024 -- January 2025} \\
+	\emph{Boys \& Girls Club}
+	\begin{itemize}
+		\item Designed and taught an after-school \textbf{computer literacy} curriculum for grades 3–6 (typing, file systems, internet safety).
+		\item Introduced \textbf{beginner coding} using Scratch and Python through project-based lessons.
+		\item Differentiated supports to meet diverse learning needs and sustain engagement.
+	\end{itemize}
+	
+	\textbf{Math Teacher (Algebra I, Algebra II, Precalculus, Calculus)} \hfill \textbf{October 2024 -- January 2025} \\
+	\emph{North Star School}
+	\begin{itemize}
+		\item Developed \textbf{unit plans, assignments, and assessments} aligned with course objectives and STEM applications.
+		\item Integrated \textbf{Desmos/GeoGebra} to strengthen conceptual understanding.
+		\item Provided individualized feedback and academic support to improve performance.
+	\end{itemize}
+	
+	\textbf{Research Assistant, AE 298 National Defense Education Program} \hfill \textbf{January 2023 -- May 2024} \\
+	\emph{Aerospace Engineering, University of Illinois Urbana–Champaign}
+	\begin{itemize}
+		\item Co-taught an introductory \textbf{rocketry} course with hands-on labs and launch activities.
+		\item Collected and analyzed assessment data to evaluate learning outcomes and program impact.
+		\item Contributed to course redesign and rubric updates to boost engagement and retention.
+	\end{itemize}
+	
+	\textbf{Research Assistant, Grants for Advancement of Teaching in Engineering} \hfill \textbf{November 2023 -- May 2024} \\
+	\emph{Mechanical Engineering, University of Illinois Urbana–Champaign}
+	\begin{itemize}
+		\item Developed a comprehensive \textbf{final project framework} using interdisciplinary pedagogy and clear assessment criteria.
+		\item Researched and authored a \textbf{literature review}; contributed to a conference manuscript and instructional materials.
+	\end{itemize}
+	
+\end{document}
