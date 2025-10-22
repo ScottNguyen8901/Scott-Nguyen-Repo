@@ -1,267 +1,252 @@
 classdef UKF_DMC
-%UKF_DMC  Unscented Kalman filter with Dynamic Model Compensation (DMC).
-%
-%   This extends a standard (additive-noise) UKF by augmenting the state
-%   with a 3-state Gauss–Markov process to capture unmodeled dynamics.
-%
-%   Models (additive noise):
-%       x_{k+1} = f(x_k, dt) + w_k,     w_k ~ N(0, Q_aug(dt))
-%       z_k     = h(x_k)     + v_k,     v_k ~ N(0, R)
-%
-%   Constructor:
-%       obj = UKF_DMC(fFcn, hFcn, x0, P0, Q_base, R, ...
-%                     alpha, beta_ukf, kappa, t_initial, ...
-%                     dmc_beta, dmc_sigma_u2)
-%
-%       fFcn          : state transition, signature f(x, dt)
-%       hFcn          : measurement function, signature h(x)
-%       x0, P0        : initial augmented state and covariance
-%       Q_base        : process noise for the ORIGINAL part of the state
-%                       (size n_orig×n_orig; non-DMC block)
-%       R             : measurement noise covariance
-%       alpha,beta,kappa : UKF tuning
-%       t_initial     : initial timestamp (seconds)
-%       dmc_beta      : Gauss–Markov rate parameter β (>0)
-%       dmc_sigma_u2  : driving-noise variance σ_u^2 for the DMC process
-%
-%   Main methods:
-%       obj = predict(obj, t_now)
-%       obj = correct(obj, z)
-%       x   = getState(obj)
-%       P   = getCovariance(obj)
-%
-%   Notes:
-%       • Augmented state = [ x_orig ; x_dmc ] with n_dmc = 3 here.
-%       • Q_aug is block-diag{ Q_base , Q_DMC(dt) }.
-%       • Uses Cholesky with small jitter for numerical robustness.
-%
+    %UKF_DMC An unscented Kalman filter class that incorporates Dynamic Model Compensation (DMC).
+    %
+    % This class extends the standard UKF to handle unmodeled dynamics by
+    % augmenting the state vector with a Gauss-Markov process. The state
+    % transition function and process noise covariance are specifically
+    % designed for this purpose.
 
-    %====================== Stored data ======================%
     properties (Access = private)
-        % Models
-        stateTransitionFcn    % f(x, dt)
-        measurementFcn        % h(x)
-
-        % Noise / helpers
-        Q_base                % process noise for original (non-DMC) block
-        R                     % measurement noise
-        Q_n_fcn               % @(dt) -> Q_DMC(dt) (3×3)
-
-        % Estimates
-        x                     % current state estimate (n×1)
-        P                     % current covariance (n×n)
-
-        % Dimensions
-        n_orig                % original state dimension
-        n_dmc                 % augmented DMC states (fixed = 3)
-        n                     % total state dimension (n_orig + n_dmc)
-        m                     % measurement dimension
-
-        % UKF scaling
-        alpha
-        beta_ukf
-        kappa
-        lambda
-        gamma
-        Wm                    % 1×(2n+1)
-        Wc                    % 1×(2n+1)
-
-        % Time & DMC params
-        t_prev                % previous timestamp [s]
-        dmc_beta              % β
-        dmc_sigma_u2          % σ_u^2
+        stateTransitionFcn   % Function handle for the nonlinear state transition
+        measurementFcn       % Function handle for the nonlinear measurement
+        Q_n_fcn              % Function handle for DMC process noise covariance (free function)
+        Q_base               % Base process noise covariance (for other uncertainties)
+        R                    % Measurement noise covariance matrix
+        x                    % State estimate vector
+        P                    % State covariance matrix
+        n_orig               % Original state dimension (e.g., position, velocity)
+        n_dmc                % DMC state dimension (Gauss-Markov process)
+        n                    % Augmented state dimension (n_orig + n_dmc)
+        m                    % Measurement dimension
+        alpha                % UKF parameter: spread of sigma points (e.g., 1e-3)
+        beta_ukf             % UKF parameter: incorporates prior knowledge (e.g., 2)
+        kappa                % UKF parameter: secondary scaling (e.g., 0)
+        lambda               % UKF scaling parameter
+        gamma                % UKF scaling parameter
+        Wm                   % Weights for the mean
+        Wc                   % Weights for the covariance
+        t_prev               % Previous time for time-difference calculation
+        dmc_beta             % Beta parameter for the Gauss-Markov process
+        dmc_sigma_u2         % Sigma_u^2 parameter for the Gauss-Markov process
     end
 
-    %====================== Public API ======================%
     methods
-        function obj = UKF_DMC(stateTransitionFcn, measurementFcn, ...
-                               initial_x, initial_P, Q_base, R, ...
-                               alpha, beta_ukf, kappa, t_initial, ...
-                               dmc_beta, dmc_sigma_u2)
-        %UKF_DMC Constructor. See class header for details.
+        function obj = UKF_DMC(stateTransitionFcn, measurementFcn, initial_x, initial_P, ...
+                               dmc_beta, dmc_sigma_u2, Q_base, R, alpha, beta_ukf, kappa, t_initial)
+            %UKF_DMC Constructor for the UKF_DMC class.
+            %
+            % Inputs:
+            %   stateTransitionFcn - Function handle, x_{k+1} = f(x_k, dt).
+            %   measurementFcn     - Function handle, z_k     = h(x_k).
+            %   initial_x          - Initial augmented state estimate vector.
+            %   initial_P          - Initial augmented state covariance matrix.
+            %   dmc_beta           - Beta parameter for the Gauss-Markov process.
+            %   dmc_sigma_u2       - Sigma_u^2 parameter for the Gauss-Markov process.
+            %   Q_base             - Base process covariance matrix (non-DMC part).
+            %   R                  - Measurement noise covariance matrix.
+            %   alpha, beta_ukf, kappa - UKF tuning parameters.
+            %   t_initial          - Initial time for the filter.
 
-            % Store models/noise
             obj.stateTransitionFcn = stateTransitionFcn;
             obj.measurementFcn     = measurementFcn;
-            obj.Q_base             = Q_base;
-            obj.R                  = R;
-
-            % Initial estimates
-            obj.x = initial_x(:);
-            obj.P = initial_P;
+            obj.Q_base = Q_base;
+            obj.R      = R;
+            obj.x      = initial_x;
+            obj.P      = initial_P;
 
             % DMC parameters
             obj.dmc_beta     = dmc_beta;
             obj.dmc_sigma_u2 = dmc_sigma_u2;
 
-            % Dimensions
-            obj.n_orig = numel(initial_x) - 3;   % assuming last 3 are DMC
+            % Set state dimensions (augmented)
+            obj.n      = length(initial_x);
+            obj.n_orig = obj.n - 3;   % Assuming 3 DMC states are tracked analytically
             obj.n_dmc  = 3;
-            obj.n      = obj.n_orig + obj.n_dmc;
-            obj.m      = size(R,1);
 
-            % UKF tuning
+            % Measurement dimension
+            obj.m = size(R, 1);
+
+            % UKF parameters
             obj.alpha   = alpha;
-            obj.beta_ukf = beta_ukf;
+            obj.beta_ukf= beta_ukf;
             obj.kappa   = kappa;
 
-            % Precompute weights / scaling
-            obj = obj.calculateWeightsAndScaling();
-
-            % Time
+            % Initialize time
             obj.t_prev = t_initial;
 
-            % DMC process noise handle Q_DMC(dt)
+            % Pre-calculate weights and scaling
+            obj = calculateWeightsAndScaling(obj);
+
+            % Create function handle for the (free) DMC process-noise helper
+            % NOTE: this binds beta and sigma_u2 now, and takes only dt at call time.
             obj.Q_n_fcn = @(dt) computeDmcProcessNoise(dt, obj.dmc_beta, obj.dmc_sigma_u2);
         end
 
         function obj = predict(obj, t_now)
-        %PREDICT  Propagate sigma points through f(x,dt) and add Q_aug(dt).
+            %PREDICT Performs the prediction step using the unscented transform.
+            %
+            % Input:
+            %   t_now - The current time.
+
             dt = t_now - obj.t_prev;
 
-            % Sigma points from current (x,P)
-            Xi = obj.generateSigmaPoints();
+            % Generate sigma points from the current state
+            sigma_points = generateSigmaPoints(obj);
 
-            % Propagate through dynamics
-            Yi = zeros(obj.n, size(Xi,2));
-            for i = 1:size(Xi,2)
-                Yi(:,i) = obj.stateTransitionFcn(Xi(:,i), dt);
+            % Propagate sigma points through the nonlinear state transition function
+            propagated_sigma_points = zeros(obj.n, 2*obj.n + 1);
+            for i = 1:(2*obj.n + 1)
+                propagated_sigma_points(:, i) = obj.stateTransitionFcn(sigma_points(:, i), dt);
             end
 
-            % Mean & covariance of prediction
-            x_pred = Yi * obj.Wm.';                  % n×1
-            P_pred = zeros(obj.n);
-            for i = 1:size(Yi,2)
-                d = Yi(:,i) - x_pred;
-                P_pred = P_pred + obj.Wc(i) * (d * d.');
+            % Recalculate mean and covariance from propagated sigma points
+            obj.x = sum(obj.Wm .* propagated_sigma_points, 2);
+            P_pred = zeros(obj.n, obj.n);
+            for i = 1:(2*obj.n + 1)
+                diff   = propagated_sigma_points(:, i) - obj.x;
+                P_pred = P_pred + obj.Wc(i) * (diff * diff.');
             end
 
-            % Augmented process noise: block-diag{Q_base, Q_DMC(dt)}
-            Q_aug = zeros(obj.n);
-            Q_aug(1:obj.n_orig, 1:obj.n_orig) = obj.Q_base;
-            Q_aug(obj.n_orig+1:end, obj.n_orig+1:end) = obj.Q_n_fcn(max(dt,0));
+            % Build augmented process noise covariance
+            Q_augmented = zeros(obj.n, obj.n);
 
-            % Commit
-            obj.x = x_pred;
-            obj.P = obj.symmetrize(P_pred + Q_aug);
+            % Q_base corresponds to original states (e.g., pos, vel, accel)
+            Q_augmented(1:3, 1:3) = obj.Q_base;
+
+            % DMC process-noise for the Gauss-Markov acceleration deviation
+            Q_dmc = obj.Q_n_fcn(dt);        % 3x3 block (Singer/CA)
+            dmc_noise_var = Q_dmc(3, 3);    % relevant term for accel-state channel
+            Q_augmented(4, 4) = dmc_noise_var;
+
+            % Update covariance and time
+            obj.P     = P_pred + Q_augmented;
             obj.t_prev = t_now;
         end
 
         function obj = correct(obj, z)
-        %CORRECT  Incorporate measurement z via h(x) and R.
-            Xi = obj.generateSigmaPoints();          % n×(2n+1)
+            %CORRECT Performs the correction (update) step of the UKF.
 
-            % Predicted measurements
-            Zi = zeros(obj.m, size(Xi,2));
-            for i = 1:size(Xi,2)
-                Zi(:,i) = obj.measurementFcn(Xi(:,i));
+            % Generate sigma points from the predicted state
+            sigma_points = generateSigmaPoints(obj);
+
+            % Predict measurements
+            Z = zeros(obj.m, 2*obj.n + 1);
+            for i = 1:(2*obj.n + 1)
+                Z(:, i) = obj.measurementFcn(sigma_points(:, i));
             end
-            z_pred = Zi * obj.Wm.';                  % m×1
 
-            % Innovation covariance S and cross-cov Pxz
-            S   = zeros(obj.m);
+            % Predicted mean measurement and innovation covariances
+            z_pred = sum(obj.Wm .* Z, 2);
+            Pzz = zeros(obj.m, obj.m);
             Pxz = zeros(obj.n, obj.m);
-            for i = 1:size(Xi,2)
-                dx = Xi(:,i) - obj.x;
-                dz = Zi(:,i) - z_pred;
-                S   = S   + obj.Wc(i) * (dz * dz.');
-                Pxz = Pxz + obj.Wc(i) * (dx * dz.');
+            for i = 1:(2*obj.n + 1)
+                z_diff = Z(:, i) - z_pred;
+                x_diff = sigma_points(:, i) - obj.x;
+                Pzz = Pzz + obj.Wc(i) * (z_diff * z_diff.');
+                Pxz = Pxz + obj.Wc(i) * (x_diff * z_diff.');
             end
-            S = obj.symmetrize(S + obj.R);
+            Pzz = Pzz + obj.R;
 
-            % Gain & update
-            K = Pxz / (S + 1e-12*eye(obj.m));
+            % Kalman gain and update
+            K     = Pxz / Pzz;
             obj.x = obj.x + K * (z - z_pred);
-            obj.P = obj.symmetrize(obj.P - K * S * K.');
+            obj.P = obj.P - K * Pzz * K.';
         end
 
-        function x_est = getState(obj),      x_est = obj.x; end
-        function P_est = getCovariance(obj), P_est = obj.P; end
+        function x_est = getState(obj)
+            %GETSTATE Returns the current state estimate.
+            x_est = obj.x;
+        end
+
+        function P_est = getCovariance(obj)
+            %GETCOVARIANCE Returns the current state covariance.
+            P_est = obj.P;
+        end
     end
 
-    %====================== Internals ======================%
     methods (Access = private)
         function obj = calculateWeightsAndScaling(obj)
+            %calculateWeightsAndScaling Calculates the unscented transform weights.
+
             obj.lambda = obj.alpha^2 * (obj.n + obj.kappa) - obj.n;
             obj.gamma  = sqrt(obj.n + obj.lambda);
 
             obj.Wm = zeros(1, 2*obj.n + 1);
+            obj.Wm(1)     = obj.lambda / (obj.n + obj.lambda);
+            obj.Wm(2:end) = 1 / (2 * (obj.n + obj.lambda));
+
             obj.Wc = zeros(1, 2*obj.n + 1);
-            obj.Wm(1) = obj.lambda / (obj.n + obj.lambda);
-            obj.Wc(1) = obj.Wm(1) + (1 - obj.alpha^2 + obj.beta_ukf);
-            obj.Wm(2:end) = 1/(2*(obj.n + obj.lambda));
-            obj.Wc(2:end) = obj.Wm(2:end);
+            obj.Wc(1)     = obj.lambda / (obj.n + obj.lambda) + (1 - obj.alpha^2 + obj.beta_ukf);
+            obj.Wc(2:end) = 1 / (2 * (obj.n + obj.lambda));
         end
 
-        function Xi = generateSigmaPoints(obj)
-        %GENERATESIGMAPOINTS  n×(2n+1) matrix of sigma points about (x,P).
-            % Robust Cholesky
-            jitter = 1e-12;
-            ok = false; tries = 0;
-            while ~ok && tries < 5
-                try
-                    A = chol(obj.P + jitter*eye(obj.n), 'lower');
-                    ok = true;
-                catch
-                    jitter = max(jitter*10, 1e-12);
-                    tries = tries + 1;
-                end
-            end
-            if ~ok
-                [V,D] = eig((obj.P+obj.P')/2);
-                D = max(D, 1e-12*eye(obj.n));
-                A = chol(V*D*V.', 'lower');
-            end
+        function sigma_points = generateSigmaPoints(obj)
+            %generateSigmaPoints Generates sigma points from current state mean and covariance.
 
-            Xi = zeros(obj.n, 2*obj.n + 1);
-            Xi(:,1) = obj.x;
+            % Stabilize P (symmetrize + epsilon on diagonal) before chol
+            P_sym = (obj.P + obj.P.') / 2;
+            eps_d = 1e-12;
+            P_stab = P_sym + eps_d * eye(obj.n);
+
+            A = real(chol(P_stab).');   % upper-triangular, transpose to get columns
+
+            sigma_points = zeros(obj.n, 2*obj.n + 1);
+            sigma_points(:, 1) = obj.x;
+
             for i = 1:obj.n
-                Xi(:,1+i)        = obj.x + obj.gamma*A(:,i);
-                Xi(:,1+obj.n+i)  = obj.x - obj.gamma*A(:,i);
+                sigma_points(:, i + 1)        = obj.x + obj.gamma * A(:, i);
+                sigma_points(:, i + obj.n + 1)= obj.x - obj.gamma * A(:, i);
             end
         end
-
-        function M = symmetrize(~, M), M = (M + M.')/2; end
     end
 end
 
-%================== DMC process-noise helper ==================%
+% ===== Free helper function (file-local, not a class method) =====
 function Q_n = computeDmcProcessNoise(dt, beta, sigma_u2)
-%COMPUTEDMCPROCESSNOISE  Closed-form Q for a 3-state Gauss–Markov chain
-% driven by white noise of variance sigma_u2, with rate parameter beta.
-%
-% This matches the structure visible in your code screenshots: the
-% elements below are symmetric with terms in t, exp(-βt), and exp(-2βt).
-% (Use your exact continuous-time model if you have one; this is the
-% typical closed form used for DMC augmentation.)
+%computeDmcProcessNoise Computes the 3×3 DMC (Singer/CA) process noise covariance.
+% Handles the constant-acceleration special case when beta ≈ 0.
 
-t = max(dt, 0);
+t = dt;
 
-% Diagonal terms
-Q_n_1_1 = sigma_u2 * ( (1/(3*beta^2))*t^3 ...
-                     + (1/(beta^3))*t^2 ...
-                     + (1/(beta^4))*(1 - 2*exp(-beta*t)) ...
-                     + (1/(2*beta^5))*(1 - exp(-2*beta*t)) );
+% Input validation
+if sigma_u2 < 0
+    error('sigma_u2 must be non-negative.');
+end
+if t < 0
+    error('dt must be non-negative.');
+end
 
-Q_n_2_2 = sigma_u2 * ( (1/(beta^2))*t ...
-                     + (2/beta^3)*(1 - exp(-beta*t)) ...
-                     + (1/(2*beta^4))*(1 - exp(-2*beta*t)) );
+if abs(beta) < 1e-9
+    % Constant-acceleration limit (beta -> 0)
+    Q_n_1_1 = (t^5) / 20;
+    Q_n_1_2 = (t^4) / 8;
+    Q_n_1_3 = (t^3) / 6;
+    Q_n_2_2 = (t^3) / 3;
+    Q_n_2_3 = (t^2) / 2;
+    Q_n_3_3 = t;
+else
+    % Singer model (beta > 0)
+    e_bt  = exp(-beta * t);
+    e_2bt = exp(-2 * beta * t);
 
-Q_n_3_3 = sigma_u2 * ( (1/(2*beta))*(1 - exp(-2*beta*t)) );
+    Q_n_1_1 = (1/(3*beta^2))*t^3 + (1/(beta^3))*t^2 + ...
+              (1/(beta^4))*(1 - 2*e_bt) + (1/(2*beta^5))*(1 - e_2bt);
 
-% Off-diagonals (symmetric)
-Q_n_1_2 = sigma_u2 * ( (1/(2*beta^2))*t^2 ...
-                     + (1/(beta^3))*(1 - exp(-beta*t)) ...
-                     + (1/(2*beta^4))*(1 - exp(-2*beta*t)) );
+    Q_n_1_2 = (1/(2*beta^2))*t^2 + (1/(beta^3))*(1 - e_bt) + ...
+              (1/(beta^4))*t*e_bt + (1/(2*beta^5))*(1 - e_2bt);
 
-Q_n_1_3 = sigma_u2 * ( (1/(2*beta))*(1 - exp(-2*beta*t)) ...
-                     + (1/(beta^2))*exp(-beta*t) );
+    Q_n_1_3 = (1/(2*beta))*(1 - e_2bt) + (1/(beta^2))*t*e_bt;
 
-Q_n_2_3 = sigma_u2 * ( (1/(2*beta^2))*(1 - exp(-2*beta*t)) ...
-                     + (1/beta^2)*exp(-beta*t) );
+    Q_n_2_2 = (1/(beta^2))*t + (2/(beta^3))*(1 - e_bt) + ...
+              (1/(2*beta^3))*(1 - e_2bt);
 
-% Assemble symmetric 3×3
-Q_n = [Q_n_1_1, Q_n_1_2, Q_n_1_3;
-       Q_n_1_2, Q_n_2_2, Q_n_2_3;
-       Q_n_1_3, Q_n_2_3, Q_n_3_3];
+    Q_n_2_3 = (1/(2*beta^2))*(1 - e_bt)^2;
+
+    Q_n_3_3 = (1/(2*beta))*(1 - e_2bt);
+end
+
+% Build symmetric matrix and apply scaling
+Q_n = sigma_u2 * [Q_n_1_1, Q_n_1_2, Q_n_1_3;
+                  Q_n_1_2, Q_n_2_2, Q_n_2_3;
+                  Q_n_1_3, Q_n_2_3, Q_n_3_3];
 end
