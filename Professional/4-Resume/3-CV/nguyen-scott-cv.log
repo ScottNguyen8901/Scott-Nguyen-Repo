@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.7.26)  30 OCT 2025 11:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.7.26)  30 OCT 2025 11:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**./scott-nguyen-teaching-resume.tex
-(scott-nguyen-teaching-resume.tex
+**./nguyen-scott-cv.tex
+(nguyen-scott-cv.tex
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-07-19>
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
@@ -322,8 +322,8 @@ File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
 tex.def
 File: l3backend-pdftex.def 2025-06-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count311
-) (scott-nguyen-teaching-resume.aux)
-\openout1 = `scott-nguyen-teaching-resume.aux'.
+) (nguyen-scott-cv.aux)
+\openout1 = `nguyen-scott-cv.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
 LaTeX Font Info:    ... okay on input line 33.
@@ -379,9 +379,9 @@ LaTeX Font Info:    ... okay on input line 33.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 Package hyperref Info: Link coloring OFF on input line 33.
-(scott-nguyen-teaching-resume.out) (scott-nguyen-teaching-resume.out)
+(nguyen-scott-cv.out) (nguyen-scott-cv.out)
 \@outlinefile=\write3
-\openout3 = `scott-nguyen-teaching-resume.out'.
+\openout3 = `nguyen-scott-cv.out'.
 
 
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
@@ -413,35 +413,38 @@ LaTeX Font Info:    Font shape `OMS/cmr/bx/n' in size <10> not available
 [1
 
 {C:/Users/scott/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
-(scott-nguyen-teaching-resume.aux)
+
+[2] (nguyen-scott-cv.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-07-19>
  ***********
-Package rerunfilecheck Info: File `scott-nguyen-teaching-resume.out' has not ch
-anged.
+Package rerunfilecheck Info: File `nguyen-scott-cv.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 10188 strings out of 468149
- 160204 string characters out of 5431082
- 605808 words of memory out of 5000000
- 38706 multiletter control sequences out of 15000+600000
- 629229 words of font info for 48 fonts, out of 8000000 for 9000
+ 10193 strings out of 468149
+ 159957 string characters out of 5431082
+ 603769 words of memory out of 5000000
+ 38708 multiletter control sequences out of 15000+600000
+ 629896 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,5n,79p,1219b,437s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 69i,5n,79p,1206b,438s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\scott\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
 1000.pk><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
 ts/cm/cmbsy10.pfb><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/type1/pub
 lic/amsfonts/cm/cmbx10.pfb><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/
 type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/scott/AppData/Local/Programs/MiKT
-eX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/scott/AppData/Local/Progr
-ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/scott/AppData/Loca
-l/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><C:/Users/scott/AppD
-ata/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on scott-nguyen-teaching-resume.pdf (1 page, 110499 bytes).
+eX/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Users/scott/AppData/Local/Progr
+ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Users/scott/AppData/
+Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/scott/
+AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users
+/scott/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><
+C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmt
+i10.pfb>
+Output written on nguyen-scott-cv.pdf (2 pages, 145802 bytes).
 PDF statistics:
- 53 PDF objects out of 1000 (max. 8388607)
- 2 named destinations out of 1000 (max. 500000)
+ 66 PDF objects out of 1000 (max. 8388607)
+ 3 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
