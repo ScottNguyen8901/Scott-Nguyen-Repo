@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.7.26)  23 OCT 2025 17:40
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.7.26)  8 DEC 2025 17:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -424,7 +424,7 @@ Package rerunfilecheck Info: File `scott-nguyen-resume.out' has not changed.
 Here is how much of TeX's memory you used:
  10192 strings out of 468149
  160091 string characters out of 5431082
- 605809 words of memory out of 5000000
+ 606809 words of memory out of 5000000
  38708 multiletter control sequences out of 15000+600000
  629896 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -441,7 +441,7 @@ AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users
 /scott/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><
 C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmt
 i10.pfb>
-Output written on scott-nguyen-resume.pdf (1 page, 137270 bytes).
+Output written on scott-nguyen-resume.pdf (1 page, 137606 bytes).
 PDF statistics:
  62 PDF objects out of 1000 (max. 8388607)
  2 named destinations out of 1000 (max. 500000)

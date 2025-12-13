@@ -1,0 +1,510 @@
+Logging console output to: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\run_log_20251213_101931.txt
+Running porkchop + surrogate experiments:   0%|                           | 0/5 [00:00<?, ?window/s]
+================================================================================
+RUN COMBO: dep2030-01-01_2032-01-01_arr2030-05-01_2032-12-26
+================================================================================
+Derived TOF range: [1.000, 1090.000] days
+Grid: 731 departures × 60 TOFs
+Departure window: 2030-01-01 00:00:00.000 to 2032-01-01 00:00:00.000
+Arrival window: 2030-05-01 00:00:00.000 to 2032-12-26 00:00:00.000
+DV cutoff: 20.0 km/s
+Ephem unavailable; Mars ephemeris will be slower.
+Saved CSV: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2030-01-01_2032-01-01_arr2030-05-01_2032-12-26\porkchop_dep2030-01-01_2032-01-01_arr2030-05-01_2032-12-26.csv (43860 rows)
+Saved plot: plots/porkchop_2030-01-01_2032-01-01.png
+GRID MIN
+2030-12-28 00:00:00.000
+277.864407
+2031-10-01 20:44:44.746
+6.700931
+OPT MIN
+2030-12-28 18:48:44.508
+284.946374
+2031-10-09 17:31:31.218
+6.644486
+11
+Saved plot: plots/porkchop_2030-01-01_2032-01-01_optpath.png
+Saved clean CSV: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2030-01-01_2032-01-01_arr2030-05-01_2032-12-26\porkchop_dep2030-01-01_2032-01-01_arr2030-05-01_2032-12-26_clean.csv
+Saved: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2030-01-01_2032-01-01_arr2030-05-01_2032-12-26\normalization_stats_dep2030-01-01_2032-01-01_arr2030-05-01_2032-12-26.json
+Saved: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2030-01-01_2032-01-01_arr2030-05-01_2032-12-26\ml_data_dep2030-01-01_2032-01-01_arr2030-05-01_2032-12-26.npz
+Rows: 6689 / 43860
+Using device: cpu
+Total samples: 6689
+Split sizes:
+  Train: 4682
+  Val:   1003
+  Test:  1004
+Epoch 001: train MSE=0.8890, val MSE=0.6657, val MAE=0.6515, val RMSE=0.8156, val R2=-0.3173, LR=3.00e-04
+Epoch 005: train MSE=0.2342, val MSE=0.4771, val MAE=0.5965, val RMSE=0.6772, val R2=0.0200, LR=3.00e-04
+Epoch 010: train MSE=0.1409, val MSE=0.1152, val MAE=0.2697, val RMSE=0.3333, val R2=0.7644, LR=3.00e-04
+Epoch 015: train MSE=0.1146, val MSE=0.1065, val MAE=0.2493, val RMSE=0.3200, val R2=0.7820, LR=3.00e-04
+Epoch 020: train MSE=0.1025, val MSE=0.0765, val MAE=0.2117, val RMSE=0.2685, val R2=0.8425, LR=3.00e-04
+Epoch 025: train MSE=0.0957, val MSE=0.0937, val MAE=0.2356, val RMSE=0.2952, val R2=0.8056, LR=3.00e-04
+Epoch 030: train MSE=0.0865, val MSE=0.1018, val MAE=0.2462, val RMSE=0.3044, val R2=0.7875, LR=1.50e-04
+Epoch 035: train MSE=0.0800, val MSE=0.0912, val MAE=0.2335, val RMSE=0.2897, val R2=0.8108, LR=1.50e-04
+Epoch 040: train MSE=0.0790, val MSE=0.0854, val MAE=0.2255, val RMSE=0.2785, val R2=0.8223, LR=7.50e-05
+Early stopping at epoch 44
+Validation performance:
+  MAE  = 0.8571 km/s
+  RMSE = 1.1065 km/s
+  R2   = 0.8319
+Test performance:
+  MAE  = 1.9288 km/s
+  RMSE = 2.3086 km/s
+  R2   = 0.4421
+All performance:
+  MAE  = 0.7313 km/s
+  RMSE = 1.2269 km/s
+  R2   = 0.8941
+Saved model: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2030-01-01_2032-01-01_arr2030-05-01_2032-12-26\dv_surrogate_model_dep2030-01-01_2032-01-01_arr2030-05-01_2032-12-26.pt
+Saved 1x3 triptych: plots\porkchop_triptych_dep20300101-20320101_arr20300501-20321226.png
+Saved error histogram: plots\porkchop_error_histogram_dep20300101-20320101_arr20300501-20321226.png
+Saved four-mins plot: plots\porkchop_four_mins_dep20300101-20320101_arr20300501-20321226.png
+SURROGATE EVAL
+mae_kms 0.731264
+rmse_kms 1.226854
+GRID TRUE MIN
+2030-12-28 00:00:00.000
+277.864407
+2031-10-01 20:44:44.746
+6.700931
+TRUE OBJECTIVE OPT MIN
+2030-12-28 18:48:44.508
+284.946374
+2031-10-09 17:31:31.218
+6.644486
+11
+SURROGATE GRID MIN
+2030-12-17 00:00:00.000
+277.864407
+2031-09-20 20:44:44.746
+7.274566
+6.861590
+SURROGATE OPT MIN
+2030-12-21 05:24:02.211
+285.827879
+2031-10-03 01:16:10.939
+7.252023
+6.716336
+10
+SUMMARY
+grid_true_dv_kms 6.700931
+trueopt_true_dv_kms 6.644486
+surggrid_pred_dv_kms 7.274566
+surggrid_true_dv_kms 6.861590
+suropt_pred_dv_kms 7.252023
+suropt_true_dv_kms 6.716336
+Running porkchop + surrogate experiments:  20%|###8               | 1/5 [00:34<02:17, 34.37s/window]
+================================================================================
+RUN COMBO: dep2032-01-01_2034-01-01_arr2032-05-01_2034-12-26
+================================================================================
+Derived TOF range: [1.000, 1090.000] days
+Grid: 732 departures × 60 TOFs
+Departure window: 2032-01-01 00:00:00.000 to 2034-01-01 00:00:00.000
+Arrival window: 2032-05-01 00:00:00.000 to 2034-12-26 00:00:00.000
+DV cutoff: 20.0 km/s
+Ephem unavailable; Mars ephemeris will be slower.
+Saved CSV: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2032-01-01_2034-01-01_arr2032-05-01_2034-12-26\porkchop_dep2032-01-01_2034-01-01_arr2032-05-01_2034-12-26.csv (43920 rows)
+Saved plot: plots/porkchop_2032-01-01_2034-01-01.png
+GRID MIN
+2033-04-17 00:00:00.000
+204.033898
+2033-11-07 00:48:48.814
+6.142027
+OPT MIN
+2033-04-15 19:53:28.647
+198.777969
+2033-10-31 14:33:45.149
+6.121069
+13
+Saved plot: plots/porkchop_2032-01-01_2034-01-01_optpath.png
+Saved clean CSV: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2032-01-01_2034-01-01_arr2032-05-01_2034-12-26\porkchop_dep2032-01-01_2034-01-01_arr2032-05-01_2034-12-26_clean.csv
+Saved: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2032-01-01_2034-01-01_arr2032-05-01_2034-12-26\normalization_stats_dep2032-01-01_2034-01-01_arr2032-05-01_2034-12-26.json
+Saved: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2032-01-01_2034-01-01_arr2032-05-01_2034-12-26\ml_data_dep2032-01-01_2034-01-01_arr2032-05-01_2034-12-26.npz
+Rows: 7242 / 43920
+Using device: cpu
+Total samples: 7242
+Split sizes:
+  Train: 5069
+  Val:   1086
+  Test:  1087
+Epoch 001: train MSE=0.8085, val MSE=0.6852, val MAE=0.6466, val RMSE=0.8209, val R2=-0.5278, LR=3.00e-04
+Epoch 005: train MSE=0.2021, val MSE=0.9295, val MAE=0.8222, val RMSE=0.9264, val R2=-1.1228, LR=3.00e-04
+Epoch 010: train MSE=0.1256, val MSE=0.7712, val MAE=0.6756, val RMSE=0.8411, val R2=-0.7638, LR=1.50e-04
+Epoch 015: train MSE=0.1067, val MSE=0.6691, val MAE=0.6106, val RMSE=0.7852, val R2=-0.5308, LR=1.50e-04
+Epoch 020: train MSE=0.0996, val MSE=0.5151, val MAE=0.5260, val RMSE=0.6860, val R2=-0.1790, LR=1.50e-04
+Epoch 025: train MSE=0.0949, val MSE=0.4503, val MAE=0.4960, val RMSE=0.6428, val R2=-0.0310, LR=1.50e-04
+Epoch 030: train MSE=0.0899, val MSE=0.3804, val MAE=0.4515, val RMSE=0.5917, val R2=0.1290, LR=1.50e-04
+Epoch 035: train MSE=0.0862, val MSE=0.2938, val MAE=0.3981, val RMSE=0.5181, val R2=0.3277, LR=1.50e-04
+Epoch 040: train MSE=0.0837, val MSE=0.2633, val MAE=0.3694, val RMSE=0.4903, val R2=0.3983, LR=1.50e-04
+Epoch 045: train MSE=0.0807, val MSE=0.2503, val MAE=0.3555, val RMSE=0.4803, val R2=0.4284, LR=1.50e-04
+Epoch 050: train MSE=0.0783, val MSE=0.1875, val MAE=0.3047, val RMSE=0.4115, val R2=0.5732, LR=1.50e-04
+Epoch 055: train MSE=0.0739, val MSE=0.2032, val MAE=0.3234, val RMSE=0.4329, val R2=0.5368, LR=1.50e-04
+Epoch 060: train MSE=0.0732, val MSE=0.1755, val MAE=0.2907, val RMSE=0.4006, val R2=0.6004, LR=1.50e-04
+Epoch 065: train MSE=0.0704, val MSE=0.1767, val MAE=0.2926, val RMSE=0.4037, val R2=0.5979, LR=1.50e-04
+Epoch 070: train MSE=0.0686, val MSE=0.1557, val MAE=0.2642, val RMSE=0.3765, val R2=0.6459, LR=1.50e-04
+Epoch 075: train MSE=0.0706, val MSE=0.1555, val MAE=0.2624, val RMSE=0.3774, val R2=0.6467, LR=1.50e-04
+Epoch 080: train MSE=0.0699, val MSE=0.1494, val MAE=0.2526, val RMSE=0.3682, val R2=0.6607, LR=7.50e-05
+Epoch 085: train MSE=0.0648, val MSE=0.1489, val MAE=0.2590, val RMSE=0.3687, val R2=0.6615, LR=7.50e-05
+Epoch 090: train MSE=0.0648, val MSE=0.1467, val MAE=0.2491, val RMSE=0.3652, val R2=0.6667, LR=7.50e-05
+Epoch 095: train MSE=0.0663, val MSE=0.1490, val MAE=0.2506, val RMSE=0.3686, val R2=0.6617, LR=3.75e-05
+Epoch 100: train MSE=0.0653, val MSE=0.1489, val MAE=0.2566, val RMSE=0.3689, val R2=0.6616, LR=3.75e-05
+Epoch 105: train MSE=0.0624, val MSE=0.1460, val MAE=0.2531, val RMSE=0.3649, val R2=0.6681, LR=1.87e-05
+Epoch 110: train MSE=0.0646, val MSE=0.1408, val MAE=0.2453, val RMSE=0.3572, val R2=0.6803, LR=9.37e-06
+Epoch 115: train MSE=0.0647, val MSE=0.1392, val MAE=0.2447, val RMSE=0.3553, val R2=0.6838, LR=9.37e-06
+Epoch 120: train MSE=0.0636, val MSE=0.1419, val MAE=0.2474, val RMSE=0.3591, val R2=0.6778, LR=4.69e-06
+Epoch 125: train MSE=0.0627, val MSE=0.1417, val MAE=0.2463, val RMSE=0.3587, val R2=0.6782, LR=2.34e-06
+Epoch 130: train MSE=0.0649, val MSE=0.1426, val MAE=0.2475, val RMSE=0.3600, val R2=0.6760, LR=1.17e-06
+Early stopping at epoch 132
+Validation performance:
+  MAE  = 0.9903 km/s
+  RMSE = 1.5102 km/s
+  R2   = 0.6942
+Test performance:
+  MAE  = 2.1741 km/s
+  RMSE = 2.5842 km/s
+  R2   = 0.3255
+All performance:
+  MAE  = 0.7985 km/s
+  RMSE = 1.3743 km/s
+  R2   = 0.8819
+Saved model: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2032-01-01_2034-01-01_arr2032-05-01_2034-12-26\dv_surrogate_model_dep2032-01-01_2034-01-01_arr2032-05-01_2034-12-26.pt
+Saved 1x3 triptych: plots\porkchop_triptych_dep20320101-20340101_arr20320430-20341227.png
+Saved error histogram: plots\porkchop_error_histogram_dep20320101-20340101_arr20320430-20341227.png
+Saved four-mins plot: plots\porkchop_four_mins_dep20320101-20340101_arr20320430-20341227.png
+SURROGATE EVAL
+mae_kms 0.798524
+rmse_kms 1.374267
+GRID TRUE MIN
+2033-04-17 00:00:00.000
+204.033898
+2033-11-07 00:48:48.814
+6.142027
+TRUE OBJECTIVE OPT MIN
+2033-04-15 19:53:28.647
+198.777969
+2033-10-31 14:33:45.149
+6.121069
+13
+SURROGATE GRID MIN
+2033-04-29 00:00:00.000
+185.576271
+2033-10-31 13:49:49.831
+6.644606
+6.509804
+SURROGATE OPT MIN
+2033-04-29 12:00:08.375
+182.207019
+2033-10-28 16:58:14.845
+6.625975
+6.586176
+13
+SUMMARY
+grid_true_dv_kms 6.142027
+trueopt_true_dv_kms 6.121069
+surggrid_pred_dv_kms 6.644606
+surggrid_true_dv_kms 6.509804
+suropt_pred_dv_kms 6.625975
+suropt_true_dv_kms 6.586176
+Running porkchop + surrogate experiments:  40%|#######6           | 2/5 [01:18<02:00, 40.08s/window]
+================================================================================
+RUN COMBO: dep2034-01-01_2036-01-01_arr2034-05-01_2036-12-26
+================================================================================
+Derived TOF range: [1.000, 1090.000] days
+Grid: 731 departures × 60 TOFs
+Departure window: 2034-01-01 00:00:00.000 to 2036-01-01 00:00:00.000
+Arrival window: 2034-05-01 00:00:00.000 to 2036-12-26 00:00:00.000
+DV cutoff: 20.0 km/s
+Ephem unavailable; Mars ephemeris will be slower.
+Saved CSV: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2034-01-01_2036-01-01_arr2034-05-01_2036-12-26\porkchop_dep2034-01-01_2036-01-01_arr2034-05-01_2036-12-26.csv (43860 rows)
+Saved plot: plots/porkchop_2034-01-01_2036-01-01.png
+GRID MIN
+2035-06-25 00:00:00.000
+204.033898
+2036-01-15 00:48:48.814
+5.577021
+OPT MIN
+2035-06-25 20:50:12.962
+201.045707
+2036-01-12 21:56:02.089
+5.570698
+13
+Saved plot: plots/porkchop_2034-01-01_2036-01-01_optpath.png
+Saved clean CSV: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2034-01-01_2036-01-01_arr2034-05-01_2036-12-26\porkchop_dep2034-01-01_2036-01-01_arr2034-05-01_2036-12-26_clean.csv
+Saved: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2034-01-01_2036-01-01_arr2034-05-01_2036-12-26\normalization_stats_dep2034-01-01_2036-01-01_arr2034-05-01_2036-12-26.json
+Saved: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2034-01-01_2036-01-01_arr2034-05-01_2036-12-26\ml_data_dep2034-01-01_2036-01-01_arr2034-05-01_2036-12-26.npz
+Rows: 7522 / 43860
+Using device: cpu
+Total samples: 7522
+Split sizes:
+  Train: 5265
+  Val:   1128
+  Test:  1129
+Epoch 001: train MSE=0.7136, val MSE=0.6230, val MAE=0.6805, val RMSE=0.7876, val R2=-0.5646, LR=3.00e-04
+Epoch 005: train MSE=0.1733, val MSE=0.6698, val MAE=0.6103, val RMSE=0.7951, val R2=-0.8143, LR=3.00e-04
+Epoch 010: train MSE=0.1043, val MSE=0.5844, val MAE=0.5217, val RMSE=0.7263, val R2=-0.6073, LR=3.00e-04
+Epoch 015: train MSE=0.0879, val MSE=0.5389, val MAE=0.5041, val RMSE=0.6972, val R2=-0.4811, LR=3.00e-04
+Epoch 020: train MSE=0.0816, val MSE=0.4309, val MAE=0.4344, val RMSE=0.6226, val R2=-0.1814, LR=3.00e-04
+Epoch 025: train MSE=0.0786, val MSE=0.4274, val MAE=0.4264, val RMSE=0.6195, val R2=-0.1728, LR=3.00e-04
+Epoch 030: train MSE=0.0745, val MSE=0.4255, val MAE=0.4287, val RMSE=0.6185, val R2=-0.1676, LR=3.00e-04
+Epoch 035: train MSE=0.0690, val MSE=0.4718, val MAE=0.4599, val RMSE=0.6495, val R2=-0.2992, LR=3.00e-04
+Epoch 040: train MSE=0.0697, val MSE=0.4271, val MAE=0.4287, val RMSE=0.6179, val R2=-0.1750, LR=1.50e-04
+Epoch 045: train MSE=0.0675, val MSE=0.3541, val MAE=0.3764, val RMSE=0.5632, val R2=0.0289, LR=1.50e-04
+Epoch 050: train MSE=0.0652, val MSE=0.3421, val MAE=0.3658, val RMSE=0.5529, val R2=0.0614, LR=1.50e-04
+Epoch 055: train MSE=0.0640, val MSE=0.3137, val MAE=0.3466, val RMSE=0.5299, val R2=0.1409, LR=1.50e-04
+Epoch 060: train MSE=0.0639, val MSE=0.3166, val MAE=0.3507, val RMSE=0.5316, val R2=0.1317, LR=7.50e-05
+Epoch 065: train MSE=0.0622, val MSE=0.3289, val MAE=0.3612, val RMSE=0.5411, val R2=0.0963, LR=7.50e-05
+Epoch 070: train MSE=0.0625, val MSE=0.3239, val MAE=0.3578, val RMSE=0.5370, val R2=0.1102, LR=3.75e-05
+Early stopping at epoch 74
+Validation performance:
+  MAE  = 1.4421 km/s
+  RMSE = 2.3033 km/s
+  R2   = 0.2560
+Test performance:
+  MAE  = 6.5276 km/s
+  RMSE = 7.1850 km/s
+  R2   = -4.5383
+All performance:
+  MAE  = 1.5362 km/s
+  RMSE = 3.0171 km/s
+  R2   = 0.4598
+Saved model: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2034-01-01_2036-01-01_arr2034-05-01_2036-12-26\dv_surrogate_model_dep2034-01-01_2036-01-01_arr2034-05-01_2036-12-26.pt
+Saved 1x3 triptych: plots\porkchop_triptych_dep20340101-20360101_arr20340501-20361226.png
+Saved error histogram: plots\porkchop_error_histogram_dep20340101-20360101_arr20340501-20361226.png
+Saved four-mins plot: plots\porkchop_four_mins_dep20340101-20360101_arr20340501-20361226.png
+SURROGATE EVAL
+mae_kms 1.536155
+rmse_kms 3.017077
+GRID TRUE MIN
+2035-06-25 00:00:00.000
+204.033898
+2036-01-15 00:48:48.814
+5.577021
+TRUE OBJECTIVE OPT MIN
+2035-06-25 20:50:12.962
+201.045707
+2036-01-12 21:56:02.089
+5.570698
+13
+SURROGATE GRID MIN
+2035-06-26 00:00:00.000
+167.118644
+2035-12-10 02:50:50.847
+5.942714
+6.350000
+SURROGATE OPT MIN
+2035-06-22 10:30:52.662
+173.709565
+2035-12-13 03:32:39.102
+5.935507
+6.163434
+10
+SUMMARY
+grid_true_dv_kms 5.577021
+trueopt_true_dv_kms 5.570698
+surggrid_pred_dv_kms 5.942714
+surggrid_true_dv_kms 6.350000
+suropt_pred_dv_kms 5.935507
+suropt_true_dv_kms 6.163434
+Running porkchop + surrogate experiments:  60%|###########4       | 3/5 [02:04<01:25, 42.86s/window]
+================================================================================
+RUN COMBO: dep2036-01-01_2038-01-01_arr2036-05-01_2038-12-26
+================================================================================
+Derived TOF range: [1.000, 1090.000] days
+Grid: 732 departures × 60 TOFs
+Departure window: 2036-01-01 00:00:00.000 to 2038-01-01 00:00:00.000
+Arrival window: 2036-05-01 00:00:00.000 to 2038-12-26 00:00:00.000
+DV cutoff: 20.0 km/s
+Ephem unavailable; Mars ephemeris will be slower.
+Saved CSV: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2036-01-01_2038-01-01_arr2036-05-01_2038-12-26\porkchop_dep2036-01-01_2038-01-01_arr2036-05-01_2038-12-26.csv (43920 rows)
+Saved plot: plots/porkchop_2036-01-01_2038-01-01.png
+GRID MIN
+2037-08-17 00:00:00.000
+351.694915
+2038-08-03 16:40:40.678
+6.603244
+OPT MIN
+2037-08-15 15:01:31.639
+348.422515
+2038-07-30 01:09:56.922
+6.600245
+15
+Saved plot: plots/porkchop_2036-01-01_2038-01-01_optpath.png
+Saved clean CSV: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2036-01-01_2038-01-01_arr2036-05-01_2038-12-26\porkchop_dep2036-01-01_2038-01-01_arr2036-05-01_2038-12-26_clean.csv
+Saved: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2036-01-01_2038-01-01_arr2036-05-01_2038-12-26\normalization_stats_dep2036-01-01_2038-01-01_arr2036-05-01_2038-12-26.json
+Saved: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2036-01-01_2038-01-01_arr2036-05-01_2038-12-26\ml_data_dep2036-01-01_2038-01-01_arr2036-05-01_2038-12-26.npz
+Rows: 7299 / 43920
+Using device: cpu
+Total samples: 7299
+Split sizes:
+  Train: 5109
+  Val:   1094
+  Test:  1096
+Epoch 001: train MSE=0.5789, val MSE=1.2666, val MAE=1.0473, val RMSE=1.1228, val R2=-1.1984, LR=3.00e-04
+Epoch 005: train MSE=0.1464, val MSE=0.5585, val MAE=0.5140, val RMSE=0.7439, val R2=0.0274, LR=3.00e-04
+Epoch 010: train MSE=0.1051, val MSE=0.4558, val MAE=0.4418, val RMSE=0.6695, val R2=0.2036, LR=1.50e-04
+Epoch 015: train MSE=0.0942, val MSE=0.4243, val MAE=0.4172, val RMSE=0.6454, val R2=0.2589, LR=1.50e-04
+Epoch 020: train MSE=0.0907, val MSE=0.3970, val MAE=0.3909, val RMSE=0.6239, val R2=0.3072, LR=1.50e-04
+Epoch 025: train MSE=0.0880, val MSE=0.3794, val MAE=0.3817, val RMSE=0.6099, val R2=0.3387, LR=1.50e-04
+Epoch 030: train MSE=0.0864, val MSE=0.3617, val MAE=0.3768, val RMSE=0.5962, val R2=0.3712, LR=1.50e-04
+Epoch 035: train MSE=0.0821, val MSE=0.3726, val MAE=0.3779, val RMSE=0.6035, val R2=0.3490, LR=1.50e-04
+Epoch 040: train MSE=0.0803, val MSE=0.3484, val MAE=0.3616, val RMSE=0.5840, val R2=0.3931, LR=1.50e-04
+Epoch 045: train MSE=0.0785, val MSE=0.3421, val MAE=0.3621, val RMSE=0.5792, val R2=0.4050, LR=1.50e-04
+Epoch 050: train MSE=0.0774, val MSE=0.3432, val MAE=0.3568, val RMSE=0.5786, val R2=0.4009, LR=7.50e-05
+Epoch 055: train MSE=0.0742, val MSE=0.3390, val MAE=0.3601, val RMSE=0.5760, val R2=0.4097, LR=7.50e-05
+Epoch 060: train MSE=0.0741, val MSE=0.3347, val MAE=0.3561, val RMSE=0.5721, val R2=0.4170, LR=7.50e-05
+Epoch 065: train MSE=0.0736, val MSE=0.3345, val MAE=0.3554, val RMSE=0.5717, val R2=0.4169, LR=7.50e-05
+Epoch 070: train MSE=0.0732, val MSE=0.3465, val MAE=0.3664, val RMSE=0.5811, val R2=0.3945, LR=7.50e-05
+Epoch 075: train MSE=0.0716, val MSE=0.3367, val MAE=0.3596, val RMSE=0.5731, val R2=0.4123, LR=7.50e-05
+Epoch 080: train MSE=0.0697, val MSE=0.3193, val MAE=0.3489, val RMSE=0.5590, val R2=0.4449, LR=7.50e-05
+Epoch 085: train MSE=0.0695, val MSE=0.3268, val MAE=0.3508, val RMSE=0.5645, val R2=0.4299, LR=7.50e-05
+Epoch 090: train MSE=0.0683, val MSE=0.3247, val MAE=0.3529, val RMSE=0.5628, val R2=0.4338, LR=3.75e-05
+Epoch 095: train MSE=0.0682, val MSE=0.3244, val MAE=0.3537, val RMSE=0.5625, val R2=0.4343, LR=1.87e-05
+Epoch 100: train MSE=0.0685, val MSE=0.3231, val MAE=0.3531, val RMSE=0.5614, val R2=0.4367, LR=9.37e-06
+Early stopping at epoch 100
+Validation performance:
+  MAE  = 1.3795 km/s
+  RMSE = 2.2209 km/s
+  R2   = 0.4544
+Test performance:
+  MAE  = 6.6451 km/s
+  RMSE = 7.5382 km/s
+  R2   = -4.3306
+All performance:
+  MAE  = 1.5831 km/s
+  RMSE = 3.1374 km/s
+  R2   = 0.3552
+Saved model: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2036-01-01_2038-01-01_arr2036-05-01_2038-12-26\dv_surrogate_model_dep2036-01-01_2038-01-01_arr2036-05-01_2038-12-26.pt
+Saved 1x3 triptych: plots\porkchop_triptych_dep20360101-20380101_arr20360430-20381227.png
+Saved error histogram: plots\porkchop_error_histogram_dep20360101-20380101_arr20360430-20381227.png
+Saved four-mins plot: plots\porkchop_four_mins_dep20360101-20380101_arr20360430-20381227.png
+SURROGATE EVAL
+mae_kms 1.583127
+rmse_kms 3.137391
+GRID TRUE MIN
+2037-08-17 00:00:00.000
+351.694915
+2038-08-03 16:40:40.678
+6.603244
+TRUE OBJECTIVE OPT MIN
+2037-08-15 15:01:31.639
+348.422515
+2038-07-30 01:09:56.922
+6.600245
+15
+SURROGATE GRID MIN
+2037-12-20 00:00:00.000
+370.152542
+2038-12-25 03:39:39.661
+4.494246
+18.525353
+SURROGATE OPT MIN
+2037-12-31 23:26:47.921
+359.810880
+2038-12-26 18:54:27.920
+4.400450
+nan
+23
+SUMMARY
+grid_true_dv_kms 6.603244
+trueopt_true_dv_kms 6.600245
+surggrid_pred_dv_kms 4.494246
+surggrid_true_dv_kms 18.525353
+suropt_pred_dv_kms 4.400450
+suropt_true_dv_kms nan
+Running porkchop + surrogate experiments:  80%|###############2   | 4/5 [02:49<00:43, 43.74s/window]
+================================================================================
+RUN COMBO: dep2038-01-01_2040-01-01_arr2038-05-01_2040-12-26
+================================================================================
+Derived TOF range: [1.000, 1090.000] days
+Grid: 731 departures × 60 TOFs
+Departure window: 2038-01-01 00:00:00.000 to 2040-01-01 00:00:00.000
+Arrival window: 2038-05-01 00:00:00.000 to 2040-12-26 00:00:00.000
+DV cutoff: 20.0 km/s
+Ephem unavailable; Mars ephemeris will be slower.
+Saved CSV: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2038-01-01_2040-01-01_arr2038-05-01_2040-12-26\porkchop_dep2038-01-01_2040-01-01_arr2038-05-01_2040-12-26.csv (43860 rows)
+c:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\porkchop_run.py:247: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`). Consider using `matplotlib.pyplot.close()`.
+  plt.figure(figsize=(10, 5))
+Saved plot: plots/porkchop_2038-01-01_2040-01-01.png
+GRID MIN
+2039-09-19 00:00:00.000
+333.237288
+2040-08-17 05:41:41.695
+5.742917
+OPT MIN
+2039-09-19 12:14:34.859
+340.892893
+2040-08-25 09:40:20.806
+5.712505
+12
+Saved plot: plots/porkchop_2038-01-01_2040-01-01_optpath.png
+Saved clean CSV: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2038-01-01_2040-01-01_arr2038-05-01_2040-12-26\porkchop_dep2038-01-01_2040-01-01_arr2038-05-01_2040-12-26_clean.csv
+Saved: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2038-01-01_2040-01-01_arr2038-05-01_2040-12-26\normalization_stats_dep2038-01-01_2040-01-01_arr2038-05-01_2040-12-26.json
+Saved: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2038-01-01_2040-01-01_arr2038-05-01_2040-12-26\ml_data_dep2038-01-01_2040-01-01_arr2038-05-01_2040-12-26.npz
+Rows: 6754 / 43860
+Using device: cpu
+Total samples: 6754
+Split sizes:
+  Train: 4727
+  Val:   1013
+  Test:  1014
+Epoch 001: train MSE=0.5229, val MSE=1.8368, val MAE=1.2436, val RMSE=1.3540, val R2=-1.4436, LR=3.00e-04
+Epoch 005: train MSE=0.1491, val MSE=0.4317, val MAE=0.4691, val RMSE=0.6508, val R2=0.4163, LR=3.00e-04
+Epoch 010: train MSE=0.1037, val MSE=0.5915, val MAE=0.5461, val RMSE=0.7529, val R2=0.1851, LR=3.00e-04
+Epoch 015: train MSE=0.0947, val MSE=0.5972, val MAE=0.5473, val RMSE=0.7562, val R2=0.1771, LR=1.50e-04
+Epoch 020: train MSE=0.0896, val MSE=0.6070, val MAE=0.5471, val RMSE=0.7624, val R2=0.1639, LR=7.50e-05
+Epoch 025: train MSE=0.0893, val MSE=0.6240, val MAE=0.5572, val RMSE=0.7730, val R2=0.1402, LR=3.75e-05
+Early stopping at epoch 25
+Validation performance:
+  MAE  = 2.1695 km/s
+  RMSE = 3.0757 km/s
+  R2   = 0.2008
+Test performance:
+  MAE  = 4.4099 km/s
+  RMSE = 5.3927 km/s
+  R2   = -1.4670
+All performance:
+  MAE  = 1.4953 km/s
+  RMSE = 2.5518 km/s
+  R2   = 0.5705
+Saved model: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931\dep2038-01-01_2040-01-01_arr2038-05-01_2040-12-26\dv_surrogate_model_dep2038-01-01_2040-01-01_arr2038-05-01_2040-12-26.pt
+Saved 1x3 triptych: plots\porkchop_triptych_dep20380101-20400101_arr20380501-20401226.png
+Saved error histogram: plots\porkchop_error_histogram_dep20380101-20400101_arr20380501-20401226.png
+Saved four-mins plot: plots\porkchop_four_mins_dep20380101-20400101_arr20380501-20401226.png
+SURROGATE EVAL
+mae_kms 1.495255
+rmse_kms 2.551766
+GRID TRUE MIN
+2039-09-19 00:00:00.000
+333.237288
+2040-08-17 05:41:41.695
+5.742917
+TRUE OBJECTIVE OPT MIN
+2039-09-19 12:14:34.859
+340.892893
+2040-08-25 09:40:20.806
+5.712505
+12
+SURROGATE GRID MIN
+2040-01-01 00:00:00.000
+351.694915
+2040-12-17 16:40:40.678
+4.476396
+16.600760
+SURROGATE OPT MIN
+2039-12-31 21:11:26.924
+359.839899
+2040-12-25 17:20:54.204
+4.402341
+17.642699
+22
+SUMMARY
+grid_true_dv_kms 5.742917
+trueopt_true_dv_kms 5.712505
+surggrid_pred_dv_kms 4.476396
+surggrid_true_dv_kms 16.600760
+suropt_pred_dv_kms 4.402341
+suropt_true_dv_kms 17.642699
+Running porkchop + surrogate experiments: 100%|###################| 5/5 [03:11<00:00, 35.96s/window]Running porkchop + surrogate experiments: 100%|###################| 5/5 [03:11<00:00, 38.37s/window]
+
+ALL COMBINATIONS COMPLETE
+Results saved under: C:\Users\scott\Documents\Folder\UNM-SSE\4-Fall-2025\ECE-506\Final-Project\Code\runs_20251213_101931

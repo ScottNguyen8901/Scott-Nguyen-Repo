@@ -1,0 +1,139 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{fancyhdr}
+
+% ---------- URL and Hyperlink setup ----------
+\Urlmuskip=0mu plus 1mu
+\hypersetup{
+	breaklinks=true,
+	colorlinks=true,
+	linkcolor=blue,
+	urlcolor=blue
+}
+
+% ---------- MATLAB code style ----------
+\lstdefinestyle{matlabstyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	numbers=left,
+	numberstyle=\tiny,
+	stepnumber=1,
+	numbersep=8pt,
+	frame=single,
+	columns=fullflexible,
+	keepspaces=true,
+	showstringspaces=false,
+	keywordstyle=\bfseries,
+	commentstyle=\itshape\color{gray},
+}
+
+% ---------- Header setup ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\today}
+\fancyhead[C]{ECE 517: Homework 3.1}
+\fancyhead[R]{Scott Nguyen}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+
+\begin{document}
+	\setlength{\parindent}{0pt}
+	
+	The objective of this assignment is to summarize the theory of Statistical Learning Theory in a structured way. The grading of this homework is based on the corresponding rubric and on the originality of the way you explain the concepts.
+	
+	\medskip
+	\textbf{Questions}
+	
+	\begin{enumerate}
+		\item \textbf{Definition of risk.} What is the definition of (expected) risk? Write it using an equation and explain all of its terms.
+		
+		\noindent\textbf{Solution.}
+		In SLT the expected risk is the average loss over the true data distribution:
+		\[
+		R(\alpha) = \int L\big(y, f(x,\alpha)\big)\, dF(x,y),
+		\]
+		where $L(\cdot)$ is the loss, $f(x,\alpha)$ is the model with parameters $\alpha$, and $F(x,y)$ is the (unknown) joint distribution of data and labels. This tells us how well the model works \emph{in general}, not just on the training set.
+		
+		\vspace{1em}
+		
+		\item \textbf{Definition of empirical risk.} What is the definition of empirical risk? Write it using an equation and explain all of its terms.
+		
+		\noindent\textbf{Solution.}
+		Because $F(x,y)$ is unknown, we approximate the risk with the data we have:
+		\[
+		R_{\text{emp}}(\alpha) = \frac{1}{N} \sum_{n=1}^{N} L\big(y_n, f(x_n,\alpha)\big).
+		\]
+		This is just the average loss on the $N$ training samples $(x_n, y_n)$. Minimizing this is what most learning algorithms do, but if the model is too flexible, minimizing $R_{\text{emp}}$ alone can overfit.
+		
+		\vspace{1em}
+		
+		\item \textbf{Expressive capacity and overfitting.} What do we mean in Machine Learning when we talk about the \emph{expressive capacity} (capacity/complexity) of a machine? What is the relationship between this concept and \emph{overfitting}?
+		
+		\noindent\textbf{Solution.}
+		Expressive capacity is how complicated a function the model can represent. A model with high capacity can fit very rich patterns — and also the noise. If we minimize empirical risk with a model whose capacity is too high for the amount of data, we get overfitting: low training error, worse test error. In SLT this idea is made precise with the VC dimension: higher VC dimension $\Rightarrow$ higher capacity $\Rightarrow$ higher overfitting risk when $N$ is small.
+		
+		\vspace{1em}
+		
+		\item \textbf{VC dimension.} Define the VC dimension in the same way it has been presented in class.
+		
+		\noindent\textbf{Solution.}
+		The VC dimension $h$ is the largest number of points that the hypothesis class can \emph{shatter}, i.e., classify correctly for \emph{all} possible labelings. For a linear classifier, a hyperplane in $\mathbb{R}^n$, we saw that $h = n + 1$. So $h$ is a numeric way to talk about model complexity.
+		
+		\vspace{1em}
+		
+		\item \textbf{VC theorem.} Enunciate and interpret the VC theorem that describes the bound on the actual (true) risk.
+		
+		\noindent\textbf{Solution.}
+		The VC theorem gives the following bound, valid with probability at least $1 - \eta$:
+		\[
+		R(\alpha) \le R_{\text{emp}}(\alpha) +
+		\sqrt{\frac{h\big(\log(2N/h) + 1\big) - \log(\eta/4)}{N}}.
+		\]
+		The first term is how well we fit the data; the second term penalizes complexity (through $h$) and small sample size (through $N$). The message is: don’t just minimize $R_{\text{emp}}$, minimize the \emph{whole} right-hand side. That’s the Structural Risk Minimization (SRM) principle.
+		
+		\vspace{1em}
+		
+		\item \textbf{SVM criterion and VC dimension.} Introduce the SVM criterion and relate it to the VC dimension.
+		
+		\noindent\textbf{Solution.}
+		For a linear classifier $w^\top x + b = 0$, the margin is
+		\[
+		d = \frac{1}{\|w\|}.
+		\]
+		Maximizing the margin is the same as minimizing $\|w\|$, which reduces the VC dimension. When the data are not separable, the SVM solves
+		\[
+		\min_{w,b,\xi_n} \frac{1}{2}\|w\|^2 + C \sum_{n=1}^N \xi_n
+		\quad \text{s.t. } y_n(w^\top x_n + b) \ge 1 - \xi_n,\; \xi_n \ge 0.
+		\]
+		The first term controls complexity (structure), the second term controls training errors (empirical risk). So the SVM is an SLT machine that actually enforces SRM.
+		
+		\vspace{1em}
+		
+		\item \textbf{Support vectors and dual coefficients.} What are the support vectors (SV) in an SVM learning machine? What are the dual coefficients associated to each SV? What can be said about the values of the dual coefficients associated to an SV depending on its position?
+		
+		\noindent\textbf{Solution.}
+		In the dual form,
+		\[
+		w = \sum_{n=1}^N \alpha_n y_n x_n.
+		\]
+		Only the points with $\alpha_n > 0$ matter — these are the \emph{support vectors}. Their $\alpha_n$ tells us where they sit relative to the margin:
+		\begin{itemize}
+			\item correctly classified \textbf{outside} the margin: $\alpha_n = 0$;
+			\item \textbf{on} the margin: $0 < \alpha_n < C$;
+			\item \textbf{inside} the margin / misclassified: $\alpha_n = C$.
+		\end{itemize}
+		So the decision boundary is completely determined by the support vectors and their dual coefficients.
+		
+	\end{enumerate}
+	
+\end{document}

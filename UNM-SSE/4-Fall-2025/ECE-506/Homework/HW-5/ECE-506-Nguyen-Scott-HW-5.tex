@@ -1,0 +1,727 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,bm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{fancyhdr}
+
+% ---------- URL and Hyperlink setup ----------
+\Urlmuskip=0mu plus 1mu
+\hypersetup{
+	breaklinks=true,
+	colorlinks=true,
+	linkcolor=blue,
+	urlcolor=blue
+}
+
+% ---------- MATLAB code style ----------
+\lstdefinestyle{matlabstyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	numbers=left,
+	numberstyle=\tiny,
+	stepnumber=1,
+	numbersep=8pt,
+	frame=single,
+	columns=fullflexible,
+	keepspaces=true,
+	showstringspaces=false,
+	keywordstyle=\bfseries,
+	commentstyle=\itshape\color{gray},
+}
+
+% ---------- Header setup ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\today}
+\fancyhead[C]{ECE 506: Homework \#5}
+\fancyhead[R]{Scott Nguyen}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+
+\begin{document}
+	
+	\noindent\textbf{Problem 1. Intersection of Convex Sets}
+	
+	Show that the intersection of any number of convex sets remains convex.
+	
+	\noindent\textbf{Hint.} Recall the definition of convex sets:
+	\[
+	x_1, x_2 \in C,\; 0 \le \theta \le 1 \;\Rightarrow\; \theta x_1 + (1-\theta)x_2 \in C.
+	\]
+	Then apply the properties of intersection. Note that the property holds trivially for empty sets. To see this, note that $A \Rightarrow B$ is the same as ``not $A$ or $B$''. For empty sets, we have that not $A$ is true since any empty set has no members. Hence, (not $A$ or $B$) holds.
+	
+	\vspace{1em}
+	\noindent\textbf{Solution.}
+	Let $\{C_i\}_{i \in I}$ be any collection of convex sets and let
+	\[
+	C = \bigcap_{i \in I} C_i.
+	\]
+	Pick any $x_1, x_2 \in C$. Being in the intersection means $x_1, x_2 \in C_i$ for every $i \in I$. Since each $C_i$ is convex, for any $0 \le \theta \le 1$ we have
+	\[
+	\theta x_1 + (1-\theta)x_2 \in C_i \quad \text{for all } i \in I.
+	\]
+	So that same point is in every $C_i$, hence it’s in their intersection $C$. That’s exactly the definition of $C$ being convex.
+	
+	\vspace{1.5em}
+	\noindent\textbf{Problem 2. Affine Sets}
+	
+	Show that halfspaces of the form
+	\[
+	S = \{ x \mid a^T x \le b \}, \quad a \neq 0
+	\]
+	are convex.
+	
+	\noindent\textbf{Hint.} Use the definition of convex sets and the properties of inequalities for $\theta x_1$ and $(1-\theta)x_2$ where $x_1, x_2 \in S$.
+	
+	\vspace{1em}
+	\noindent\textbf{Solution.}
+	Let $S = \{ x \mid a^T x \le b \}$ with $a \neq 0$. Take any $x_1, x_2 \in S$. That means
+	\[
+	a^T x_1 \le b \quad \text{and} \quad a^T x_2 \le b.
+	\]
+	Now take any $0 \le \theta \le 1$ and look at the convex combination
+	\[
+	x = \theta x_1 + (1-\theta)x_2.
+	\]
+	Then
+	\[
+	a^T x = a^T (\theta x_1 + (1-\theta)x_2)
+	= \theta a^T x_1 + (1-\theta) a^T x_2
+	\le \theta b + (1-\theta) b
+	= b.
+	\]
+	So $a^T x \le b$, which means $x \in S$. Since this works for any two points in $S$ and any $\theta \in [0,1]$, the halfspace $S$ is convex.
+	
+	\newpage
+	\noindent\textbf{Problem 3. Positive Semidefinite Matrices and Convex Functions}
+	
+	Suppose that $A_1, A_2, \dots, A_m$ are symmetric positive semidefinite.
+	
+	\begin{enumerate}[label=\textbf{(\alph*)}, leftmargin=1.2cm]
+		\item Show that $A_1 + A_2 + \cdots + A_m$ is symmetric positive semidefinite. In other words, show that symmetric positive semidefinite matrices are closed under addition.
+		
+		\noindent\textit{Hint.} A matrix $A$ is symmetric positive semidefinite if $x^T A x \ge 0$ for all $x$. Use this property and inequality properties.
+		
+		\noindent\textbf{Solution.}
+		Let $A_1, A_2, \dots, A_m$ be symmetric positive semidefinite (PSD) matrices. First, since each $A_i$ is symmetric, their sum
+		\[
+		A = A_1 + A_2 + \cdots + A_m
+		\]
+		is also symmetric.
+		
+		Now take any vector $x$. Then
+		\[
+		x^T A x = x^T (A_1 + \cdots + A_m) x
+		= x^T A_1 x + \cdots + x^T A_m x.
+		\]
+		But each $A_i$ is PSD, so $x^T A_i x \ge 0$ for all $i$. A sum of nonnegative numbers is nonnegative, so
+		\[
+		x^T A x \ge 0 \quad \text{for all } x.
+		\]
+		Therefore $A$ is symmetric positive semidefinite.
+		
+		\item Assume that $w_1, w_2, \dots, w_m \ge 0$. Show that
+		\[
+		w_1 A_1 + w_2 A_2 + \cdots + w_m A_m
+		\]
+		is also symmetric positive semidefinite.
+		
+		\noindent\textbf{Solution.}
+		Let $A_1, \dots, A_m$ be symmetric positive semidefinite and let $w_1, \dots, w_m \ge 0$. Define
+		\[
+		A = w_1 A_1 + w_2 A_2 + \cdots + w_m A_m.
+		\]
+		Each $A_i$ is symmetric, so any nonnegative scalar multiple $w_i A_i$ is also symmetric, and a sum of symmetric matrices is symmetric; hence $A$ is symmetric.
+		
+		Now take any vector $x$. Then
+		\[
+		x^T A x = x^T \bigl( w_1 A_1 + \cdots + w_m A_m \bigr) x
+		= w_1 x^T A_1 x + \cdots + w_m x^T A_m x.
+		\]
+		Since each $A_i$ is positive semidefinite, $x^T A_i x \ge 0$. Since also $w_i \ge 0$, every term $w_i x^T A_i x \ge 0$. A sum of nonnegative terms is nonnegative, so
+		\[
+		x^T A x \ge 0 \quad \text{for all } x.
+		\]
+		Therefore $A$ is symmetric positive semidefinite.
+		
+		\item Suppose that $f_1, f_2, \dots, f_m$ are convex and $w_1, w_2, \dots, w_m \ge 0$. Furthermore, assume that $f_1, f_2, \dots, f_m$ are continuously differentiable up to the second derivative. Show that
+		\[
+		w_1 f_1(x) + w_2 f_2(x) + \cdots + w_m f_m(x)
+		\]
+		is convex.
+		
+		\noindent\textit{Hint.} Consider the Hessian of $w_1 f_1(x) + \cdots + w_m f_m(x)$ and part (b).
+		
+		\noindent\textbf{Solution.}
+		Let $f_1, \dots, f_m$ be convex and let $w_1, \dots, w_m \ge 0$. Define
+		\[
+		f(x) = w_1 f_1(x) + \cdots + w_m f_m(x).
+		\]
+		We show $f$ is convex using the definition.
+		
+		Take any $x, y$ and any $0 \le \theta \le 1$. Since each $f_i$ is convex,
+		\[
+		f_i(\theta x + (1-\theta) y) \le \theta f_i(x) + (1-\theta) f_i(y).
+		\]
+		Multiply both sides by $w_i \ge 0$:
+		\[
+		w_i f_i(\theta x + (1-\theta) y) \le w_i \theta f_i(x) + w_i (1-\theta) f_i(y).
+		\]
+		Now sum over $i = 1, \dots, m$:
+		\[
+		\sum_{i=1}^m w_i f_i(\theta x + (1-\theta) y)
+		\le \theta \sum_{i=1}^m w_i f_i(x) + (1-\theta) \sum_{i=1}^m w_i f_i(y).
+		\]
+		But the left-hand side is $f(\theta x + (1-\theta) y)$ and the right-hand side is
+		$\theta f(x) + (1-\theta) f(y)$. So
+		\[
+		f(\theta x + (1-\theta) y) \le \theta f(x) + (1-\theta) f(y),
+		\]
+		which is exactly convexity.
+		
+		\item We consider a more direct proof of (c) that does not require that the functions are differentiable. Define $g(x)$ using
+		\[
+		g(x) = w_1 f_1(x) + w_2 f_2(x) + \cdots + w_m f_m(x)
+		\]
+		for $w_1, \dots, w_m \ge 0$ and $f_1, \dots, f_m$ convex. Show that $g(x)$ is convex even though it may not be differentiable.
+		
+		\noindent\textit{Hint.} You will need to use the definition of convexity and add up the inequalities from the individual convex functions to prove this.
+		
+		\noindent\textbf{Solution.}
+		Let $f_1, \dots, f_m$ be convex and $w_1, \dots, w_m \ge 0$. Define
+		\[
+		g(x) = \sum_{i=1}^m w_i f_i(x).
+		\]
+		We want to show $g$ is convex without assuming differentiability.
+		
+		Take any $x, y$ and $0 \le \theta \le 1$. Since each $f_i$ is convex, we have
+		\[
+		f_i(\theta x + (1-\theta) y) \le \theta f_i(x) + (1-\theta) f_i(y).
+		\]
+		Multiply by $w_i \ge 0$:
+		\[
+		w_i f_i(\theta x + (1-\theta) y) \le \theta w_i f_i(x) + (1-\theta) w_i f_i(y).
+		\]
+		Now sum these inequalities over $i = 1, \dots, m$:
+		\[
+		\sum_{i=1}^m w_i f_i(\theta x + (1-\theta) y)
+		\le \theta \sum_{i=1}^m w_i f_i(x) + (1-\theta) \sum_{i=1}^m w_i f_i(y).
+		\]
+		The left side is $g(\theta x + (1-\theta) y)$ and the right side is
+		$\theta g(x) + (1-\theta) g(y)$. So
+		\[
+		g(\theta x + (1-\theta) y) \le \theta g(x) + (1-\theta) g(y),
+		\]
+		which is exactly the definition of convexity. Thus $g$ is convex even if the $f_i$’s are not differentiable.
+		
+		\item Based on (d) show that the elastic net formulation is convex:
+		\[
+		\|y - X\beta\|_2^2 + \lambda_2 \|\beta\|_2^2 + \lambda_1 \|\beta\|_1
+		\]
+		where $y, \beta$ are vectors, $X$ is a matrix, and $\lambda_1, \lambda_2 > 0$.
+		
+		\noindent\textit{Hint.} From slide 3-4, we have the following convex norms: $\|\beta\|_p$ for $p \ge 1$ which includes $p = \infty$. In addition, evaluate the Hessians of
+		\[
+		\|y - X\beta\|_2^2 = (y - X\beta)^T (y - X\beta), \qquad
+		\|\beta\|_2^2 = \sum_i \beta_i^2 = \beta^T \beta
+		\]
+		and show that they are symmetric positive semidefinite based on 5(b).
+		
+		\noindent\textbf{Solution.}
+		We want to show that
+		\[
+		F(\beta) = \|y - X\beta\|_2^2 + \lambda_2 \|\beta\|_2^2 + \lambda_1 \|\beta\|_1
+		\]
+		is convex for $\lambda_1, \lambda_2 > 0$.
+		
+		1. The term $\|y - X\beta\|_2^2 = (y - X\beta)^T (y - X\beta)$ is a quadratic function in $\beta$. Its Hessian is $2X^T X$, and $X^T X$ is symmetric positive semidefinite, so this term is convex.
+		
+		2. The term $\|\beta\|_2^2 = \beta^T \beta$ has Hessian $2I$, which is symmetric positive definite, so $\|\beta\|_2^2$ is convex. Multiplying by $\lambda_2 > 0$ keeps it convex.
+		
+		3. The term $\|\beta\|_1$ is a norm (with $p=1$), and norms are convex. Multiplying by $\lambda_1 > 0$ keeps it convex.
+		
+		Now we have a sum of convex functions, each with a nonnegative weight. By the result in (d), the sum is convex. Therefore, the elastic net objective is convex.
+		
+	\end{enumerate}
+	
+	\newpage
+	
+	\vspace{1.5em}
+	\noindent\textbf{Problem 4. Convex Functions in 1D}
+	
+	\begin{enumerate}[label=\textbf{(\alph*)}, leftmargin=1.2cm]
+		\item Use the definition of convexity and concavity to show that $ax + b$ is both convex and concave.
+		
+		\noindent\textbf{Solution.}
+		A function $f$ is convex if
+		\[
+		f(tx_1 + (1-t)x_2) \le t f(x_1) + (1-t) f(x_2)
+		\quad \forall\, x_1,x_2 \in \mathbb{R}, \; t \in [0,1].
+		\]
+		Let $f(x) = ax + b$. Then
+		\[
+		f(tx_1 + (1-t)x_2)
+		= a(tx_1 + (1-t)x_2) + b
+		= t(ax_1 + b) + (1-t)(ax_2 + b)
+		= t f(x_1) + (1-t) f(x_2).
+		\]
+		Thus equality holds, implying both
+		\[
+		f(tx_1 + (1-t)x_2) \le t f(x_1) + (1-t) f(x_2)
+		\quad \text{and} \quad
+		f(tx_1 + (1-t)x_2) \ge t f(x_1) + (1-t) f(x_2).
+		\]
+		Hence, $f(x) = ax + b$ is both convex and concave (i.e., affine).
+		
+		\item Use the second derivative test to establish that the following functions are convex:
+		\[
+		e^{ax} \text{ for } x \in \mathbb{R}, \qquad
+		x^\alpha \text{ for } x \in \mathbb{R}_{++} \text{ and } \alpha \ge 1, \qquad
+		x \log x \text{ for } x \in \mathbb{R}_{++}.
+		\]
+		
+		\noindent\textbf{Solution.}
+		Recall: if $f$ is twice differentiable on an interval and $f''(x) \ge 0$ for all $x$ in that interval, then $f$ is convex there.
+		
+		1. For $f(x) = e^{ax}$, we have
+		\[
+		f'(x) = a e^{ax}, \qquad f''(x) = a^2 e^{ax}.
+		\]
+		Since $e^{ax} > 0$ and $a^2 \ge 0$, we get $f''(x) \ge 0$ for all $x \in \mathbb{R}$, so $e^{ax}$ is convex on $\mathbb{R}$.
+		
+		2. For $f(x) = x^\alpha$ with $x \in \mathbb{R}_{++}$ and $\alpha \ge 1$,
+		\[
+		f'(x) = \alpha x^{\alpha-1}, \qquad f''(x) = \alpha(\alpha-1) x^{\alpha-2}.
+		\]
+		Here $\alpha(\alpha-1) \ge 0$ and $x^{\alpha-2} > 0$ for $x>0$, so $f''(x) \ge 0$ on $\mathbb{R}_{++}$, hence $x^\alpha$ is convex on $\mathbb{R}_{++}$.
+		
+		3. For $f(x) = x \log x$ on $\mathbb{R}_{++}$,
+		\[
+		f'(x) = \log x + 1, \qquad f''(x) = \frac{1}{x}.
+		\]
+		Since $\frac{1}{x} > 0$ for $x>0$, we have $f''(x) \ge 0$ on $\mathbb{R}_{++}$, so $x \log x$ is convex on $\mathbb{R}_{++}$.
+		
+	\end{enumerate}
+	
+	\newpage
+	\noindent\textbf{Problem 5. Symmetric Positive Semidefinite Matrices}
+	
+	\begin{enumerate}[label=\textbf{(\alph*)}, leftmargin=1.2cm]
+		\item Suppose that $S$ is symmetric with positive entries. Show that $S$ is symmetric positive semidefinite for vectors $x \ge 0$.
+		
+		\noindent\textit{Hint.} Use the definition from 3(a), inequality properties, and the fact that
+		\[
+		x^T S x = \sum_i \sum_j s_{ij} x_i x_j.
+		\]
+		
+		\noindent\textbf{Solution.}
+		Let $S = [s_{ij}]$ be a symmetric matrix with positive entries, i.e.\ $s_{ij} > 0$ for all $i,j$.  
+		Take any vector $x \ge 0$, meaning $x_i \ge 0$ for all $i$. Then
+		\[
+		x^T S x = \sum_i \sum_j s_{ij} x_i x_j.
+		\]
+		Since $s_{ij} > 0$ and $x_i, x_j \ge 0$, each term $s_{ij} x_i x_j \ge 0$.  
+		Therefore,
+		\[
+		x^T S x = \sum_i \sum_j s_{ij} x_i x_j \ge 0.
+		\]
+		Because $S$ is symmetric and $x^T S x \ge 0$ for all $x \ge 0$,  
+		we conclude that $S$ is \textbf{symmetric positive semidefinite for vectors $x \ge 0$}.
+		
+		\item Suppose that $S$ is symmetric and expressed as $S = V V^T$ for some vector $V$. Show that $S$ is symmetric positive semidefinite.
+		
+		\noindent\textit{Hint.} Use the fact that
+		\[
+		x^T V V^T x = (V^T x)^T (V^T x).
+		\]
+		
+		\noindent\textbf{Solution.}
+		Let $S = V V^T$ for some (column) vector $V \in \mathbb{R}^n$. First, $S$ is symmetric because
+		\[
+		S^T = (V V^T)^T = V V^T = S.
+		\]
+		Now take any $x \in \mathbb{R}^n$. Then
+		\[
+		x^T S x = x^T (V V^T) x = (V^T x)^T (V^T x).
+		\]
+		But $(V^T x)$ is a scalar, so
+		\[
+		(V^T x)^T (V^T x) = (V^T x)^2 \ge 0.
+		\]
+		Thus $x^T S x \ge 0$ for all $x$, and since $S$ is symmetric, $S$ is symmetric positive semidefinite.
+		
+	\end{enumerate}
+	
+	\newpage
+	
+	\vspace{1.5em}
+	\noindent\textbf{Problem 6. Multiobjective Optimization I} \hfill (This problem is worth twice as much credit as the other problems.)
+	
+	\begin{enumerate}[label=\textbf{(\alph*)}, leftmargin=1.2cm]
+		\item Suppose that $f_1(\cdot)$ and $f_2(\cdot)$ represent two objectives that we are trying to minimize. When comparing points, we say that $x$ is \emph{at least as good as} $y$ in the multiobjective sense if
+		\[
+		f_1(x) \le f_1(y) \quad \text{and} \quad f_2(x) \le f_2(y).
+		\]
+		Usually, there is no one point that is better than all other points. Instead, in multiobjective optimization (or vector optimization), we compute the Pareto front as the set of points that cannot be improved upon by any other point.
+		
+		More formally, $x$ is a Pareto point if we cannot find another point that matches $x$ in all but at least one objective:
+		\[
+		x \text{ is Pareto-optimal} \;\Rightarrow\; \neg \bigl(\exists y \, \exists j \, \forall i \ne j \; f_j(x) > f_j(y) \text{ and } f_i(y) \le f_i(x) \bigr).
+		\]
+		Negate this statement to show that:
+		\[
+		x \text{ is Pareto-optimal} \;\Rightarrow\; \forall y \; \forall j \text{ except for index } i: \; f_j(x) \le f_j(y) \text{ or } f_i(y) > f_i(x).
+		\]
+		In other words, a point is Pareto optimal if no other point can be found that is at least as good in all criteria.
+		
+		\noindent\textit{Hint.} We propagate the negation from left to right. Also note that $\neg \forall y$ becomes $\exists y$ and $\neg \exists y$ becomes $\forall y$. Then the negation of $(A \text{ and } B)$ is $(\neg A \text{ or } \neg B)$.
+		
+		\noindent\textbf{Solution.}
+		We begin with the definition of a Pareto-optimal point:
+		\[
+		x \text{ is Pareto-optimal} \;\Rightarrow\;
+		\neg \bigl( \exists y \, \exists j \, \forall i \ne j \;
+		[\, f_j(x) > f_j(y) \text{ and } f_i(y) \le f_i(x) \,] \bigr).
+		\]
+		This expression says that there does not exist another point $y$ and an objective $j$
+		such that $y$ performs strictly better than $x$ in objective $j$ and at least as well in all others.
+		
+		To obtain the equivalent positive form, we move the negation inward step by step,
+		using the standard logical rules:
+		\[
+		\neg(\exists) = \forall, \quad
+		\neg(\forall) = \exists, \quad
+		\neg(A \land B) = (\neg A) \lor (\neg B).
+		\]
+		
+		Applying these in sequence:
+		\begin{align*}
+			&\neg \bigl(\exists y \, \exists j \, \forall i \ne j \;
+			[ f_j(x) > f_j(y) \text{ and } f_i(y) \le f_i(x) ] \bigr) \\
+			&= \forall y \; \neg \bigl(\exists j \, \forall i \ne j \;
+			[ f_j(x) > f_j(y) \text{ and } f_i(y) \le f_i(x) ] \bigr) \\
+			&= \forall y \; \forall j \;
+			\neg \bigl(\forall i \ne j \;
+			[ f_j(x) > f_j(y) \text{ and } f_i(y) \le f_i(x) ] \bigr) \\
+			&= \forall y \; \forall j \;
+			\exists i \ne j \; \neg \bigl( f_j(x) > f_j(y)
+			\text{ and } f_i(y) \le f_i(x) \bigr) \\
+			&= \forall y \; \forall j \;
+			\exists i \ne j \; \bigl(
+			f_j(x) \le f_j(y) \; \text{or} \;
+			f_i(y) > f_i(x)
+			\bigr).
+		\end{align*}
+		
+		Therefore, we can express Pareto optimality equivalently as:
+		\[
+		\boxed{
+			x \text{ is Pareto-optimal} \;\Longrightarrow\;
+			\forall y \; \forall j \; \exists i \ne j :
+			\bigl( f_j(x) \le f_j(y) \;\text{or}\;
+			f_i(y) > f_i(x) \bigr).
+		}
+		\]
+		
+		In words, this means that for every other point $y$ and every objective $j$,
+		there is at least one objective (possibly a different one) where either
+		$x$ performs no worse than $y$, or $y$ performs worse than $x$.
+		Thus, no point $y$ exists that is at least as good as $x$ in all objectives
+		and strictly better in one.
+		
+		\item Suppose that we are looking at accuracy and computational time. As before, we want to minimize the computational time objective. However, we want to have higher accuracy for this objective. Modify the code so that the new front determines that $x$ is better than $y$ if
+		\[
+		(\text{accuracy}(x) \ge \text{accuracy}(y) \text{ and } \text{time}(x) < \text{time}(y))
+		\]
+		or
+		\[
+		(\text{accuracy}(x) > \text{accuracy}(y) \text{ and } \text{time}(x) \le \text{time}(y)).
+		\]
+		Modify the provided code so that it computes the new front and produce a plot of accuracy (vertical axis) against time (horizontal axis) and demonstrate your function works against 10 random points.
+		
+		\noindent\textit{Note.} Do not oversample. There is one point that is optimal and better than all of the others. Can you see which one? If you sample only a few points, you should be getting a nice front.
+		
+		\noindent\textbf{Solution.}  
+		Here we’re minimizing computational time and maximizing accuracy. A point is considered better if it’s faster while maintaining equal or higher accuracy, or if it’s more accurate at the same or lower time. Using 10 random samples, the figure below shows the resulting Pareto front with accuracy on the vertical axis and time on the horizontal axis.  
+		
+		\begin{figure}[h!]
+			\centering
+			\includegraphics[width=0.6\textwidth]{Code/fig_1.png}
+			\caption{Accuracy vs.\ Time for 10 random samples. Blue dots are Pareto-optimal points; the red line shows the Pareto front.}
+		\end{figure}
+		
+		\noindent The plot makes the trade-off clear—higher accuracy generally comes with longer computation time. The top-left point stands out as the best overall, since it’s both accurate and fast.  
+		
+	\end{enumerate}
+	
+	\newpage
+	
+	\noindent\textbf{Problem 7. Multiobjective Optimization II} \hfill (This problem is worth twice as much credit as the other problems.)
+	
+	\begin{enumerate}[label=\textbf{(\alph*)}, leftmargin=1.2cm]
+		\item Suppose that the Pareto front is given by
+		\[
+		f_2(x) = \frac{1}{f_1(x)} \quad \text{for } x > 0.
+		\]
+		First, we need to show that this is a valid relationship. To verify that this equation can represent a Pareto front, consider any two distinct points of the form $(f_1, 1/f_1)$ and show that one cannot dominate the other.
+		
+		\noindent\textbf{Solution.}  
+		The given front is 
+		\[
+		f_2 = \frac{1}{f_1}, \quad f_1 > 0.
+		\]
+		To check if this can represent a valid Pareto front, take two different points on the curve:
+		\[
+		P = (f_1, 1/f_1), \quad Q = (g_1, 1/g_1),
+		\]
+		where \(f_1 \neq g_1\) and both are positive.
+		
+		If \(f_1 < g_1\), then \(P\) has a smaller \(f_1\) (better in that objective), but a larger \(f_2\) (worse in the other).  
+		If \(f_1 > g_1\), the opposite happens—\(Q\) is better in \(f_1\) but worse in \(f_2\).  
+		
+		In both cases, neither point dominates the other. This means no point along the curve can be strictly better in both objectives, which is exactly what defines a Pareto front.  
+		So, \(f_2 = 1/f_1\) for \(f_1 > 0\) is indeed a valid Pareto front.
+		
+		\item Show that the relationship in 7(a) is both one-to-one and convex. To show that the equation is one-to-one, simply show that we cannot have two different values of $f_1$ map to the same $1/f_1$.
+		
+		\noindent\textbf{Solution.}  
+		The relationship is 
+		\[
+		f_2 = \frac{1}{f_1}, \quad f_1 > 0.
+		\]
+		It’s one-to-one because no two different values of \(f_1\) can produce the same \(f_2\).  
+		If \(f_{1a} \ne f_{1b}\), then \(1/f_{1a} \ne 1/f_{1b}\), since the reciprocal function is strictly decreasing for positive values.  
+		
+		To check convexity, take the second derivative of \(f_2\) with respect to \(f_1\):
+		\[
+		\frac{d f_2}{d f_1} = -\frac{1}{f_1^2}, \quad 
+		\frac{d^2 f_2}{d f_1^2} = \frac{2}{f_1^3}.
+		\]
+		Because \(f_1 > 0\), the second derivative is positive, so the curve is convex.  
+		Hence, the relationship \(f_2 = 1/f_1\) is both one-to-one and convex.  
+		
+		\item Suppose that we want to use scalarization to find the points on the Pareto front. In this case, we would minimize
+		\[
+		f_1(x) + \lambda f_2(x).
+		\]
+		Take the gradient of this expression and set it to zero to find a relationship between $\nabla f_1$ and $\nabla f_2$.
+		
+		\noindent\textbf{Solution.}  
+		Using scalarization, we minimize the combined objective
+		\[
+		f_1(x) + \lambda f_2(x),
+		\]
+		where \(\lambda > 0\) is a weighting factor.  
+		
+		Taking the gradient and setting it equal to zero gives
+		\[
+		\nabla f_1(x) + \lambda \nabla f_2(x) = 0.
+		\]
+		Rearranging, we get the relationship
+		\[
+		\nabla f_1(x) = -\lambda \nabla f_2(x).
+		\]
+		This shows that, at any Pareto-optimal point, the gradients of \(f_1\) and \(f_2\) are opposite in direction and scaled by \(\lambda\).  
+		
+		\item Consider the tangent lines on the Pareto front. The slope at each point is given by $\frac{d f_2}{d f_1}$. As discussed in the book, the vector $(1, \lambda)$ is orthogonal to the local tangent line. Explain how you can select $\lambda$ to get different points on the Pareto front. Provide an example.
+		
+		\noindent\textbf{Solution.}  
+		The slope of the Pareto front is given by 
+		\[
+		\frac{d f_2}{d f_1},
+		\]
+		and the vector \((1, \lambda)\) is orthogonal to this tangent line.  
+		Because orthogonality implies
+		\[
+		\frac{d f_2}{d f_1} = -\frac{1}{\lambda},
+		\]
+		changing the value of \(\lambda\) changes the slope of the tangent line and, in turn, selects different points along the front.  
+		
+		For example, using the front \(f_2 = 1/f_1\), we have
+		\[
+		\frac{d f_2}{d f_1} = -\frac{1}{f_1^2}.
+		\]
+		Comparing with \(-1/\lambda\), we find
+		\[
+		\lambda = f_1^2.
+		\]
+		So, by varying \(\lambda\), we can move to different \(f_1\) (and corresponding \(f_2\)) values on the Pareto front — small \(\lambda\) emphasizes minimizing \(f_1\), while large \(\lambda\) emphasizes minimizing \(f_2\).  
+		
+		\item Note that we can also use the Pareto front to solve constrained optimization problems. Consider the following problem:
+		\[
+		\min_x f_2(x) \quad \text{for } f_1 \le b.
+		\]
+		Show that the solution is on the boundary. Repeat for:
+		\[
+		\min_x f_1(x) \quad \text{for } f_2 \le b.
+		\]
+		
+		\noindent\textbf{Solution.}
+		Think of the Pareto front as giving us the “best you can do” in one objective for any fixed value of the other. So if we want to
+		\[
+		\min_x f_2(x) \quad \text{subject to } f_1(x) \le b,
+		\]
+		then among all points whose \(f_1\) is at most \(b\), the one with the smallest \(f_2\) will lie on the Pareto front at exactly \(f_1 = b\). If it were at some \(f_1 < b\), then (by moving along the front to the right, up to \(f_1 = b\)) we could often do better in \(f_2\), so the optimal feasible point gets “pushed” to the boundary.
+		
+		By the same logic, for
+		\[
+		\min_x f_1(x) \quad \text{subject to } f_2(x) \le b,
+		\]
+		the best point will lie on the part of the Pareto front where \(f_2 = b\). Going below the boundary in \(f_2\) would force us off the front and give a worse \(f_1\), so again the solution is on the constraint boundary.
+		
+	\end{enumerate}
+	
+	\newpage
+	
+	\vspace{1.5em}
+	\noindent\textbf{Provided MATLAB Code}
+	
+	\noindent You may include the provided code as follows:
+	\begin{lstlisting}[style=matlabstyle]
+% Regular multi-objective optimization methods:
+%  Regular methods assume that objective values are available over
+%  regularly spaced intervals. This is a trivial case and it is one for
+%  which all of the problems can be solved directly.
+clear
+clc
+run_reg_mo_obj
+
+function run_reg_mo_obj
+N = 10;
+M = 10;
+fs = 14; % font size
+lw = 1.5; % line width
+mo2d = setup_multi_obj_rand2d(N, M);
+mo2d_pareto_points = pareto_opt2d(mo2d);
+mo2d_pareto_front   = pareto_front_conts2d(mo2d);
+plot_mo_all(1, mo2d, mo2d_pareto_points, mo2d_pareto_front, fs, lw);
+end
+
+% ------------------------------------------
+% A regular structure constructor to guarantee that
+% we have uniform structure names.
+function [mo_struct] = make_mo_struct (x1, x2, o1, o2)
+mo_struct = struct('x1', x1, 'x2', x2, 'o1', o1, 'o2', o2);
+end
+
+% ----------------------
+% setup_multi_obj_rand2d():
+%  Sets up all of the objective using random functions
+%  In this special structure "multi_obj2d", arrays
+%  are created using meshgrid() and stored regularly.
+function [mo2d] = setup_multi_obj_rand2d(N, M)
+
+% Uniformly sample the parameter space
+x1_range = linspace(0, 1, N);
+x2_range = linspace(0, 1, M);
+
+% Create a uniform grid of the parameters space based on the range:
+[x1, x2] = meshgrid(x1_range, x2_range);
+
+% For each one of the parameter values create random values:
+% (assignment wants 10 random points, so just make 1-by-N arrays)
+f1 = rand(1, N);  % time (to minimize)
+f2 = rand(1, N);  % accuracy (to maximize)
+x1 = rand(1, N);
+x2 = rand(1, N);
+
+% Put everything in a nice multi-objective optimization structure: 
+mo2d = make_mo_struct(x1, x2, f1, f2);
+end
+
+% -------------
+% pareto_opt2d()
+%   Compute the Pareto-optimal points in 2d.
+%   Store the results in a parallel structure of 1-D arrays.
+function [mo2d_pareto_points] = pareto_opt2d(mo2d)
+
+% Initialize the results:
+x1 = [];
+x2 = [];
+o1 = [];
+o2 = [];
+
+% Go through a loop all possible points to identify optimal cases    
+[N, M] = size(mo2d.x1);
+for i=1:N
+for j=1:M
+o1_val = mo2d.o1 (i,j);  % time
+o2_val = mo2d.o2 (i,j);  % accuracy
+
+% Compute the number of non-zero elements that are better using
+% nnz(.)
+opt_size = nnz((mo2d.o2 >= o2_val) .* (mo2d.o1 <  o1_val)) + ...
+nnz((mo2d.o2 >  o2_val) .* (mo2d.o1 <= o1_val));
+
+% Nobody can beat this point. So it is optimal:
+if (opt_size == 0) 
+x1 = [x1, mo2d.x1(i,j)];
+x2 = [x2, mo2d.x2(i,j)];
+o1 = [o1, o1_val];
+o2 = [o2, o2_val];
+end          
+end
+end
+
+% Create the return structure:
+mo2d_pareto_points = make_mo_struct(x1, x2, o1, o2); 
+end
+
+% --------------
+% pareto_front2d()
+%    Generates a Pareto front by computing the Pareto points
+%    and then sorting through them in the right order.
+function [mo2d_pareto_front] = pareto_front_conts2d(mo2d)
+
+% Generate the optimal points:
+[mo2d_pareto_points] = pareto_opt2d(mo2d);
+
+% Sort through the data points:
+% Start from the highest value of o1 and the lowest of o2.
+% First, re-index based on a descending order from o1.
+[o1_sorted, o1_ind] = sort(mo2d_pareto_points.o1, 'ascend');
+o2_vals = mo2d_pareto_points.o2 (o1_ind);
+x1_vals = mo2d_pareto_points.x1 (o1_ind);
+x2_vals = mo2d_pareto_points.x2 (o1_ind);
+
+% Assuming that the objectives are continuous, we do not need to do
+% anything else!
+
+% Store the contents in a structure:
+mo2d_pareto_front = make_mo_struct(x1_vals, x2_vals, o1_sorted, o2_vals);
+end
+
+% --------------
+% plot_mo_all():
+%   Plots the realization space and Pareto optimal front for visualization.
+function plot_mo_all (figure_num, mo_all, mo_points, mo_pareto_front, fs, lw)
+figure(figure_num);
+clf
+hold on
+title('Accuracy vs Time (Pareto front)', 'FontName', 'Arial', 'FontSize', fs);
+xlabel('Time (lower is better)', 'FontName', 'Arial', 'FontSize', fs);
+ylabel('Accuracy (higher is better)', 'FontName', 'Arial', 'FontSize', fs);
+grid on
+axis tight
+plot(mo_all.o1(:), mo_all.o2(:), '.', 'Color', [0.8 0.8 0.8], 'HandleVisibility', 'off');
+h1 = plot(mo_points.o1(:), mo_points.o2(:), 'o', 'MarkerFaceColor', 'b', ...
+'DisplayName', 'Pareto points', 'LineWidth', lw);
+h2 = plot(mo_pareto_front.o1(:), mo_pareto_front.o2(:), 'r-', ...
+'LineWidth', lw, 'DisplayName', 'Pareto front');
+legend([h1 h2], 'Pareto points', 'Pareto front', 'Location', 'northeast', ...
+'FontName', 'Arial', 'FontSize', fs-2);
+set(gca, 'FontName', 'Arial', 'FontSize', fs);
+hold off
+saveas(gcf, 'fig_1.png');
+end
+	\end{lstlisting}
+	
+\end{document}
