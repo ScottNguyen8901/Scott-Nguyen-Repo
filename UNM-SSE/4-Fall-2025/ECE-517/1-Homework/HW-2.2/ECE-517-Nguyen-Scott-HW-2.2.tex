@@ -1,0 +1,105 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{fancyhdr}
+
+% ---------- URL and Hyperlink setup ----------
+\Urlmuskip=0mu plus 1mu
+\hypersetup{
+	breaklinks=true,
+	colorlinks=true,
+	linkcolor=blue,
+	urlcolor=blue
+}
+
+% ---------- MATLAB code style ----------
+\lstdefinestyle{matlabstyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	numbers=left,
+	numberstyle=\tiny,
+	stepnumber=1,
+	numbersep=8pt,
+	frame=single,
+	columns=fullflexible,
+	keepspaces=true,
+	showstringspaces=false,
+	keywordstyle=\bfseries,
+	commentstyle=\itshape\color{gray},
+}
+
+% ---------- Header setup ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\today}
+\fancyhead[C]{ECE 517: Homework 2.2}
+\fancyhead[R]{Scott Nguyen}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+
+\begin{document}
+	\setlength{\parindent}{0pt}
+	
+	Write a complete derivation of the proof that the maximization of margin 
+	$d$ is equivalent to minimize the norm of the parameter vector in the maximum margin machine presented in the last set of slides of this module. 
+	
+	\vspace{1em}
+	\textbf{Solution.}
+	
+	A separating hyperplane can be written as
+	\[
+	\mathbf{w}^\top \mathbf{x} + b = 0,
+	\]
+	where $\mathbf{w}$ is the normal vector and $b$ is the bias.
+	For linearly separable data $(\mathbf{x}_i, y_i)$ with $y_i \in \{-1, 1\}$, we scale $\mathbf{w}$ and $b$ so that
+	\[
+	y_i(\mathbf{w}^\top \mathbf{x}_i + b) \ge 1.
+	\]
+	This means that the two margin planes are
+	\[
+	\mathbf{w}^\top \mathbf{x} + b = 1
+	\quad \text{and} \quad
+	\mathbf{w}^\top \mathbf{x} + b = -1.
+	\]
+	
+	Let $\mathbf{x}_0$ be a point on the separating hyperplane:
+	\[
+	\mathbf{w}^\top \mathbf{x}_0 + b = 0.
+	\]
+	A point on the upper margin can be written as $\mathbf{x}_1 = \mathbf{x}_0 + \rho \mathbf{w}$.
+	Substituting into $\mathbf{w}^\top \mathbf{x}_1 + b = 1$ gives
+	\[
+	\mathbf{w}^\top (\mathbf{x}_0 + \rho \mathbf{w}) + b = 1
+	\quad \Rightarrow \quad
+	\rho \|\mathbf{w}\|^2 = 1
+	\quad \Rightarrow \quad
+	\rho = \frac{1}{\|\mathbf{w}\|^2}.
+	\]
+	The perpendicular distance from the hyperplane to this margin is
+	\[
+	d = \|\mathbf{x}_1 - \mathbf{x}_0\|
+	= \rho \|\mathbf{w}\|
+	= \frac{1}{\|\mathbf{w}\|}.
+	\]
+	
+	Since $d = 1/\|\mathbf{w}\|$, maximizing the margin is the same as minimizing $\|\mathbf{w}\|$.
+	So the maximum–margin problem can be written as
+	\[
+	\min_{\mathbf{w}, b} \|\mathbf{w}\|
+	\quad \text{subject to} \quad
+	y_i(\mathbf{w}^\top \mathbf{x}_i + b) \ge 1.
+	\]
+	
+	\medskip
+	Therefore, maximizing the margin $d$ is equivalent to minimizing the norm of the parameter vector $\mathbf{w}$ in the maximum–margin machine.
+	
+\end{document}

@@ -1,0 +1,594 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,bm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+
+\setlength{\parindent}{0pt}
+
+% ---------- URL and Hyperlink setup ----------
+\Urlmuskip=0mu plus 1mu
+\hypersetup{
+	breaklinks=true,
+	colorlinks=true,
+	linkcolor=blue,
+	urlcolor=blue
+}
+
+% ---------- MATLAB code style ----------
+\lstdefinestyle{matlabstyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	numbers=left,
+	numberstyle=\tiny,
+	stepnumber=1,
+	numbersep=8pt,
+	frame=single,
+	columns=fullflexible,
+	keepspaces=true,
+	showstringspaces=false,
+	keywordstyle=\bfseries,
+	commentstyle=\itshape\color{gray},
+}
+
+% ---------- Header setup ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\today}
+\fancyhead[C]{ECE 517: Homework \#6}
+\fancyhead[R]{Scott Nguyen}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+
+\begin{document}
+	
+	\noindent\textbf{Multiclass Classification with Support Vector Machines}
+	
+	In problems where the number of classes is $K>2$, there are several ways to construct a multiclass classification model. In the case of a Support Vector Machine, several options have been used, almost all of them based on binary classifiers. The common ones are:\\
+	
+	1) One-Against-All (OAA) machines.\\
+	
+	In a OAA (alo known as one-versus-all, OVA), K independent classfiers are trained. For classifier k, training data of class k is labelled as 1 and the rest of data is labelled as -1. During testing, the model calculates the decision function value for each of the binary SVM classifiers. The class with the highest decision function value is then assigned as the predicted class for that instance. Essentially, each SVM gives a "score" indicating how likely an instance belongs to the positive class for that specific SVM. The one-vs-all method chooses the class whose corresponding SVM gives the highest score. The linear SVM in Scikit-Learn (sklearn.svm.LinearSVC) uses this approach
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\textwidth]{fig_1.png}
+	\end{figure}
+	
+	The image above shows an example of OAA classification with data labelled with forur different classes. The boundaries have been drawn by computing which one of the four classfiers provides the highest output for each point in the plane. This partitions the space in 4 sections.\\
+	
+	2) One Against One (OAO)\\
+	
+	The OAO or OVO strategy consists of constructing k(k-1)/2 binary classifiers. For example, if there are 4 classes, the OAO strategy constructs 1A2, 1A3, 1A4, 2A3, 2A4 and 3A4 classifiers, this is 6 different classifiers. Classifier 1A2 is trained with classes 1 and 2, where the data of class 1 is labelled as +1 and  the data of class 2 is labelled as -1. Classifier 1A3 is trained with classes 1 and 3, labelled as +1 and -1 respectively, and so on. 
+	During the test, to predict the class of a new data point, the new point is evaluated by all binary classifiers Each classifier cast one vote for one of its two classes, and the class that receives the most votes is selected as the prediction for the datapoint. The standard kernel SVM in Scikit-Learn (sklearn.svm.SVC) uses this approach.  
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\textwidth]{fig_2.png}
+	\end{figure}
+
+	The figure corresponds to an example of SVM classification that uses the OAO strategy using the multiclass class sklearn.svm.SVC with a linear kernel. Its result is actually very similar to the previous one using the OAA approach.\\ 
+	
+	3) Direct formulation of the multiclass SVM (k-class SVM)\\
+	
+	This approach is a modification of the SVM formulation to construct a single classifier able to classify among the different classes. It was introducxed in 1998 by J. Weston and C. Watkins in the technical report, \emph{Weston, Jason, and Chris Watkins. Multi-class support vector machines. Technical Report CSD-TR-98-04, Department of Computer Science, Royal Holloway, University of London, May, 1998.}\\
+	
+	The table below shows a comparison of advantages and tradeoffs of the three approaches. 
+	
+	\begin{table*}[h!]
+		\centering
+		\renewcommand{\arraystretch}{1.28}
+		
+		% Column layout:
+		% l = small fixed-width first column
+		% X X X = three flexible comparison columns
+		\begin{tabularx}{\textwidth}{p{2.8cm}|X|X|X}
+			\textbf{Feature} &
+			\textbf{One-versus-All (OvA or AOA)} &
+			\textbf{One-versus-One (OvO or AOO)} &
+			\textbf{k-Class SVM (Weston \& Watkins)} \\ \hline
+			
+			\textbf{Number of Classifiers} &
+			$k$ (linear in $k$) &
+			$k(k-1)/2$ (quadratic in $k$) &
+			\textit{One single optimization problem} solved for $k$ classes simultaneously. \\
+			
+			\textbf{Training Data per Classifier} &
+			Large: One class vs. all $k-1$ other classes. \textbf{Imbalanced training sets} are common. &
+			Small: Only samples from the two specific classes. \textbf{Balanced training sets} by nature. &
+			Uses all training data in one formulation. \\
+			
+			\textbf{Training Time} &
+			\textbf{Fastest} for training, as only $k$ classifiers are trained. &
+			Slower than OvA due to the quadratic number of classifiers, but each classifier is trained on a smaller subset of the data. &
+			\textbf{Slowest} (in its original form) as it involves solving a single, much larger optimization problem. \\
+			
+			\textbf{Prediction / Testing Time} &
+			Fast, as only $k$ decision functions are evaluated. &
+			Slower, as $k(k-1)/2$ decision functions are evaluated, usually combined by \textbf{majority voting}. &
+			Fast, as it involves a single maximum decision function: $\arg\max_i f_i(\mathbf{x})$. \\
+			
+		\end{tabularx}
+		
+		\caption{Comparison of OvA, OvO, and k-Class SVM methods.}
+		\label{tab:svm_comparison}
+	\end{table*}
+
+	\textbf{The UCI machine learning Repository}\\
+	
+	The University of California at Irvine Machine Learning Repository \href{https://archive.ics.uci.edu/}{link} is an online repository of datasets maintained by the UC Irvine since 1987, to provide a central place for researchers, educators, and students to find and share real-world data for developing and testing machine learning algorithms. Most probably, in the XXI century, this repository is maintained for educational purposes, but no public data about the evolution of citations of the UCI repository is available. It contains over 600 dataset from domains as biology and medicine, social sciences, image Recognition, fiinance, physics, energy, engineering, and others. Each dataset contains: 
+	
+	\begin{enumerate}
+		\item A data file (CSV or text)
+		\item A description file explaining:
+		\item Attributes (features)
+		\item Task type (classification, regression, clustering)
+		\item Number of instances
+		\item References to academic papers using it
+	\end{enumerate}
+	
+	Many of the datasets are available through Scikit-Learn or Pandas, but the safest way is to use the code provided in the UCI repository (if present) or to download directly the .zip file. The following \href{https://colab.research.google.com/drive/1hCmSUcDQMuZe9SrMs0qRkfnQa-BRbqKw?usp=sharing}{Google ColabLinks} code provides several examples on how to download the data.\\
+	
+	The assignment consists of programming a complete experiment of classification with support vector machines comparing different kernels.\\
+	
+	The student is required to conduct experiments with several of the UCI standard datasets and provide a report with ALL of the elements described below. 
+	
+	\newpage
+	\textbf{Assignment}\\
+	
+	\textbf{6.1}: Choose at least 4 databases whose target is multiclass (with more than two classes). Use the filter of the web page to select Task: "classfication data" and Python: "Available for Python Import" . The number of available data should be of about 170 datasets. Choose two datasets that you consider easy and two datasets that you consider difficult. Break the data into 80\% for training and 20\% for test.\\
+	
+	\noindent\textbf{Solution 6.1}\\
+	
+	I labeled Car Evaluation and Wine as ``easy’’ because their class boundaries are relatively clean and the dimensionality is moderate. Dermatology and Glass were considered ``difficult’’ due to higher dimensionality (Dermatology) and overlapping class structure with imbalance (Glass).
+	
+	\begin{table}[H]
+		\centering
+		\renewcommand{\arraystretch}{1.1}
+		\begin{tabular}{lcccc}
+			\toprule
+			\textbf{Dataset} & \textbf{Samples} & \textbf{Features} & \textbf{Classes} & \textbf{Train/Test} \\
+			\midrule
+			Car Evaluation & 1728 & 6  & 4 & 1382 / 346 \\
+			Dermatology    & 366  & 34 & 6 & 292 / 74 \\
+			Glass          & 214  & 9  & 6 & 171 / 43 \\
+			Wine           & 178  & 13 & 3 & 142 / 36 \\
+			\bottomrule
+		\end{tabular}
+		\caption{Summary of the four multiclass datasets used in this assignment.}
+	\end{table}
+	
+	\newpage
+	\textbf{6.2}: Code as script to conduct a classification experiment to be used by the four datasets. The script must have the following features:\\
+	
+	a) It must be able to perform a v-fold validation for all the parameters of the SVC.\\
+	
+	b) It must be able to compare amongst different kernels. One of the kernels must be linear, another one must be the squared exponential (RBF kernel) and a third kernel must be of your choice amongst the standard kernels coded in the Sckit Learn package.\\
+	
+	c) It must train and validate with the training data (80\% of the data) and do a test on the remaining 20\% of the data.\\
+	
+	Perform experiments with all the datasets and the standard SVM. Write a report that contains, at least, the following:\\
+	
+	1) Description of the data. The description must include an explanation of why you think the data is easy or difficult to use. If so, what are the challenges that a proipri the data shows.\\
+	
+	2) Description of the experiment, including the cross-validation using v-fold. The description must not be limited to the used functions or classes of the Scikit-Learn package, but it must detail the v-fold mechanism, and the choice of the intervals of the parameters of the SVM, that are the C and the parameters of the kernels.\\
+	
+	3) Presentation of the results. You can use tables, graphs or confusion matrices. The clarity and significance on the presentation of the results will be graded. \\
+	
+	4) A discussion including at least the comparison of the results with different kernels, and a comment on the values of the optimal parameters.\\
+	
+	\noindent\textbf{Solution 6.2}\\
+	
+	For each dataset, I trained an SVM classifier using only the 80\% training portion. I used
+	5-fold stratified cross-validation to select hyperparameters. The grid included a linear kernel, an RBF kernel, and a polynomial kernel. For each kernel, I searched over $C$, $\gamma$ (when applicable), and the polynomial degree. After CV, the best model was retrained on the full training set and evaluated on the 20\% test set. Table~\ref{tab:svm_results} summarizes the best kernel, its CV accuracy, and the final test accuracy.
+	
+	\begin{table}[H]
+		\centering
+		\renewcommand{\arraystretch}{1.1}
+		\begin{tabular}{lccc}
+			\toprule
+			\textbf{Dataset} & \textbf{Best Kernel} & \textbf{CV Acc.} & \textbf{Test Acc.} \\
+			\midrule
+			Car Evaluation & Poly ($C{=}10$, deg=3) & 0.9986 & 0.9971 \\
+			Dermatology    & Linear ($C{=}1$)       & 0.9760 & 0.9730 \\
+			Glass          & RBF ($C{=}10$, $\gamma{=}0.1$) & 0.6956 & 0.7209 \\
+			Wine           & Linear ($C{=}0.1$)     & 0.9510 & 0.9722 \\
+			\bottomrule
+		\end{tabular}
+		\caption{Best SVM configuration and performance for each dataset.}
+		\label{tab:svm_results}
+	\end{table}
+	
+	Overall, the easy datasets (Car Evaluation and Wine) reached very high accuracy, even with simple
+	kernels. Dermatology performed best with a linear kernel despite its higher dimensionality.
+	Glass remained the most difficult, and the RBF kernel gave the best (but still moderate)
+	performance due to class overlap.
+
+	\newpage
+	\begin{lstlisting}[style=matlabstyle]
+import numpy as np
+import pandas as pd
+
+from ucimlrepo import fetch_ucirepo
+from sklearn.model_selection import train_test_split, StratifiedKFold, GridSearchCV
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.impute import SimpleImputer
+
+param_grid = [
+{
+	"kernel": ["linear"],
+	"C": [0.1, 1, 10, 100],
+},
+{
+	"kernel": ["rbf"],
+	"C": [0.1, 1, 10, 100],
+	"gamma": [0.01, 0.1, 1],
+},
+{
+	"kernel": ["poly"],
+	"C": [0.1, 1, 10],
+	"degree": [2, 3, 4],
+	"gamma": ["scale", "auto"],
+},
+]
+
+
+def prepare_features(X_train, X_test):
+"""
+Preprocess features for SVM:
+1) One-hot encode categorical features (if inputs are pandas DataFrames).
+2) Align train/test columns after encoding.
+3) Cast to float to avoid bool dtype issues.
+4) Impute missing values (NaN) using 'most_frequent'.
+
+Returns:
+X_train_pre, X_test_pre: NumPy arrays ready for SVC.
+"""
+# Step 1: handle categorical features via one-hot encoding if DataFrame
+if hasattr(X_train, "select_dtypes"):
+X_train_enc = pd.get_dummies(X_train)
+X_test_enc = pd.get_dummies(X_test)
+
+# Align columns between train and test
+X_train_enc, X_test_enc = X_train_enc.align(
+X_test_enc, join="left", axis=1, fill_value=0
+)
+else:
+X_train_enc, X_test_enc = X_train, X_test
+
+# Step 2: cast to float (bool -> 0/1, ints -> float, etc.)
+X_train_enc = X_train_enc.astype(float)
+X_test_enc = X_test_enc.astype(float)
+
+# Step 3: impute missing values
+imputer = SimpleImputer(strategy="most_frequent")
+X_train_imp = imputer.fit_transform(X_train_enc)
+X_test_imp = imputer.transform(X_test_enc)
+
+return X_train_imp, X_test_imp
+
+
+# ------------------------------------------------------------
+# 6.1 - load 4 multiclass datasets and make 80/20 splits
+# ------------------------------------------------------------
+
+dataset_ids = {
+	"car_evaluation": 19,
+	"dermatology": 33,
+	"glass": 42,
+	"wine": 109,
+}
+
+datasets = {}
+splits = {}
+
+for name, uci_id in dataset_ids.items():
+print(f"\n=== {name} (UCI id={uci_id}) ===")
+ds = fetch_ucirepo(id=uci_id)
+
+X = ds.data.features
+y = ds.data.targets.squeeze()
+
+# Ensure y is 1-D (some targets come as DataFrame with 1 column)
+if getattr(y, "ndim", 1) > 1:
+y = y.iloc[:, 0] if hasattr(y, "iloc") else y[:, 0]
+
+n_samples, n_features = X.shape
+classes = np.unique(y)
+n_classes = len(classes)
+
+print(f"samples: {n_samples}, features: {n_features}, classes: {n_classes}")
+print("class labels:", classes)
+assert n_classes > 2, f"{name} is not multiclass"
+
+# 80/20 stratified split
+X_train, X_test, y_train, y_test = train_test_split(
+X,
+y,
+test_size=0.2,
+stratify=y,
+random_state=42,
+)
+
+datasets[name] = ds
+splits[name] = {
+	"X_train": X_train,
+	"X_test": X_test,
+	"y_train": y_train,
+	"y_test": y_test,
+}
+
+print(f"train shape: {X_train.shape}, test shape: {X_test.shape}")
+
+# Mark which datasets you consider "easy" vs "difficult"
+easy_datasets = ["car_evaluation", "wine"]
+difficult_datasets = ["dermatology", "glass"]
+
+print("\nEasy datasets:", easy_datasets)
+print("Difficult datasets:", difficult_datasets)
+
+
+# ------------------------------------------------------------
+# 6.2 - classification experiment with SVM + v-fold CV
+# ------------------------------------------------------------
+
+results = {}
+
+for name, split in splits.items():
+print("\n" + "=" * 70)
+print(f"SVM experiment for dataset: {name}")
+print("=" * 70)
+
+X_train = split["X_train"]
+X_test = split["X_test"]
+y_train = split["y_train"]
+y_test = split["y_test"]
+
+# Prepare features: encode categoricals + cast to numeric + impute NaNs
+X_train_pre, X_test_pre = prepare_features(X_train, X_test)
+
+# GridSearchCV: v-fold cross-validation over all SVC parameters
+grid = GridSearchCV(
+estimator=SVC(),
+param_grid=param_grid,
+cv=cv,
+scoring="accuracy",
+n_jobs=-1,
+refit=True,  # refit best model on the full training set
+return_train_score=False,
+)
+
+grid.fit(X_train_pre, y_train)
+
+# Best model from CV
+best_model = grid.best_estimator_
+best_params = grid.best_params_
+best_cv_acc = grid.best_score_
+
+print("Best parameters (v-fold CV):", best_params)
+print(f"Best mean CV accuracy: {best_cv_acc:.4f}")
+
+# Summarize best CV accuracy per kernel (for kernel comparison in report)
+cv_results = grid.cv_results_
+kernel_best_cv = {}
+for mean_score, params in zip(cv_results["mean_test_score"], cv_results["params"]):
+k = params["kernel"]
+if k not in kernel_best_cv or mean_score > kernel_best_cv[k]:
+kernel_best_cv[k] = mean_score
+
+print("\nBest CV accuracy per kernel:")
+for k, acc in kernel_best_cv.items():
+print(f"  {k:>6}: {acc:.4f}")
+
+# Evaluate on the held-out 20% test set
+y_pred_test = best_model.predict(X_test_pre)
+test_acc = accuracy_score(y_test, y_pred_test)
+cm = confusion_matrix(y_test, y_pred_test)
+
+print(f"\nTest accuracy (on 20% hold-out set): {test_acc:.4f}")
+print("Confusion matrix (rows = true, cols = predicted):")
+print(cm)
+
+# Store everything for later reporting
+results[name] = {
+	"best_params": best_params,
+	"best_cv_acc": best_cv_acc,
+	"kernel_best_cv": kernel_best_cv,
+	"test_acc": test_acc,
+	"confusion_matrix": cm,
+}
+
+print("\n\n=== Summary of results across all datasets ===")
+for name, res in results.items():
+print("\nDataset:", name)
+print("  Best params:", res["best_params"])
+print(f"  Best CV accuracy: {res['best_cv_acc']:.4f}")
+print(f"  Test accuracy:    {res['test_acc']:.4f}")
+print("  Best CV accuracy per kernel:")
+for k, acc in res["kernel_best_cv"].items():
+print(f"    {k:>6}: {acc:.4f}")
+import numpy as np
+import pandas as pd
+
+from ucimlrepo import fetch_ucirepo
+from sklearn.model_selection import train_test_split, StratifiedKFold, GridSearchCV
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.impute import SimpleImputer
+
+v_folds = 5
+cv = StratifiedKFold(n_splits=v_folds, shuffle=True, random_state=42)
+
+param_grid = [
+{
+	"kernel": ["linear"],
+	"C": [0.1, 1, 10, 100],
+},
+{
+	"kernel": ["rbf"],
+	"C": [0.1, 1, 10, 100],
+	"gamma": [0.01, 0.1, 1],
+},
+{
+	"kernel": ["poly"],
+	"C": [0.1, 1, 10],
+	"degree": [2, 3, 4],
+	"gamma": ["scale", "auto"],
+},
+]
+
+
+def prepare_features(X_train, X_test):
+
+if hasattr(X_train, "select_dtypes"):
+X_train_enc = pd.get_dummies(X_train)
+X_test_enc = pd.get_dummies(X_test)
+
+X_train_enc, X_test_enc = X_train_enc.align(
+X_test_enc, join="left", axis=1, fill_value=0
+)
+else:
+X_train_enc, X_test_enc = X_train, X_test
+
+X_train_enc = X_train_enc.astype(float)
+X_test_enc = X_test_enc.astype(float)
+
+imputer = SimpleImputer(strategy="most_frequent")
+X_train_imp = imputer.fit_transform(X_train_enc)
+X_test_imp = imputer.transform(X_test_enc)
+
+return X_train_imp, X_test_imp
+
+dataset_ids = {
+	"car_evaluation": 19,
+	"dermatology": 33,
+	"glass": 42,
+	"wine": 109,
+}
+
+datasets = {}
+splits = {}
+
+for name, uci_id in dataset_ids.items():
+print(f"\n=== {name} (UCI id={uci_id}) ===")
+ds = fetch_ucirepo(id=uci_id)
+
+X = ds.data.features
+y = ds.data.targets.squeeze()
+
+if getattr(y, "ndim", 1) > 1:
+y = y.iloc[:, 0] if hasattr(y, "iloc") else y[:, 0]
+
+n_samples, n_features = X.shape
+classes = np.unique(y)
+n_classes = len(classes)
+
+print(f"samples: {n_samples}, features: {n_features}, classes: {n_classes}")
+print("class labels:", classes)
+assert n_classes > 2, f"{name} is not multiclass"
+
+X_train, X_test, y_train, y_test = train_test_split(
+X,
+y,
+test_size=0.2,
+stratify=y,
+random_state=42,
+)
+
+datasets[name] = ds
+splits[name] = {
+	"X_train": X_train,
+	"X_test": X_test,
+	"y_train": y_train,
+	"y_test": y_test,
+}
+
+print(f"train shape: {X_train.shape}, test shape: {X_test.shape}")
+
+easy_datasets = ["car_evaluation", "wine"]
+difficult_datasets = ["dermatology", "glass"]
+
+print("\nEasy datasets:", easy_datasets)
+print("Difficult datasets:", difficult_datasets)
+
+results = {}
+
+for name, split in splits.items():
+print("\n" + "=" * 70)
+print(f"SVM experiment for dataset: {name}")
+print("=" * 70)
+
+X_train = split["X_train"]
+X_test = split["X_test"]
+y_train = split["y_train"]
+y_test = split["y_test"]
+
+X_train_pre, X_test_pre = prepare_features(X_train, X_test)
+
+grid = GridSearchCV(
+estimator=SVC(),
+param_grid=param_grid,
+cv=cv,
+scoring="accuracy",
+n_jobs=-1,
+refit=True, 
+return_train_score=False,
+)
+
+grid.fit(X_train_pre, y_train)
+
+best_model = grid.best_estimator_
+best_params = grid.best_params_
+best_cv_acc = grid.best_score_
+
+print("Best parameters (v-fold CV):", best_params)
+print(f"Best mean CV accuracy: {best_cv_acc:.4f}")
+
+cv_results = grid.cv_results_
+kernel_best_cv = {}
+for mean_score, params in zip(cv_results["mean_test_score"], cv_results["params"]):
+k = params["kernel"]
+if k not in kernel_best_cv or mean_score > kernel_best_cv[k]:
+kernel_best_cv[k] = mean_score
+
+print("\nBest CV accuracy per kernel:")
+for k, acc in kernel_best_cv.items():
+print(f"  {k:>6}: {acc:.4f}")
+
+y_pred_test = best_model.predict(X_test_pre)
+test_acc = accuracy_score(y_test, y_pred_test)
+cm = confusion_matrix(y_test, y_pred_test)
+
+print(f"\nTest accuracy (on 20% hold-out set): {test_acc:.4f}")
+print("Confusion matrix (rows = true, cols = predicted):")
+print(cm)
+
+results[name] = {
+	"best_params": best_params,
+	"best_cv_acc": best_cv_acc,
+	"kernel_best_cv": kernel_best_cv,
+	"test_acc": test_acc,
+	"confusion_matrix": cm,
+}
+
+print("\n\n=== Summary of results across all datasets ===")
+for name, res in results.items():
+print("\nDataset:", name)
+print("  Best params:", res["best_params"])
+print(f"  Best CV accuracy: {res['best_cv_acc']:.4f}")
+print(f"  Test accuracy:    {res['test_acc']:.4f}")
+print("  Best CV accuracy per kernel:")
+for k, acc in res["kernel_best_cv"].items():
+print(f"    {k:>6}: {acc:.4f}")
+	\end{lstlisting}
+\end{document}

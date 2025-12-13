@@ -1,0 +1,150 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,bm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{fancyhdr}
+
+% ---------- URL and Hyperlink setup ----------
+\Urlmuskip=0mu plus 1mu
+\hypersetup{
+	breaklinks=true,
+	colorlinks=true,
+	linkcolor=blue,
+	urlcolor=blue
+}
+
+% ---------- MATLAB code style ----------
+\lstdefinestyle{matlabstyle}{
+	language=Matlab,
+	basicstyle=\ttfamily\small,
+	numbers=left,
+	numberstyle=\tiny,
+	stepnumber=1,
+	numbersep=8pt,
+	frame=single,
+	columns=fullflexible,
+	keepspaces=true,
+	showstringspaces=false,
+	keywordstyle=\bfseries,
+	commentstyle=\itshape\color{gray},
+}
+
+% ---------- Header setup ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{November 2, 2025}
+\fancyhead[C]{ECE 517: Homework 2.1}
+\fancyhead[R]{Scott Nguyen}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+
+\begin{document}
+	
+	\noindent\textbf{Problem 1. Regularized MMSE Criterion}
+	
+	\noindent
+	A variation of the MMSE criterion minimizes the norm of the weight vector $\mathbf{w}$. 
+	This is a way to control the complexity of the structure. The corresponding function is
+	
+	\[
+	\mathcal{L}(\mathbf{x}, \mathbf{w}) = \mathbb{E}[e^2] + \lambda \lVert \mathbf{w} \rVert^2
+	\]
+	
+	\begin{enumerate}[label=\textbf{(\arabic*)}, leftmargin=1.2cm]
+		\item Make the derivation of the closed solution for $\mathbf{w}$.
+		\item Work out an iterative solution using the same technique as used in the Least Mean Squares algorithm.
+		\item Comment and compare both solutions in a short conclusion section.
+	\end{enumerate}
+	
+	\vspace{1em}
+	\noindent\textbf{Solution.}
+	
+	We are given the regularized MMSE cost
+	\[
+	J(\mathbf{w}) = \mathbb{E}\big[(d - \mathbf{w}^\top \mathbf{x})^2\big] + \lambda \lVert \mathbf{w} \rVert^2,
+	\]
+	where $\mathbf{x}$ is the input vector, $d$ is the desired response, $\mathbf{w}$ is the weight vector we want to design, and $\lambda \ge 0$ is the regularization parameter that keeps the weights from growing too large.
+	
+	\medskip
+	\noindent\textbf{(1) Closed-form solution}
+	
+	Start from the MSE part:
+	\[
+	\mathbb{E}\big[(d - \mathbf{w}^\top \mathbf{x})^2\big]
+	= \mathbb{E}[d^2] - 2 \mathbf{w}^\top \mathbb{E}[d \mathbf{x}] + \mathbf{w}^\top \mathbb{E}[\mathbf{x}\mathbf{x}^\top]\mathbf{w}.
+	\]
+	To simplify notation, let
+	\[
+	\mathbf{p} = \mathbb{E}[d \mathbf{x}] \quad \text{and} \quad \mathbf{R} = \mathbb{E}[\mathbf{x}\mathbf{x}^\top].
+	\]
+	Then the cost becomes
+	\[
+	J(\mathbf{w}) = \mathbb{E}[d^2]
+	- 2 \mathbf{p}^\top \mathbf{w}
+	+ \mathbf{w}^\top \mathbf{R} \mathbf{w}
+	+ \lambda \mathbf{w}^\top \mathbf{w}.
+	\]
+	Combine the quadratic terms:
+	\[
+	J(\mathbf{w}) = \mathbb{E}[d^2] - 2 \mathbf{p}^\top \mathbf{w}
+	+ \mathbf{w}^\top (\mathbf{R} + \lambda \mathbf{I}) \mathbf{w}.
+	\]
+	
+	Now differentiate w.r.t. $\mathbf{w}$:
+	\[
+	\nabla_{\mathbf{w}} J(\mathbf{w}) = -2 \mathbf{p} + 2(\mathbf{R} + \lambda \mathbf{I}) \mathbf{w}.
+	\]
+	Set this to zero to find the minimizer:
+	\[
+	(\mathbf{R} + \lambda \mathbf{I}) \mathbf{w} = \mathbf{p}.
+	\]
+	Assuming $\mathbf{R} + \lambda \mathbf{I}$ is invertible (it is if $\lambda>0$), we get
+	\[
+	\boxed{\mathbf{w}^\star = (\mathbf{R} + \lambda \mathbf{I})^{-1} \mathbf{p}.}
+	\]
+	
+	\medskip
+	\noindent\textbf{(2) Iterative solution (LMS-style)}
+	
+	For an online / adaptive version, we replace the expectations with the current sample $(\mathbf{x}(n), d(n))$. Define the instantaneous error
+	\[
+	e(n) = d(n) - \mathbf{w}^\top(n)\mathbf{x}(n).
+	\]
+	The instantaneous cost is
+	\[
+	J_n(\mathbf{w}) = e^2(n) + \lambda \lVert \mathbf{w} \rVert^2.
+	\]
+	Compute its gradient:
+	\[
+	\nabla_{\mathbf{w}} J_n(\mathbf{w}) = -2 e(n)\mathbf{x}(n) + 2 \lambda \mathbf{w}(n).
+	\]
+	A standard stochastic-gradient update with step size $\mu$ is
+	\begin{align*}
+		\mathbf{w}(n+1)
+		&= \mathbf{w}(n) - \frac{\mu}{2} \nabla_{\mathbf{w}} J_n(\mathbf{w}(n)) \\
+		&= \mathbf{w}(n) + \mu e(n)\mathbf{x}(n) - \mu \lambda \mathbf{w}(n).
+	\end{align*}
+	So the final iterative rule is
+	\[
+	\boxed{\mathbf{w}(n+1) = (1 - \mu \lambda)\,\mathbf{w}(n) + \mu e(n)\mathbf{x}(n).}
+	\]
+	This is exactly LMS but with a “weight decay” factor $(1 - \mu \lambda)$.
+	
+	\medskip
+	\noindent\textbf{(3) Short comparison}
+	
+	\begin{itemize}
+		\item \emph{Batch / closed form:} $\mathbf{w}^\star = (\mathbf{R} + \lambda \mathbf{I})^{-1} \mathbf{p}$ is precise but needs $\mathbf{R}$ and $\mathbf{p}$ and a matrix inverse.
+		\item \emph{Iterative / LMS-like:} $\mathbf{w}(n+1) = (1 - \mu \lambda)\mathbf{w}(n) + \mu e(n)\mathbf{x}(n)$ works sample by sample and is good when data arrive over time.
+		\item \emph{Effect of $\lambda$:} In both cases $\lambda$ penalizes large weights, makes the problem better conditioned, and usually improves generalization.
+	\end{itemize}
+	
+\end{document}
