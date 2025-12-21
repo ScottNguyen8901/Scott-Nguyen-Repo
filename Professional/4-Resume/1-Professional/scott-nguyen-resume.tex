@@ -36,8 +36,8 @@
 		{\color{mygreen}
 			{\Huge \textbf{Scott Nguyen}} \\
 			\small
-			\href{mailto:scott.nguyen8901@gmail.com}{scott.nguyen8901@gmail.com} \textbar
-			(515) 943-6283 %\textbar
+			\href{mailto:scott.nguyen8901@gmail.com}{scott.nguyen8901@gmail.com} \hspace{0.1cm}\textbar\hspace{0.1cm}
+			(515) 943-6283\hspace{0.1cm}\textbar\hspace{0.1cm}
 			%\href{https://www.linkedin.com/in/scottnguyen8901/}{linkedin.com/in/scottnguyen8901} \textbar
 			\textbf{Security Clearance: Interim Secret}
 		}
@@ -47,7 +47,7 @@
 	
 	\section*{Education}
 	
-	\textbf{Master of Science in Electrical Engineering \textbar\ Space Systems Engineering} \hfill \textbf{Fall 2026} \\
+	\textbf{Master of Science in Electrical Engineering \textbar\ Space Systems Engineering} \hfill \textbf{Summer 2026} \\
 	University of New Mexico \hfill GPA: 3.94/4.00
 	
 	\textbf{Master of Science in Aerospace Engineering} \hfill \textbf{Fall 2024} \\
@@ -61,7 +61,7 @@
 	\section*{Skills}
 	\textbf{Programming Languages:} MATLAB, Python, C/C++, Ruby \\
 	\textbf{Frameworks / Libraries / Tools:} NumPy, SciPy, Matplotlib, Astropy, Poliastro, bpy, git \\
-	\textbf{Applications:} Simulink, Blender
+	\textbf{Applications:} Simulink, Blender, ANSYS HFSS, FEKO, TICRA
 	
 	\sectionline
 	
@@ -70,17 +70,16 @@
 	\textbf{Student Co-Op, Electronics for Contested Space Group} \hfill \textbf{September 2025 – Present} \\
 	\emph{MIT Lincoln Laboratory}
 	\begin{itemize}
-		\item Led design of a new \textbf{S-band communication architecture}, integrating flight-like hardware and simulation to reestablish links with lost-communication satellites.
-		\item Implemented an \textbf{\emph{Unscented Kalman Filter (UKF)}} for precise radio frequency measurements and state estimation
-		\item Built a probabilistic detection tool to compute observation likelihoods from resident space object (RSO) properties and optical sensor performance.
+		\item Designed a communication architecture with radio-frequency hardware and simulation to support lost-satellite reacquisition.
+		\item Developed an optical space domain awareness analysis tool that propagates TLE-based RSO orbits from user-defined sensor locations and applies illumination and elevation constraints to identify observable windows and pointing solutions.
+		\item Modeled RSO detectability and tracking performance for optical space domain awareness using photometric, kinematic, and sensor-noise models to assess detection limits and track duration.
 	\end{itemize}
 
 	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill \textbf{May 2025 – August 2025} \\
 	\emph{Blue Canyon Technologies}
 	\begin{itemize}
-		\item Performed post-environment (TVAC/vibe) functional testing of \textbf{\emph{IMU}}, \textbf{\emph{Nano Star Tracker}}, \textbf{\emph{Reaction Wheels}}, \textbf{\emph{Torque Rods}}, and \textbf{\emph{Sun Sensors}}; verified polarity, health, and performance against flight acceptance criteria.
-		\item Led root-cause investigation of \textbf{\emph{SADA}} command–response latency; characterized timing delay across modes, identified the source, and informed updates to command/telemetry interfaces and test limits.
-		\item Automated \textbf{\emph{SADA}} validation in \textbf{\emph{COSMOS}} with \textbf{\emph{Ruby}} scripts; mapped telemetry channels, implemented pass/fail logic, and generated reproducible test reports.
+		\item Executed post-environment testing of \textbf{IMU, star trackers, reaction wheels, torque rods, and sun sensors}.
+		\item Diagnosed \textbf{Solar Array Drive Assembly (SADA)} timing latency and automated \textbf{COSMOS (Ruby)} validation.
 	\end{itemize}
 
 	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill \textbf{January 2025 – April 2025} \\
@@ -103,19 +102,25 @@
 	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill \textbf{May 2023 – August 2023} \\
 	\emph{Space Dynamics Laboratory}
 	\begin{itemize}
-		\item Implemented a UKF with range iteration and least-squares orbit determination methods for \textbf{relative orbit determination using angles-only measurements}
-		\item Performed Monte Carlo analysis on relative orbits to identify challenging observability scenarios and refine the estimation algorithm
-		\item Programmed and developed unit tests for the \textbf{\emph{Lambert Solver}} to be utilized with \textbf{\emph{Initial Orbit Determination (IOD)}}
+		\item Developed \textbf{angles-only orbit determination} pipelines using UKF, range iteration, and least-squares methods for \textbf{SSA tracking and characterization}.
+		\item Performed Monte Carlo observability analysis to identify challenging geometries and improve tracking of closely spaced RSOs.
+		\item Implemented and unit-tested a \textbf{Lambert-based IOD solver} to support track initialization and catalog maintenance.
 	\end{itemize}
-	
+
 	\sectionline
 	
 	\section*{Research Projects}
 	
-	\textbf{Delta-V Minimization from Geostationary Orbit to Mars}
+	\textbf{Optical Orbit Determination and Tracking (LEO Object)}
 	\begin{itemize}
-		\item Generated pork-chop plots using Lambert solutions and cross-validated optimizer results with the plot’s global and local minimum regions to ensure consistency
-		\item Utilized Blender’s Python API to visualize the optimized trajectory and animate planetary motion
+		\item Built an end-to-end orbit determination pipeline from ground-based optical line-of-sight measurements, including time/frames handling and measurement conditioning
+		\item Applied classical initial orbit determination (Laplace) to recover an ECI state from sparse measurements; validated against truth propagation and evaluated sensitivity to realistic measurement noise via Monte Carlo error statistics
+	\end{itemize}
+	
+	\textbf{Astrodynamics and Optimization for Mission Design (Earth--Mars Transfer)}
+	\begin{itemize}
+		\item Designed and analyzed interplanetary transfers using ephemeris-driven Lambert targeting and patched-conic $\Delta V$ estimates to assess launch-window trade spaces.
+		\item Combined grid-based porkchop mapping with constrained nonlinear optimization (SLSQP) to identify low-$\Delta V$ solutions under time-of-flight constraints; produced 3D trajectory visualizations for verification and communication
 	\end{itemize}
 	
 \end{document}
