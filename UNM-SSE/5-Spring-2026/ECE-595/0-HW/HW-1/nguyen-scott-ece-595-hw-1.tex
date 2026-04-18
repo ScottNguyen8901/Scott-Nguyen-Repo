@@ -1,0 +1,205 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage{cite}
+\usepackage{url}
+
+\title{Differences in AI Cloud Services Across Vendors}
+
+\author{
+	\IEEEauthorblockN{Scott Nguyen}
+	\IEEEauthorblockA{
+		Department of Electrical and Computer Engineering\\
+		University of New Mexico\\
+		Email: snguyen9@unm.edu}
+}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{abstract}
+		Cloud-based AI services, commonly referred to as Machine Learning as a Service (MLaaS), have significantly reduced the barriers to adopting artificial intelligence. Leading cloud providers such as Amazon Web Services (AWS), Microsoft Azure, and Google Cloud Platform (GCP) offer comprehensive ecosystems for building, training, and deploying AI models. This paper presents a detailed comparison of these platforms, focusing on architecture, scalability, performance, cost considerations, and generative AI capabilities. Additionally, performance characteristics and real-world use cases are analyzed to provide guidance for selecting the most suitable platform for different business scenarios.
+	\end{abstract}
+	
+	\section{Introduction}
+	Artificial Intelligence (AI) is rapidly transforming industries by enabling automation, predictive analytics, and intelligent decision-making. However, developing AI systems requires significant computational resources, large datasets, and expertise in machine learning. Cloud computing platforms address these challenges by offering scalable infrastructure and pre-built AI services.
+	
+	The emergence of MLaaS allows organizations to develop AI solutions without investing heavily in hardware. Major providers such as AWS, Azure, and Google Cloud compete by offering advanced AI tools, including generative AI models. This paper compares these platforms in depth, highlighting their similarities, differences, and performance trade-offs.
+	
+	In addition to traditional machine learning services, modern cloud providers are increasingly focusing on end-to-end AI workflows. These workflows include data ingestion, feature engineering, model training, deployment, and monitoring within a unified platform. This shift reduces development complexity and allows organizations to move from experimentation to production more efficiently. As a result, cloud AI platforms are no longer just infrastructure providers but complete ecosystems that support the full lifecycle of AI applications.
+	
+	\section{Background: MLaaS}
+	Machine Learning as a Service (MLaaS) refers to cloud-based platforms that provide tools for data processing, model training, deployment, and inference \cite{mlaas_survey}. These platforms typically include:
+	
+	\begin{itemize}
+		\item Data storage and preprocessing pipelines
+		\item Model training environments with GPUs/TPUs
+		\item Pre-trained models and APIs
+		\item Deployment and monitoring tools
+	\end{itemize}
+	
+	MLaaS enables scalability, reduces infrastructure costs, and accelerates AI development cycles. It is particularly important in modern AI systems where large-scale data processing and distributed computing are required.
+	
+	Another important aspect of MLaaS platforms is their support for collaboration and reproducibility. Teams can share datasets, models, and experiments through centralized environments, enabling more efficient development cycles. Furthermore, built-in monitoring and logging tools allow practitioners to track model performance over time, ensuring reliability in production systems. These features are essential for maintaining large-scale AI systems in real-world applications.
+	
+	\section{AWS AI Services}
+	Amazon Web Services provides one of the most comprehensive AI ecosystems.
+	
+	\subsection{Key Services}
+	\begin{itemize}
+		\item Amazon SageMaker – Full ML lifecycle platform
+		\item Amazon Bedrock – Generative AI and foundation models
+		\item AWS AI APIs – Vision, speech, NLP
+	\end{itemize}
+	
+	\subsection{Performance and Scalability}
+	AWS offers highly scalable compute resources, including GPU clusters for training large models. SageMaker supports distributed training, which improves performance for large datasets.
+	
+	\subsection{Strengths}
+	\begin{itemize}
+		\item Highly flexible and customizable
+		\item Large ecosystem of services
+		\item Strong scalability for production systems
+	\end{itemize}
+	
+	\subsection{Limitations}
+	\begin{itemize}
+		\item Complex configuration
+		\item Cost management can be challenging
+	\end{itemize}
+	
+	\section{Microsoft Azure AI Services}
+	Microsoft Azure focuses on enterprise integration and accessibility.
+	
+	\subsection{Key Services}
+	\begin{itemize}
+		\item Azure Machine Learning
+		\item Azure AI Services
+		\item Azure OpenAI Service
+	\end{itemize}
+	
+	\subsection{Performance and Integration}
+	Azure provides strong performance for enterprise workloads and integrates seamlessly with Microsoft products such as Office and Teams.
+	
+	\subsection{Strengths}
+	\begin{itemize}
+		\item Strong enterprise ecosystem
+		\item Easy integration with existing tools
+		\item Access to advanced OpenAI models
+	\end{itemize}
+	
+	\subsection{Limitations}
+	\begin{itemize}
+		\item Less flexibility than AWS in some cases
+		\item Dependency on Microsoft ecosystem
+	\end{itemize}
+	
+	\section{Google Cloud AI Services}
+	Google Cloud is known for its leadership in AI research.
+	
+	\subsection{Key Services}
+	\begin{itemize}
+		\item Vertex AI – Unified ML platform
+		\item Google AI APIs
+		\item Generative AI (Gemini)
+	\end{itemize}
+	
+	\subsection{Performance and Innovation}
+	Google Cloud leverages Tensor Processing Units (TPUs), which provide high throughput for deep learning workloads. This gives Google an advantage in training performance for certain models.
+	
+	\subsection{Strengths}
+	\begin{itemize}
+		\item Advanced AI research capabilities
+		\item Simplified workflows
+		\item Strong performance for deep learning tasks
+	\end{itemize}
+	
+	\subsection{Limitations}
+	\begin{itemize}
+		\item Smaller enterprise adoption
+		\item Limited integration compared to Azure
+	\end{itemize}
+	
+	\section{Generative AI Comparison}
+	Generative AI has become a major differentiator among cloud platforms. According to recent comparisons \cite{bedrock_compare}, each provider offers unique capabilities:
+	
+	\begin{itemize}
+		\item AWS Bedrock focuses on ease of use and multiple foundation models
+		\item Azure OpenAI emphasizes enterprise-ready GPT integration
+		\item Google Vertex AI provides flexibility and advanced model customization
+	\end{itemize}
+	
+	These differences highlight the importance of selecting platforms based on specific use cases.
+	
+	\section{Performance and Benchmark Considerations}
+	Performance in AI cloud platforms depends on several factors:
+	
+	\begin{itemize}
+		\item Compute resources (GPU vs TPU)
+		\item Data transfer speeds
+		\item Model optimization tools
+	\end{itemize}
+	
+	AWS excels in distributed training, Azure performs well in enterprise workflows, and Google Cloud provides high efficiency for large-scale deep learning using TPUs.
+	
+	Benchmark performance across cloud platforms is often evaluated using metrics such as training time, inference latency, and cost per computation. While AWS provides strong performance through GPU-based distributed training, Google Cloud’s TPUs are specifically optimized for matrix operations commonly used in deep learning, resulting in improved efficiency for certain workloads. Azure, on the other hand, balances performance with ease of deployment, particularly in enterprise environments where integration and reliability are critical. These differences highlight that performance is not solely dependent on hardware but also on software optimization and system architecture.
+	
+	\section{Scalability and Deployment Considerations}
+	Scalability is a critical factor when deploying AI systems in production. AWS provides highly scalable infrastructure that supports automatic resource allocation and distributed workloads, making it suitable for large-scale applications. Azure offers strong support for enterprise deployment pipelines, including integration with DevOps tools and security frameworks. Google Cloud emphasizes simplified deployment through Vertex AI, enabling users to deploy models quickly with minimal configuration.
+	
+	Additionally, real-world deployment requires consideration of reliability and monitoring. All three platforms provide tools for tracking model performance, detecting drift, and updating models as needed. These capabilities are essential for maintaining consistent performance in dynamic environments where data distributions may change over time.
+	
+	\section{Comparative Analysis}
+	
+	\begin{table}[h]
+		\centering
+		\caption{Cloud AI Platform Comparison}
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			Feature & AWS & Azure & Google Cloud \\
+			\hline
+			ML Platform & SageMaker & Azure ML & Vertex AI \\
+			GenAI & Bedrock & Azure OpenAI & Gemini \\
+			Compute & GPUs & GPUs & TPUs + GPUs \\
+			Ease of Use & Moderate & High & High \\
+			Enterprise Integration & Moderate & Strong & Moderate \\
+			Innovation & High & High & Very High \\
+			\hline
+		\end{tabular}
+	\end{table}
+	
+	\section{Use Case Recommendations}
+	\begin{itemize}
+		\item Startups and research: Google Cloud
+		\item Enterprise environments: Azure
+		\item Large-scale production: AWS
+	\end{itemize}
+	
+	\section{Conclusion}
+	Cloud AI platforms have transformed the development and deployment of artificial intelligence systems. AWS, Azure, and Google Cloud each offer unique strengths. AWS provides scalability and flexibility, Azure excels in enterprise integration, and Google Cloud leads in innovation and performance.
+	
+	The selection of a platform should depend on business requirements, including scalability, cost, and integration needs. As AI continues to evolve, cloud platforms will remain critical in enabling future innovations.
+	
+	\begin{thebibliography}{99}
+		
+		\bibitem{aws_sagemaker}
+		Amazon Web Services, ``Amazon SageMaker Documentation,'' 2026.
+		
+		\bibitem{aws_bedrock}
+		Amazon Web Services, ``Amazon Bedrock,'' 2026.
+		
+		\bibitem{azure_ai}
+		Microsoft, ``Azure AI Services,'' 2026.
+		
+		\bibitem{gcp_vertex}
+		Google Cloud, ``Vertex AI,'' 2026.
+		
+		\bibitem{bedrock_compare}
+		V. Kaushik, ``Amazon Bedrock vs Google Vertex AI vs Azure,'' Medium, 2024.
+		
+		\bibitem{mlaas_survey}
+		X. Zhang et al., ``Machine Learning as a Service: A Survey,'' arXiv, 2019.
+		
+	\end{thebibliography}
+	
+\end{document}

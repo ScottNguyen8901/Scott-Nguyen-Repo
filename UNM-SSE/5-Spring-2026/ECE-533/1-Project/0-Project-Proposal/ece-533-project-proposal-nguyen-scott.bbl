@@ -1,0 +1,16 @@
+\begin{thebibliography}{1}
+
+\bibitem{silburt2019lunar}
+A.~D. Silburt, M.~Ali-Dib, C.~Zhu, A.~P. Jackson, D.~Valencia, Y.~Kissin,
+  D.~Tamayo, and K.~Menou, ``Lunar crater identification via deep learning,''
+  {\em Icarus}, vol.~317, pp.~27--38, 2019.
+
+\bibitem{lee2020crater}
+C.-Y. Lee {\em et~al.}, ``Automatic crater detection using convolutional neural
+  networks,'' {\em Icarus}, vol.~338, p.~113530, 2020.
+
+\bibitem{wang2022crater}
+J.~Wang {\em et~al.}, ``Automated crater detection using deep learning-based
+  object detection,'' {\em Remote Sensing}, vol.~14, no.~12, p.~2800, 2022.
+
+\end{thebibliography}

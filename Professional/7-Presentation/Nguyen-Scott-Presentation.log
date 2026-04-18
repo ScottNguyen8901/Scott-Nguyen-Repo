@@ -1,18 +1,18 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.7.26)  5 OCT 2025 15:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.12.13)  13 APR 2026 20:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **./Nguyen-Scott-Presentation.tex
 (Nguyen-Scott-Presentation.tex
-LaTeX2e <2025-06-01> patch level 1
-L3 programming layer <2025-07-19>
+LaTeX2e <2025-11-01>
+L3 programming layer <2025-11-06>
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamer.cls
 Document Class: beamer 2025/08/13 v3.76 A class for typesetting presentations
 
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasemodes.
 sty
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
-Package: etoolbox 2025/02/11 v2.5l e-TeX tools for LaTeX (JAW)
+Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count275
 )
 \beamer@tempbox=\box53
@@ -120,7 +120,7 @@ y
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgfrcs.
 code.tex
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf\pgf.revision.tex)
-Package: pgfrcs 2023-01-15 v3.1.10 (3.1.10)
+Package: pgfrcs 2025-08-29 v3.1.11a (3.1.11a)
 ))
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgfkeys.s
 ty
@@ -204,7 +204,7 @@ File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 Package graphics Info: Driver file: pdftex.def on input line 106.
 
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
-File: pdftex.def 2024/04/13 v1.2c Graphics/color driver for pdftex
+File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen183
 \Gin@req@width=\dimen184
@@ -213,7 +213,7 @@ File: pdftex.def 2024/04/13 v1.2c Graphics/color driver for pdftex
 sty
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
 s.code.tex
-Package: pgfsys 2023-01-15 v3.1.10 (3.1.10)
+Package: pgfsys 2025-08-29 v3.1.11a (3.1.11a)
 \pgf@x=\dimen185
 \pgf@y=\dimen186
 \pgf@xa=\dimen187
@@ -237,27 +237,27 @@ Package: pgfsys 2023-01-15 v3.1.10 (3.1.10)
 
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgf.c
 fg
-File: pgf.cfg 2023-01-15 v3.1.10 (3.1.10)
+File: pgf.cfg 2025-08-29 v3.1.11a (3.1.11a)
 )
 Driver file for pgf: pgfsys-pdftex.def
 
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
 s-pdftex.def
-File: pgfsys-pdftex.def 2023-01-15 v3.1.10 (3.1.10)
+File: pgfsys-pdftex.def 2025-08-29 v3.1.11a (3.1.11a)
 
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
 s-common-pdf.def
-File: pgfsys-common-pdf.def 2023-01-15 v3.1.10 (3.1.10)
+File: pgfsys-common-pdf.def 2025-08-29 v3.1.11a (3.1.11a)
 )))
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
 ssoftpath.code.tex
-File: pgfsyssoftpath.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfsyssoftpath.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgfsyssoftpath@smallbuffer@items=\count315
 \pgfsyssoftpath@bigbuffer@items=\count316
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/systemlayer\pgfsy
 sprotocol.code.tex
-File: pgfsysprotocol.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfsysprotocol.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 ))
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
 Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
@@ -279,13 +279,13 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
 e.code.tex
-Package: pgfcore 2023-01-15 v3.1.10 (3.1.10)
+Package: pgfcore 2025-08-29 v3.1.11a (3.1.11a)
 
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/math\pgfint.code.
 tex)
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
 epoints.code.tex
-File: pgfcorepoints.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfcorepoints.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgf@picminx=\dimen195
 \pgf@picmaxx=\dimen196
 \pgf@picminy=\dimen197
@@ -303,19 +303,19 @@ File: pgfcorepoints.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
 epathconstruct.code.tex
-File: pgfcorepathconstruct.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfcorepathconstruct.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgf@path@lastx=\dimen265
 \pgf@path@lasty=\dimen266
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
 epathusage.code.tex
-File: pgfcorepathusage.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfcorepathusage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgf@shorten@end@additional=\dimen267
 \pgf@shorten@start@additional=\dimen268
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
 escopes.code.tex
-File: pgfcorescopes.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfcorescopes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgfpic=\box64
 \pgf@hbox=\box65
 \pgf@layerbox@main=\box66
@@ -323,64 +323,64 @@ File: pgfcorescopes.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
 egraphicstate.code.tex
-File: pgfcoregraphicstate.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfcoregraphicstate.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgflinewidth=\dimen269
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
 etransformations.code.tex
-File: pgfcoretransformations.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfcoretransformations.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgf@pt@x=\dimen270
 \pgf@pt@y=\dimen271
 \pgf@pt@temp=\dimen272
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
 equick.code.tex
-File: pgfcorequick.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfcorequick.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
 eobjects.code.tex
-File: pgfcoreobjects.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfcoreobjects.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
 epathprocessing.code.tex
-File: pgfcorepathprocessing.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfcorepathprocessing.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
 earrows.code.tex
-File: pgfcorearrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfcorearrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgfarrowsep=\dimen273
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
 eshade.code.tex
-File: pgfcoreshade.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfcoreshade.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgf@max=\dimen274
 \pgf@sys@shading@range@num=\count318
 \pgf@shadingcount=\count319
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
 eimage.code.tex
-File: pgfcoreimage.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfcoreimage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
 eexternal.code.tex
-File: pgfcoreexternal.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfcoreexternal.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgfexternal@startupbox=\box67
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
 elayers.code.tex
-File: pgfcorelayers.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfcorelayers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
 etransparency.code.tex
-File: pgfcoretransparency.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfcoretransparency.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
 epatterns.code.tex
-File: pgfcorepatterns.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfcorepatterns.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/basiclayer\pgfcor
 erdf.code.tex
-File: pgfcorerdf.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfcorerdf.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 )))
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\xxcolor.s
 ty
@@ -662,7 +662,7 @@ tionsymbols.tex)
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/beamer\beamerbasetheore
 ms.sty
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
-Package: amsmath 2025/06/16 v2.17y AMS math features
+Package: amsmath 2025/07/09 v2.17z AMS math features
 \@mathmargin=\skip61
 
 For additional information on amsmath, use the `?' option.
@@ -726,8 +726,8 @@ LaTeX Info: Redefining \Relbar on input line 970.
 \multlinegap=\skip62
 \multlinetaggap=\skip63
 \mathdisplay@stack=\toks39
-LaTeX Info: Redefining \[ on input line 2949.
-LaTeX Info: Redefining \] on input line 2950.
+LaTeX Info: Redefining \[ on input line 2950.
+LaTeX Info: Redefining \] on input line 2951.
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/amscls\amsthm.sty
 Package: amsthm 2020/05/29 v2.20.6
@@ -787,32 +787,32 @@ LaTeX Info: Redefining \addtolength on input line 87.
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/pgf/frontendlayer\tikz.
 sty
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/pgf/basiclayer\pgf.sty
-Package: pgf 2023-01-15 v3.1.10 (3.1.10)
+Package: pgf 2025-08-29 v3.1.11a (3.1.11a)
 
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodule
 shapes.code.tex
-File: pgfmoduleshapes.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfmoduleshapes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgfnodeparttextbox=\box78
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodule
 plot.code.tex
-File: pgfmoduleplot.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfmoduleplot.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/pgf/compatibility\pgfco
 mp-version-0-65.sty
-Package: pgfcomp-version-0-65 2023-01-15 v3.1.10 (3.1.10)
+Package: pgfcomp-version-0-65 2025-08-29 v3.1.11a (3.1.11a)
 \pgf@nodesepstart=\dimen304
 \pgf@nodesepend=\dimen305
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/pgf/compatibility\pgfco
 mp-version-1-18.sty
-Package: pgfcomp-version-1-18 2023-01-15 v3.1.10 (3.1.10)
+Package: pgfcomp-version-1-18 2025-08-29 v3.1.11a (3.1.11a)
 ))
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/pgf/utilities\pgffor.st
 y
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/utilities\pgffor.
 code.tex
-Package: pgffor 2023-01-15 v3.1.10 (3.1.10)
+Package: pgffor 2025-08-29 v3.1.11a (3.1.11a)
 \pgffor@iter=\dimen306
 \pgffor@skip=\dimen307
 \pgffor@stack=\toks48
@@ -820,11 +820,11 @@ Package: pgffor 2023-01-15 v3.1.10 (3.1.10)
 ))
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
 z\tikz.code.tex
-Package: tikz 2023-01-15 v3.1.10 (3.1.10)
+Package: tikz 2025-08-29 v3.1.11a (3.1.11a)
 
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/libraries\pgflibr
 aryplothandlers.code.tex
-File: pgflibraryplothandlers.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgflibraryplothandlers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgf@plot@mark@count=\count361
 \pgfplotmarksize=\dimen308
 )
@@ -847,7 +847,7 @@ File: pgflibraryplothandlers.code.tex 2023-01-15 v3.1.10 (3.1.10)
 
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/modules\pgfmodule
 matrix.code.tex
-File: pgfmodulematrix.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: pgfmodulematrix.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgfmatrixcurrentrow=\count366
 \pgfmatrixcurrentcolumn=\count367
 \pgf@matrix@numberofcolumns=\count368
@@ -856,7 +856,7 @@ File: pgfmodulematrix.code.tex 2023-01-15 v3.1.10 (3.1.10)
 
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/pgf/frontendlayer/tik
 z/libraries\tikzlibrarytopaths.code.tex
-File: tikzlibrarytopaths.code.tex 2023-01-15 v3.1.10 (3.1.10)
+File: tikzlibrarytopaths.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 )))
 \metropolis@titleseparator@linewidth=\skip70
 \metropolis@progressonsectionpage=\skip71
@@ -898,18 +898,18 @@ pport for TeXGyreTermesX
 nd its extensions (msharpe)
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/xpatch\xpatch.sty
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/l3kernel\expl3.sty
-Package: expl3 2025-07-19 L3 programming layer (loader) 
+Package: expl3 2025-11-06 L3 programming layer (loader) 
 
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
 tex.def
-File: l3backend-pdftex.def 2025-06-09 L3 backend support: PDF output (pdfTeX)
+File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count370
 ))
 Package: xpatch 2020/03/25 v0.3a Extending etoolbox patching commands
 
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/l3packages/xparse\xpars
 e.sty
-Package: xparse 2024-08-16 L3 Experimental document command parser
+Package: xparse 2025-10-09 L3 Experimental document command parser
 ))
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/xkeyval\xkeyval.sty
 Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
@@ -1092,7 +1092,7 @@ Package: inputenc 2024/02/08 v1.3d Input encoding file
 \inpenc@posthook=\toks56
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty
-Package: fontenc 2024/12/21 v2.1c Standard LaTeX package
+Package: fontenc 2025/07/18 v2.1d Standard LaTeX package
 LaTeX Font Info:    Trying to load font information for T1+minntx on input line
  116.
 
@@ -1103,30 +1103,33 @@ LaTeX Font Info:    Font shape `T1/minntx/m/n' will be
 (Font)              scaled to size 10.0pt on input line 116.
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/babel\babel.sty
-Package: babel 2025/07/13 v25.11 The multilingual framework for LuaLaTeX, pdfLa
+Package: babel 2025/11/09 v25.15 The multilingual framework for LuaLaTeX, pdfLa
 TeX and XeLaTeX
 \babel@savecnt=\count379
 LaTeX Encoding Info:    Redeclaring text command \ij (encoding OT1) on input li
-ne 2045.
+ne 2050.
 LaTeX Encoding Info:    Redeclaring text command \IJ (encoding OT1) on input li
-ne 2047.
+ne 2052.
 LaTeX Encoding Info:    Redeclaring text command \ij (encoding T1) on input lin
-e 2049.
+e 2054.
 LaTeX Encoding Info:    Redeclaring text command \IJ (encoding T1) on input lin
-e 2050.
+e 2055.
 LaTeX Encoding Info:    Ignoring declaration for text command \ij (encoding ?) 
-on input line 2051.
+on input line 2056.
 LaTeX Encoding Info:    Ignoring declaration for text command \IJ (encoding ?) 
-on input line 2053.
+on input line 2058.
 LaTeX Encoding Info:    Ignoring declaration for text command \SS (encoding ?) 
-on input line 2078.
+on input line 2083.
 \U@D=\dimen331
 \l@unhyphenated=\language79
 
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/babel\txtbabel.def)
 \bbl@readstream=\read4
-LaTeX Info: Redefining \textlatin on input line 3916.
+LaTeX Info: Redefining \textlatin on input line 3942.
 \bbl@dirlevel=\count380
+Package babel Info: Configuration files are deprecated, as
+(babel)             they can break document portability.
+(babel)             Reported on input line 4175.
 
 *************************************
 * Local config file bblopts.cfg used
@@ -1135,6 +1138,11 @@ LaTeX Info: Redefining \textlatin on input line 3916.
 File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
  babel
 )
+(C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/babel/locale/en\babel
+-american.tex)
+Package babel Info: Importing font and identification data for american
+(babel)             from babel-en-US.ini. Reported on input line 4298.
+
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/babel-english\american.
 ldf
 Language: american 2017/06/06 v3.3r English support from the babel system
@@ -1142,12 +1150,6 @@ Language: american 2017/06/06 v3.3r English support from the babel system
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/babel-english\english.l
 df
 Language: english 2017/06/06 v3.3r English support from the babel system
-
-(C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/generic/babel/locale/en\babel
--american.tex
-Package babel Info: Importing font and identification data for american
-(babel)             from babel-en-US.ini. Reported on input line 12.
-)
 Package babel Info: Hyphen rules for 'canadian' set to \l@english
 (babel)             (\language0). Reported on input line 102.
 Package babel Info: Hyphen rules for 'australian' set to \l@ukenglish
@@ -1280,7 +1282,7 @@ Package: translations 2022/02/05 v1.12 internationalization of LaTeX2e packages
 \l__siunitx_unit_position_int=\count407
 \l__siunitx_unit_total_int=\count408
  (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/tools\array.sty
-Package: array 2025/06/08 v2.6j Tabular extension package (FMi)
+Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
 \col@sep=\dimen366
 \ar@mcellbox=\box94
 \extrarowheight=\dimen367
@@ -1314,18 +1316,24 @@ Package siunitx Info: Option "detect-all" has been deprecated in this release.
 \lst@maxwidth=\dimen371
 
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstpatch.sty
-File: lstpatch.sty 2024/09/23 1.10c (Carsten Heinz)
+File: lstpatch.sty 2025/11/14 1.11b (Carsten Heinz)
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstmisc.sty
-File: lstmisc.sty 2024/09/23 1.10c (Carsten Heinz)
+File: lstmisc.sty 2025/11/14 1.11b (Carsten Heinz)
 \c@lstnumber=\count415
 \lst@skipnumbers=\count416
 \lst@framebox=\box97
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.cfg
-File: listings.cfg 2024/09/23 1.10c listings configuration
+File: listings.cfg 2025/11/14 1.11b listings configuration
 ))
-Package: listings 2024/09/23 1.10c (Carsten Heinz)
+Package: listings 2025/11/14 1.11b (Carsten Heinz)
+==> First Aid for listings.sty no longer applied!
+    Expected:
+        2024/09/23 1.10c (Carsten Heinz)
+    but found:
+        2025/11/14 1.11b (Carsten Heinz)
+    so I'm assuming it got fixed.
 
 ! LaTeX Error: Command \definition already defined.
                Or name \end... illegal, see p.192 of the manual.
@@ -1592,7 +1600,7 @@ File: biblatex.cfg
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Document encoding is UTF8 ....
 Package biblatex Info: ... and expl3
-(biblatex)             2025-07-19 L3 programming layer (loader) 
+(biblatex)             2025-11-06 L3 programming layer (loader) 
 (biblatex)             is new enough (at least 2020/04/06),
 (biblatex)             setting 'casechanger=expl3'.
 
@@ -1817,33 +1825,21 @@ Overfull \vbox (39.81935pt too high) detected at line 88
 
 Overfull \vbox (11.08pt too high) has occurred while \output is active []
 
-
-
 LaTeX Font Info:    Font shape `T1/ntxtlf/m/n' will be
 (Font)              scaled to size 4.0pt on input line 88.
-[1
+ [1
 
 {C:/Users/scott/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/scot
 t/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/newtx/ntx-ec-tlf.enc}]
 (Nguyen-Scott-Presentation.toc)
 LaTeX Font Info:    Font shape `T1/ntxtlf/b/n' will be
 (Font)              scaled to size 12.0pt on input line 93.
-
-Overfull \hbox (455.24408pt too wide) in paragraph at lines 93--93
-[][]  
- []
-
-
-
-[2
+ [2
 
 ]
-Overfull \hbox (220.0pt too wide) in paragraph at lines 96--96
-[][][]  
- []
-
 LaTeX Font Info:    Trying to load font information for OT1+minntx on input lin
 e 96.
+
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/newtx\ot1minntx.fd
 File: ot1minntx.fd 2023/09/09 v1.1 font definition file for OT1/minntx
 )
@@ -1926,7 +1922,6 @@ LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
 LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
 (Font)              scaled to size 5.5pt on input line 96.
 
-
 [3
 
 ]
@@ -1937,65 +1932,24 @@ File: ts1ntxtlf.fd 2015/01/18 v1.0 fd file for TS1/ntxtlf
 )
 LaTeX Font Info:    Font shape `TS1/ntxtlf/m/n' will be
 (Font)              scaled to size 10.0pt on input line 105.
-
-Overfull \hbox (910.48816pt too wide) in paragraph at lines 105--105
-[][]  
- []
-
-
-
 [4
 
-]
-Overfull \hbox (1365.73224pt too wide) in paragraph at lines 113--113
-[][]  
- []
+{C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/tex-gyre/q-ts1.en
+c}] [5
 
-
-
-[5
-
-]
-Overfull \hbox (660.0pt too wide) in paragraph at lines 116--116
-[][][]  
- []
-
-
-
-[6
+] [6
 
 ]
 LaTeX Font Info:    Font shape `T1/ntxtlf/b/n' will be
 (Font)              scaled to size 10.0pt on input line 126.
 LaTeX Font Info:    Font shape `T1/ntxtlf/m/it' will be
 (Font)              scaled to size 10.0pt on input line 126.
-
-Overfull \hbox (1820.97632pt too wide) in paragraph at lines 126--126
-[][]  
- []
-
-
-
-[7
+ [7
 
 {C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/newtx/ntx-ot1-tlf
-.enc}]
-Overfull \hbox (2276.2204pt too wide) in paragraph at lines 135--135
-[][]  
- []
+.enc}] [8
 
-
-
-[8
-
-]
-Overfull \hbox (1100.0pt too wide) in paragraph at lines 138--138
-[][][]  
- []
-
-
-
-[9
+] [9
 
 ]
 
@@ -2189,10 +2143,6 @@ Type  H <return>  for immediate help.
 l.153 	\end{frame}
                   
 Your command was ignored.
-Type  I <comm    
-l.153 	\end{frame}
-                  
-Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
@@ -2256,11 +2206,6 @@ l.153 	\end{frame}
 You've closed more groups than you opened.
 Such booboos are generally harmless, so keep going.
 
-
-Overfull \hbox (2731.46448pt too wide) in paragraph at lines 153--153
-[][]  
- []
-
 ! Undefined control sequence.
 \endbeamer@frameslide ...box \else \beamer@zoomer 
                                                   \fi \beamer@undolabels \be...
@@ -2292,8 +2237,6 @@ l.153 	\end{frame}
                   
 Things are pretty mixed up, but I think the worst is over.
 
-
-
 [10
 
 ]
@@ -2301,7 +2244,7 @@ Things are pretty mixed up, but I think the worst is over.
 
  (Nguyen-Scott-Presentation.vrb
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
-File: lstlang1.sty 2024/09/23 1.10c listings language file
+File: lstlang1.sty 2025/11/14 1.11b listings language file
 )
 LaTeX Font Info:    Font shape `T1/ntxtlf/b/n' will be
 (Font)              scaled to size 9.0pt on input line 2.
@@ -2328,12 +2271,6 @@ LaTeX Font Info:    Font shape `T1/ntxtt/b/n' in size <8> not available
 LaTeX Font Info:    Font shape `T1/ntxtt/m/it' in size <8> not available
 (Font)              Font shape `T1/txtt/m/sl' tried instead on input line 6.
 )
-Overfull \hbox (3186.70856pt too wide) in paragraph at lines 167--167
-[][]  
- []
-
-
-
 [11
 
 ]
@@ -2354,44 +2291,16 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-Overfull \hbox (3641.95264pt too wide) in paragraph at lines 186--186
-[][]  
- []
-
-
 Overfull \vbox (27.8697pt too high) detected at line 186
  []
 
-
-
 [12
 
-]
-Overfull \hbox (1760.0pt too wide) in paragraph at lines 189--189
-[][][]  
- []
+] [13
 
+] [14
 
-
-[13
-
-]
-Overfull \hbox (4097.19672pt too wide) in paragraph at lines 198--198
-[][]  
- []
-
-
-
-[14
-
-]
-Overfull \hbox (4552.4408pt too wide) in paragraph at lines 213--213
-[][]  
- []
-
-
-
-[15
+] [15
 
 ]
 
@@ -2411,70 +2320,26 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-Overfull \hbox (5007.68488pt too wide) in paragraph at lines 220--220
-[][]  
- []
-
-
 Overfull \vbox (154.07147pt too high) detected at line 220
  []
 
-
-
 [16
 
-]
-Overfull \hbox (2420.0pt too wide) in paragraph at lines 223--223
-[][][]  
- []
+] [17
 
+] [18
 
-
-[17
-
-]
-Overfull \hbox (5462.92896pt too wide) in paragraph at lines 232--232
-[][]  
- []
-
-
-
-[18
-
-]
-Overfull \hbox (5918.17303pt too wide) in paragraph at lines 239--239
-[][]  
- []
-
-
-
-[19
+] [19
 
 ]
 
 LaTeX Warning: Empty bibliography on input line 244.
 
-
-Overfull \hbox (6373.41711pt too wide) in paragraph at lines 244--244
-[][]  
- []
-
-
-
 [20
 
-]
-Overfull \hbox (3080.0pt too wide) in paragraph at lines 248--248
-[][][]  
- []
+] [21
 
-
-
-[21
-
-]
-
-[22
+] [22
 
 ]
 \tf@nav=\write7
@@ -2488,34 +2353,40 @@ Overfull \hbox (3080.0pt too wide) in paragraph at lines 248--248
 
  (Nguyen-Scott-Presentation.aux)
  ***********
-LaTeX2e <2025-06-01> patch level 1
+LaTeX2e <2025-11-01>
 L3 programming layer <2020/03/25>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
-
-Package rerunfilecheck Warning: File `Nguyen-Scott-Presentation.out' has change
-d.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `Nguyen-Scott-Presentation.out':
-(rerunfilecheck)             Before: D41D8CD98F00B204E9800998ECF8427E;0
-(rerunfilecheck)             After:  7C73C8C34BA209805F9278D1B47A1C73;612.
-
-Package biblatex Warning: Please (re)run Biber on the file:
-(biblatex)                Nguyen-Scott-Presentation
-(biblatex)                and rerun LaTeX afterwards.
-
+Package rerunfilecheck Info: File `Nguyen-Scott-Presentation.out' has not chang
+ed.
+(rerunfilecheck)             Checksum: 7C73C8C34BA209805F9278D1B47A1C73;612.
 Package logreq Info: Writing requests to 'Nguyen-Scott-Presentation.run.xml'.
 \openout1 = `Nguyen-Scott-Presentation.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 45332 strings out of 468149
- 925602 string characters out of 5431082
- 1731519 words of memory out of 5000000
- 73108 multiletter control sequences out of 15000+600000
- 684369 words of font info fo
+ 45415 strings out of 467871
+ 926459 string characters out of 5418375
+ 1736697 words of memory out of 5000000
+ 73469 multiletter control sequences out of 15000+600000
+ 685265 words of font info for 102 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 128i,13n,123p,1958b,1988s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/type1/public/newtx/NewTXM
+I.pfb><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/type1/public/newtx/Ne
+wTXMI7.pfb><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/type1/public/tex
+-gyre/qtmr.pfb><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/type1/public
+/txfonts/t1xbtt.pfb><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/type1/p
+ublic/txfonts/t1xtt.pfb><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/typ
+e1/public/txfonts/t1xtt.pfb><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts
+/type1/public/newtx/txmiaX.pfb><C:/Users/scott/AppData/Local/Programs/MiKTeX/fo
+nts/type1/public/newtx/txsym.pfb><C:/Users/scott/AppData/Local/Programs/MiKTeX/
+fonts/type1/public/newtx/txsys.pfb><C:/Users/scott/AppData/Local/Programs/MiKTe
+X/fonts/type1/public/newtx/ztmb.pfb><C:/Users/scott/AppData/Local/Programs/MiKT
+eX/fonts/type1/public/newtx/ztmr.pfb><C:/Users/scott/AppData/Local/Programs/MiK
+TeX/fonts/type1/public/newtx/ztmri.pfb>
+Output written on Nguyen-Scott-Presentation.pdf (22 pages, 210002 bytes).
+PDF statistics:
+ 249 PDF objects out of 1000 (max. 8388607)
+ 52 named destinations out of 1000 (max. 500000)
+ 99 words of extra memory for PDF output out of 10000 (max. 10000000)
+

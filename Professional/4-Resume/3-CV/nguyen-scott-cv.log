@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.7.26)  8 DEC 2025 17:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.12.13)  18 MAR 2026 16:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **./nguyen-scott-cv.tex
 (nguyen-scott-cv.tex
-LaTeX2e <2025-06-01> patch level 1
-L3 programming layer <2025-07-19>
+LaTeX2e <2025-11-01>
+L3 programming layer <2025-11-06>
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
 Document Class: article 2025/01/22 v1.4n Standard LaTeX document class
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/base\size10.clo
@@ -83,7 +83,7 @@ Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
 ))
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
-Package: etoolbox 2025/02/11 v2.5l e-TeX tools for LaTeX (JAW)
+Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count288
 )) (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.st
 y
@@ -205,7 +205,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 \Hy@SectionHShift=\skip54
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/tools\multicol.sty
-Package: multicol 2025/05/25 v2.0a multicolumn formatting (FMi)
+Package: multicol 2025/10/21 v2.0b multicolumn formatting (FMi)
 \c@tracingmulticols=\count300
 \mult@box=\box55
 \multicol@leftmargin=\dimen167
@@ -303,7 +303,7 @@ File: color.cfg 2016/01/02 v1.6 sample color configuration
 Package xcolor Info: Driver file: pdftex.def on input line 274.
 
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
-File: pdftex.def 2024/04/13 v1.2c Graphics/color driver for pdftex
+File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.ltx)
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
@@ -320,7 +320,7 @@ File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
 tex.def
-File: l3backend-pdftex.def 2025-06-09 L3 backend support: PDF output (pdfTeX)
+File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count311
 ) (nguyen-scott-cv.aux)
 \openout1 = `nguyen-scott-cv.aux'.
@@ -409,27 +409,25 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
 LaTeX Font Info:    Font shape `OMS/cmr/bx/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/b/n' tried instead on input line 49.
 
-
 [1
 
-{C:/Users/scott/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
-
-[2] (nguyen-scott-cv.aux)
+{C:/Users/scott/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2]
+(nguyen-scott-cv.aux)
  ***********
-LaTeX2e <2025-06-01> patch level 1
-L3 programming layer <2025-07-19>
+LaTeX2e <2025-11-01>
+L3 programming layer <2025-11-06>
  ***********
 Package rerunfilecheck Info: File `nguyen-scott-cv.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 10193 strings out of 468149
- 159957 string characters out of 5431082
- 603769 words of memory out of 5000000
- 38708 multiletter control sequences out of 15000+600000
- 629896 words of font info for 50 fonts, out of 8000000 for 9000
+ 10196 strings out of 467871
+ 160024 string characters out of 5418375
+ 607700 words of memory out of 5000000
+ 38989 multiletter control sequences out of 15000+600000
+ 630792 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,5n,79p,1206b,438s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 69i,5n,84p,1206b,440s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\scott\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
 1000.pk><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
 ts/cm/cmbsy10.pfb><C:/Users/scott/AppData/Local/Programs/MiKTeX/fonts/type1/pub

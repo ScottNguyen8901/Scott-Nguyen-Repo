@@ -1,0 +1,180 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,bm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xurl}
+\usepackage{fancyhdr}
+
+\setkeys{Gin}{width=0.75\textwidth}
+\setlength{\parindent}{0pt}
+\Urlmuskip=0mu plus 1mu
+
+% ---------- Header setup ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\today}
+\fancyhead[C]{Homework \#5}
+\fancyhead[R]{Scott Nguyen}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+
+\begin{document}
+	
+	\begin{center}
+		{\Large Homework \#5: Distributions and Fourier Transforms: How to differentiate functions for Deep Learning, take Fourier Transforms of tempered distributions, and visualize convolutions in Neural Networks using Fourier Transforms}
+		
+		\vspace{0.5em}
+		March 19, 2026
+	\end{center}
+	
+	\textbf{Warning:} You are expected to provide answers in your own words based on the discussion held in class. You will receive no credit for copying material from an AI chatbot, the internet, or if your discussion simply does not reflect the class discussion of what is expected. The use of AI or online resources is not prohibited. However, you need to use your own words, and your answers need to align with class discussions.
+	
+	\hrule
+	\vspace{1em}
+	
+	% ============================================================
+	\textbf{Problem \#1. Differentiating Functions.}
+	
+	The most essential innovation of Deep Learning is to provide automated methods for the differentiation of functions. Once you have derivatives, you can optimize.
+	
+	This problem reviews differentiation in the context of distribution theory. In regular calculus, we note that continuity does not guarantee that we can differentiate. Using Distributions, we can differentiate discontinuous functions!
+	
+	In general, we defined derivatives using:
+	\[
+	\left\langle \frac{\partial f}{\partial x_k}, \phi \right\rangle
+	= -
+	\left\langle f, \frac{\partial \phi}{\partial x_k} \right\rangle.
+	\]
+	
+	where:
+	\[
+	\left\langle f, \frac{\partial \phi}{\partial x_k} \right\rangle
+	= -
+	\int_{\mathbb{R}} f(x) \frac{\partial \phi(x)}{\partial x} dx
+	\]
+	
+	and $\phi$ is a test function: $f \in D(\Omega)$ (see definition in the lecture notes).
+	
+	In the notes, we differentiated two functions that do not have derivatives in the ordinary sense:
+	\[
+	\frac{d u(t)}{dt} = \delta(t)
+	\]
+	\[
+	\frac{d}{dx}\text{ReLU}(x) =
+	\begin{cases}
+		1, & x > 0 \\
+		0, & x \le 0
+	\end{cases}
+	\]
+	
+	At the end of our lecture, we note that distribution derivatives coincide with regular derivatives when the function is continuous. Note that regular calculus also requires differentiability. We can use our regular calculus understanding here because $\phi$ is assumed to have derivatives of all orders everywhere.
+	
+	In this problem, we aim to show that moving the ReLU around, as is often done in Neural Networks, yields the expected results. The same applies to the step function.
+	
+	Follow the same process as in the lecture notes to show that:
+	\[
+	\frac{d}{dx}\text{ReLU}(x - 5) =
+	\begin{cases}
+		1, & x > 5 \\
+		0, & x \le 5
+	\end{cases}
+	\]
+	
+	Follow the same steps as for ReLU(x) provided in the lecture notes.
+	
+	Note that translation simply translates the derivative!
+	
+	\vspace{1em}
+	
+	% ============================================================
+	\textbf{Problem \#2. Fourier Transforms for Tempered Distributions}
+	
+	\vspace{0.5em}
+	
+	\textbf{2(a)} Suppose that we want to evaluate the Fourier Transform of $exp(j\omega_0 x)$ where $\omega_0$ is a constant ($\omega$ instead of $\xi$ here!). We begin by establishing the need for a new theory! Show that the following integral is not well defined:
+	\[
+	\hat{g}(\omega) = \int_{\mathbb{R}} exp(j\omega_0 x) exp(j\omega x) dx.
+	\]
+	
+	To show that this is not well defined, follow the steps below:
+	
+	1. Evaluate the integral directly for a bounded domain:
+	\[
+	\int_{-B}^{B} exp(j\omega_0 x) exp(j\omega x) dx
+	\]
+	
+	2. Next, note that you can get different answers as $B \to \infty$ by setting $B = 2\pi n + \theta$ where $\theta \in [0, 2\pi)$, $n$ is an integer.
+	
+	Riemann has a famous theorem that shows that if a series is not absolutely convergent, but it is conditionally convergent, we can rearrange the sums to get whatever result we want. Here, conditionally convergent implies that you can get an answer by rearranging how you add up the integral. This is why you will often see the requirement of absolute convergence:
+	\[
+	\int_{\mathbb{R}} |g(x)| dx < \infty.
+	\]
+	
+	\vspace{1em}
+	
+	\textbf{2(b)} In this problem, we want to show that $g(x) = exp(j\omega_0 x)$ satisfies the conditions of a tempered distribution.
+	
+	Recall that for all $\phi \in S(\mathbb{R}^n)$, we have very rapid decay at infinity as given by:
+	\[
+	|\phi(x)| \le M_N |x|^{-N}, \text{ as } x \to \infty, \text{ for all } N = 1, 2, \dots
+	\]
+	
+	Thus we can define the integral of a product of a very nice function $\phi \in S(\mathbb{R}^n)$ with a potentially very nasty function and still get a well-defined integral:
+	\[
+	\int_{\mathbb{R}^n} |g(x)\phi(x)| dx < \infty.
+	\]
+	
+	For this problem, you need to show that the above inequality holds so that $g$ defines a tempered distribution.
+	
+	To show the finiteness, use the fact that:
+	\[
+	\int_{\mathbb{R}} |\phi(x)| dx < \infty
+	\]
+	
+	as proven on page 30 of A Guide to Distribution Theory and Fourier Transforms.
+	
+	\vspace{1em}
+	
+	\textbf{2(c)} We want to try two candidates for the Fourier Transform to see which one works out. Here are the two expressions:
+	\[
+	\mathcal{F}(exp(j\omega_0 x)) = C\delta(\omega + \omega_0),
+	\]
+	\[
+	\mathcal{F}(exp(j\omega_0 x)) = C\delta(\omega - \omega_0).
+	\]
+	
+	where you need to compute the value for $C$.
+	
+	Follow the steps described in the lecture notes to make this work.
+	
+	Hint: Use the definition of the inverse Fourier Transform in Step 1, adding necessary constants to get an expression for the RHS.
+	
+	Another hint: Note that inner products can be viewed as the Fourier Transform or inverse Fourier Transform of a function at zero.
+	
+	\vspace{1em}
+	
+	% ============================================================
+	\textbf{Problem \#3. Convolution is multiplication in the Frequency Domain!}
+	
+	Convolutional Neural Networks (CNNs) are very powerful! Here, we want to visualize how the Fourier Transform can help us visualize what happens when convolving with different filters.
+	
+	Answer the following:
+	
+	\begin{itemize}
+		
+		\item Sketch the effect of convolution with a filter that has low-pass rectangular support in the frequency domain. What frequencies are missing from the output image? How does the image appear?
+		
+		\item Sketch the effect of convolution with a low-pass filter support over a disk in the frequency domain. What frequencies are missing from the output image? How does the image appear?
+		
+		\item For a filter with circular support, show that rotation of the input image does not remove frequency content.
+		
+	\end{itemize}
+	
+\end{document}
