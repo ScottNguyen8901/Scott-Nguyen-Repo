@@ -1017,7 +1017,9 @@ Setting \texttt{top\_p = 0.99} allows sampling from a much larger set of likely 
 	10) Once upon a time, they were going to need these in the form of a small dose, perhaps a tablespoon. At that time the main problems of those times were to get the best dosage, rather than to get a very large dosage, and that
 \end{lstlisting}
 
-\textbf{Observation:} The outputs are much more varied across runs than with \texttt{top\_p = 0.1}. This makes the text more diverse and creative, but some outputs are less coherent and feel more random.
+The outputs are much more varied across runs than with \texttt{top\_p = 0.1}. This makes the text more diverse and creative, but some outputs are less coherent and feel more random.
+
+\newpage
 
 \textbf{Problem 4. Basic transformer architecture.}
 
@@ -1046,6 +1048,203 @@ Here is the list of models:
     \item Transformer
 \end{enumerate}
 
+\textbf{Solution}
+
+\begin{enumerate}[label=\roman*.]
+
+\item \textbf{TransformerEncoderLayer}
+
+\begin{itemize}
+    \item \textbf{Input dimensions:}
+    \[
+    (\text{seq\_len}, \text{batch\_size}, d_{\text{model}})
+    \]
+    \item \textbf{Output dimensions:}
+    \[
+    (\text{seq\_len}, \text{batch\_size}, d_{\text{model}})
+    \]
+    \item \textbf{Equation:}
+    \[
+    X_1 = \mathrm{LayerNorm}\bigl(X + \mathrm{MHA}(X,X,X)\bigr)
+    \]
+    \[
+    X_2 = \mathrm{LayerNorm}\bigl(X_1 + \mathrm{FFN}(X_1)\bigr)
+    \]
+    where
+    \[
+    \mathrm{FFN}(X)=\sigma(XW_1+b_1)W_2+b_2
+    \]
+    \item \textbf{Learnable parameters:}
+    \begin{itemize}
+        \item Multi-head attention projection weights and biases
+        \item Output projection weight and bias
+        \item Feedforward weights $W_1,W_2$ and biases
+        \item LayerNorm scale and shift parameters
+    \end{itemize}
+\end{itemize}
+
+\item \textbf{TransformerDecoderLayer}
+
+\begin{itemize}
+    \item \textbf{Input dimensions:}
+    \[
+    \text{target: } (\text{tgt\_len}, \text{batch\_size}, d_{\text{model}})
+    \]
+    \[
+    \text{memory: } (\text{src\_len}, \text{batch\_size}, d_{\text{model}})
+    \]
+    \item \textbf{Output dimensions:}
+    \[
+    (\text{tgt\_len}, \text{batch\_size}, d_{\text{model}})
+    \]
+    \item \textbf{Equation:}
+    \[
+    Y_1 = \mathrm{LayerNorm}\bigl(Y + \mathrm{MHA}(Y,Y,Y)\bigr)
+    \]
+    \[
+    Y_2 = \mathrm{LayerNorm}\bigl(Y_1 + \mathrm{MHA}(Y_1,M,M)\bigr)
+    \]
+    \[
+    Y_3 = \mathrm{LayerNorm}\bigl(Y_2 + \mathrm{FFN}(Y_2)\bigr)
+    \]
+    where $M$ is the encoder output.
+    \item \textbf{Learnable parameters:}
+    \begin{itemize}
+        \item Self-attention projection weights and biases
+        \item Cross-attention projection weights and biases
+        \item Output projection weights and biases
+        \item Feedforward weights and biases
+        \item LayerNorm scale and shift parameters
+    \end{itemize}
+\end{itemize}
+
+\item \textbf{TransformerEncoder}
+
+\begin{itemize}
+    \item \textbf{Input dimensions:}
+    \[
+    (\text{seq\_len}, \text{batch\_size}, d_{\text{model}})
+    \]
+    \item \textbf{Output dimensions:}
+    \[
+    (\text{seq\_len}, \text{batch\_size}, d_{\text{model}})
+    \]
+    \item \textbf{Equation:}
+
+    The encoder is a stack of $L$ encoder layers:
+    \[
+    H^{(0)} = X,\qquad H^{(\ell)} = \mathrm{EncoderLayer}^{(\ell)}(H^{(\ell-1)}),\quad \ell=1,\dots,L
+    \]
+    \[
+    \mathrm{Encoder}(X)=H^{(L)}
+    \]
+    \item \textbf{Learnable parameters:}
+
+    All learnable parameters from each encoder layer in the stack, and any final normalization parameters if included.
+\end{itemize}
+
+\item \textbf{TransformerDecoder}
+
+\begin{itemize}
+    \item \textbf{Input dimensions:}
+    \[
+    \text{target: } (\text{tgt\_len}, \text{batch\_size}, d_{\text{model}})
+    \]
+    \[
+    \text{memory: } (\text{src\_len}, \text{batch\_size}, d_{\text{model}})
+    \]
+    \item \textbf{Output dimensions:}
+    \[
+    (\text{tgt\_len}, \text{batch\_size}, d_{\text{model}})
+    \]
+    \item \textbf{Equation:}
+
+    The decoder is a stack of $L$ decoder layers:
+    \[
+    G^{(0)} = Y,\qquad G^{(\ell)} = \mathrm{DecoderLayer}^{(\ell)}(G^{(\ell-1)}, M),\quad \ell=1,\dots,L
+    \]
+    \[
+    \mathrm{Decoder}(Y,M)=G^{(L)}
+    \]
+    \item \textbf{Learnable parameters:}
+
+    All learnable parameters from each decoder layer in the stack, and any final normalization parameters if included.
+\end{itemize}
+
+\item \textbf{MultiheadAttention}
+
+\begin{itemize}
+    \item \textbf{Input dimensions:}
+    \[
+    Q:\; (\text{tgt\_len}, \text{batch\_size}, d_{\text{model}})
+    \]
+    \[
+    K,V:\; (\text{src\_len}, \text{batch\_size}, d_{\text{model}})
+    \]
+    \item \textbf{Output dimensions:}
+    \[
+    \text{attention output: } (\text{tgt\_len}, \text{batch\_size}, d_{\text{model}})
+    \]
+    \[
+    \text{attention weights: typically } (\text{batch\_size}, \text{tgt\_len}, \text{src\_len})
+    \]
+    \item \textbf{Equation:}
+    \[
+    Q_h = QW_h^Q,\qquad K_h = KW_h^K,\qquad V_h = VW_h^V
+    \]
+    \[
+    \mathrm{head}_h = \mathrm{softmax}\left(\frac{Q_hK_h^T}{\sqrt{d_k}}\right)V_h
+    \]
+    \[
+    \mathrm{MHA}(Q,K,V)=\mathrm{Concat}(\mathrm{head}_1,\dots,\mathrm{head}_H)W^O
+    \]
+    \item \textbf{Learnable parameters:}
+    \begin{itemize}
+        \item Query projection weights and biases
+        \item Key projection weights and biases
+        \item Value projection weights and biases
+        \item Output projection weight and bias
+    \end{itemize}
+\end{itemize}
+
+\item \textbf{Transformer}
+
+\begin{itemize}
+    \item \textbf{Input dimensions:}
+    \[
+    \text{src: } (\text{src\_len}, \text{batch\_size}, d_{\text{model}})
+    \]
+    \[
+    \text{tgt: } (\text{tgt\_len}, \text{batch\_size}, d_{\text{model}})
+    \]
+    \item \textbf{Output dimensions:}
+    \[
+    (\text{tgt\_len}, \text{batch\_size}, d_{\text{model}})
+    \]
+    \item \textbf{Equation:}
+    \[
+    M = \mathrm{Encoder}(\mathrm{src})
+    \]
+    \[
+    \mathrm{Transformer}(\mathrm{src},\mathrm{tgt})=\mathrm{Decoder}(\mathrm{tgt},M)
+    \]
+    \item \textbf{Learnable parameters:}
+
+    All learnable parameters in the encoder stack and decoder stack, including:
+    \begin{itemize}
+        \item all multi-head attention weights and biases,
+        \item all feedforward weights and biases,
+        \item all LayerNorm parameters.
+    \end{itemize}
+\end{itemize}
+
+\end{enumerate}
+
+\textbf{Note:} If \texttt{batch\_first=True} is used, the dimensions are written as
+\[
+(\text{batch\_size}, \text{seq\_len}, d_{\text{model}}).
+\]
+
 \textbf{4(b)} Describe briefly how the NmtTransformer is trained.
 
 For this problem, you need to provide
@@ -1056,12 +1255,58 @@ For this problem, you need to provide
     \item How many epochs are used for training?
 \end{enumerate}
 
+\textbf{Solution}
+
+\begin{enumerate}[label=\alph*.]
+
+\item \textbf{Inputs used for training:}
+
+The model is trained using:
+\begin{itemize}
+    \item Source sequence (\texttt{src}) — input sentence (e.g., English)
+    \item Target sequence (\texttt{tgt}) — shifted target sentence (e.g., French)
+\end{itemize}
+The decoder receives the target sequence shifted right (teacher forcing), and the model predicts the next token.
+
+\item \textbf{Optimizer:}
+
+The optimizer used is Adam:
+\[
+\texttt{torch.optim.Adam(model.parameters(), lr=...)}
+\]
+It is set up with the model parameters and a learning rate, allowing all learnable parameters in the transformer to be updated during training.
+
+\item \textbf{Number of epochs:}
+
+The model is trained for multiple epochs (typically around 10 epochs in the notebook), iterating over the dataset several times to improve performance.
+
+\end{enumerate}
+
 \textbf{4(c)} Describe briefly how the NmtTransformer is deployed.
 
 \begin{enumerate}[label=\alph*.]
     \item What are the inputs and computed outputs?
     \item How is the transformer connecting the decoder to the encoder for computing outputs?
 \end{enumerate}
+
+\textbf{Solution}
+
+\begin{enumerate}[label=\alph*.]
+
+\item \textbf{Inputs and computed outputs:}
+
+The deployed model takes a source sequence (\texttt{src}) as input and generates a target sequence token-by-token. At each step, the decoder outputs a probability distribution over the vocabulary, and the next token is selected (e.g., via greedy decoding or sampling). The final output is the generated translated sentence.
+
+\item \textbf{Connection between encoder and decoder:}
+
+The encoder processes the source sequence to produce a memory representation. The decoder uses this memory through cross-attention:
+\[
+\mathrm{MHA}(Q,K,V) = \mathrm{MHA}(\text{decoder states}, \text{encoder outputs}, \text{encoder outputs})
+\]
+Here, the encoder outputs serve as keys and values, allowing the decoder to attend to relevant parts of the input sequence when generating each token.
+
+\end{enumerate}
+
 \textbf{4(d)} For each of the models below, you need to provide the following:
 
 \begin{enumerate}[label=\alph*.]
@@ -1077,6 +1322,86 @@ Here is the list of models:
     \item ViT
 \end{enumerate}
 
+\textbf{Solution}
+
+\begin{enumerate}[label=\roman*.]
+
+\item \textbf{PatchEmbedding}
+
+\begin{itemize}
+    \item \textbf{Input dimensions:}
+    \[
+    (\text{batch\_size}, C, H, W)
+    \]
+    \item \textbf{Output dimensions:}
+    \[
+    (\text{batch\_size}, N, d_{\text{model}})
+    \]
+    where $N = \frac{H}{P}\frac{W}{P}$ is the number of patches and $P$ is the patch size.
+    \item \textbf{Equation:}
+
+    The image is split into patches, flattened, and projected:
+    \[
+    x_p = \text{flatten}(\text{patch}_p)
+    \]
+    \[
+    z_p = x_p W + b
+    \]
+    where $W$ maps each patch to $d_{\text{model}}$.
+\end{itemize}
+
+\item \textbf{TransformerEncoderLayer}
+
+\begin{itemize}
+    \item \textbf{Input dimensions:}
+    \[
+    (\text{seq\_len}, \text{batch\_size}, d_{\text{model}})
+    \]
+    \item \textbf{Output dimensions:}
+    \[
+    (\text{seq\_len}, \text{batch\_size}, d_{\text{model}})
+    \]
+    \item \textbf{Equation:}
+    \[
+    X_1 = \mathrm{LayerNorm}(X + \mathrm{MHA}(X,X,X))
+    \]
+    \[
+    X_2 = \mathrm{LayerNorm}(X_1 + \mathrm{FFN}(X_1))
+    \]
+\end{itemize}
+
+\item \textbf{ViT (Vision Transformer)}
+
+\begin{itemize}
+    \item \textbf{Input dimensions:}
+    \[
+    (\text{batch\_size}, C, H, W)
+    \]
+    \item \textbf{Output dimensions:}
+    \[
+    (\text{batch\_size}, \text{num\_classes})
+    \]
+    \item \textbf{Equation:}
+
+    First apply patch embedding:
+    \[
+    Z_0 = [x_{\text{class}}; z_1; \dots; z_N] + E_{\text{pos}}
+    \]
+
+    Then pass through encoder layers:
+    \[
+    Z_L = \mathrm{Encoder}(Z_0)
+    \]
+
+    Final classification:
+    \[
+    y = \mathrm{MLP}(Z_L^{(0)})
+    \]
+    where $Z_L^{(0)}$ is the class token.
+\end{itemize}
+
+\end{enumerate}
+
 \textbf{4(e)} For DINO, we use two ViT systems. The teacher is trained on the full input image. The student is trained on zoomed versions of the same input image. Self distillation with no labels trains the student to produce the same output as the teacher (who is not trained). For each one of the 12 images in the DINO example in the code, comment on high attention values for image segmentation of the two cats. Specifically, highlight image regions that appear:
 
 \begin{enumerate}[label=\roman*.]
@@ -1084,6 +1409,29 @@ Here is the list of models:
     \item wrong.
     \item may be correct.
 \end{enumerate}
+
+\textbf{Solution}
+
+Below I comment on the 12 DINO attention maps (read left-to-right, top-to-bottom).
+
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Mostly correct:} high attention on the left cat’s torso and the right cat’s face/neck. \textbf{Wrong:} small background spillover on the blanket.
+    \item \textbf{Correct:} attention highlights both cats, especially the right cat’s head and the left cat’s upper body. \textbf{May be correct:} slight attention on nearby blanket folds.
+    \item \textbf{Correct:} strong segmentation of the left cat’s full body and part of the right cat’s body. \textbf{Wrong:} misses some of the right cat’s lower body.
+    \item \textbf{May be correct:} both cats are visible, but there is also strong attention on the background and couch, so segmentation is less clean.
+    \item \textbf{Correct:} left cat is well highlighted, and the right cat’s head/neck region is identified. \textbf{Wrong:} extra attention leaks to the lower-right blanket.
+    \item \textbf{Correct:} strong attention on most of the right cat and much of the left cat. \textbf{May be correct:} some attention on the remote and nearby edges.
+    \item \textbf{Correct:} attention captures the left cat and the right cat’s head. \textbf{Wrong:} some isolated background hotspots.
+    \item \textbf{Correct:} both cats are strongly highlighted, especially their bodies. This is one of the best segmentation maps. \textbf{Wrong:} minor spillover to the lower background.
+    \item \textbf{Correct:} attention focuses on the main body regions of both cats. \textbf{Wrong:} a few extra bright spots appear off the cats.
+    \item \textbf{Correct:} left cat is segmented well and the right cat is partially segmented. \textbf{May be correct:} the remote receives some attention because it is close to the cats.
+    \item \textbf{May be correct:} the map finds parts of both cats, but also attends to larger blanket regions, so the segmentation is less precise.
+    \item \textbf{Correct:} the right cat’s face and torso are highlighted, and part of the left cat is also detected. \textbf{Wrong:} some body regions are missed, especially on the left cat.
+\end{enumerate}
+
+Overall, the best heads are the ones where high attention stays concentrated on the cats’ bodies, faces, and legs. The weaker heads are those where attention spreads onto the blanket, couch, or remote. Some regions marked outside the cats may still be \emph{possibly correct} if they lie on boundaries, shadows, or nearby object edges that help define the cats’ shapes.
+
+\newpage
 
 \textbf{Problem 5. (Contrastive learning models)}
 
