@@ -1,0 +1,8 @@
+path: C:/Users/snguye17/Documents/folder/martianlunar-crater-detection-dataset/craters
+
+train: train/images
+val: valid/images
+test: test/images
+
+names:
+  0: crater

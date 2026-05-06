@@ -1,1 +1,68 @@
-UNM-SSE/[3]-Summer-2025/ECE-531/hw/hw_3/scott-key.pem
+# =========================
+# Python
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.env/
+.venv/
+
+# =========================
+# Model weights
+# =========================
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# =========================
+# Training / inference outputs
+# =========================
+runs/
+outputs/
+results/
+checkpoints/
+
+# YOLO cache files
+*.cache
+
+# =========================
+# Jupyter
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# LaTeX build artifacts
+# =========================
+*.aux
+*.log
+*.synctex.gz
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.lof
+*.lot
+*.bbl
+*.blg
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+
+# =========================
+# Temporary files
+# =========================
+*.tmp
+*.temp

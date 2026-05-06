@@ -5,6 +5,7 @@
 \usepackage{lmodern}
 \usepackage{setspace}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{hyperref}
 \usepackage{fancyhdr}
 \usepackage{enumitem}
@@ -12,6 +13,11 @@
 \usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{tikz}
+\usepackage{float}
+\usetikzlibrary{positioning, arrows.meta}
 
 \definecolor{codegray}{gray}{0.95}
 \definecolor{codered}{rgb}{0.8,0,0}
@@ -67,6 +73,8 @@ You will receive zero credit if your answers appear to be AI-generated. During g
 During the final exam, I will primarily focus on interpreting diagrams and figures that would be nearly impossible to answer using AI-generated text. During the oral project, I will ask questions directly related to the material I ask in the homework. I will then provide a grade that reflects your understanding of what you are doing and how you respond to feedback.
 
 The credit is not distributed equally among problems.
+
+\newpage
 
 \section{Problems}
 
@@ -134,6 +142,8 @@ with update rule:
 a_k \leftarrow a_k - \eta \cdot 2 (y_{\text{pred},i} - y_i)\, x_i^k,
 \]
 where $\eta$ is the learning rate.
+
+\newpage
 
     \item Enter your derived equations in the NumPy code and show how it works for a learning rate of 1e-3. Does the MSE ever reach a plateau? How do you know? What does the gradient need to be?
 
@@ -204,6 +214,7 @@ This confirms that:
     \item Reduction in MSE can be achieved even without full convergence.
 \end{itemize}
 
+\newpage
     \item Reimplement the example in 1(b) using the Neural Network module. Make sure to use the best result from 1(b). For your code, change the runtime environment to make use that you are using a GPU. Compare your results against 1(b). Did it work?
 
 \textbf{Solution}
@@ -1447,12 +1458,80 @@ For the CLIP problem, refer to: \href{https://colab.research.google.com/drive/1g
     \item Different bluring functions.
 \end{enumerate}
 
+\textbf{Solution}
+
+\begin{algorithm}[H]
+	\caption{Expanded Contrastive Transforms}
+	\begin{algorithmic}[1]
+		\State \textbf{Input:} Image $x$
+		\State \textbf{Output:} Augmented image $\tilde{x}$
+		
+		\Statex
+		
+		\State \textbf{i. Larger variety of scalings}
+		\State Choose scaling transform $T_s$ from:
+		\State \quad RandomResizedCrop$(96,\ \text{scale}=(0.08,1.0))$
+		\State \quad RandomResizedCrop$(96,\ \text{scale}=(0.2,0.8))$
+		\State \quad RandomResizedCrop$(96,\ \text{scale}=(0.5,1.0))$
+		\State \quad Resize$(\text{random size in }[80,140])$
+		\State \quad RandomCrop$(96)$ or CenterCrop$(96)$
+		\State Apply $x \leftarrow T_s(x)$
+		\State Apply RandomHorizontalFlip$(p=0.5)$
+		
+		\Statex
+		
+		\State \textbf{ii. Different color variations}
+		\State Choose color transform $T_c$ from:
+		\State \quad ColorJitter$(b,c,s,h)$ with random parameters
+		\State \quad RandomGrayscale$(p=0.2)$
+		\State \quad RandomSolarize$(\text{threshold})$
+		\State \quad RandomPosterize$(\text{bits})$
+		\State \quad RandomAutocontrast()
+		\State \quad RandomEqualize()
+		\State Apply $x \leftarrow T_c(x)$
+		
+		\Statex
+		
+		\State \textbf{iii. Different blurring functions}
+		\State Choose blur transform $T_b$ from:
+		\State \quad GaussianBlur$(k)$
+		\State \quad MedianBlur$(k)$
+		\State \quad MotionBlur$(k,\theta)$
+		\State \quad BoxBlur$(k)$
+		\State Apply $x \leftarrow T_b(x)$
+		
+		\Statex
+		
+		\State Convert to tensor and normalize:
+		\State $x \leftarrow \text{ToTensor}(x)$
+		\State $x \leftarrow \text{Normalize}(x)$
+		
+		\State \Return $\tilde{x} = x$
+	\end{algorithmic}
+\end{algorithm}
+
+\newpage
+
 \textbf{5(b)} Explain how the following transformations may not work for contrastive learning:
 
 \begin{enumerate}[label=\roman*.]
     \item Random resizing.
     \item Random resized cropping.
 \end{enumerate}
+
+\textbf{Solution}
+
+\begin{enumerate}[label=\roman*.]
+	
+	\item \textbf{Random resizing:}  
+	Random resizing alone may not be effective for contrastive learning because it does not significantly change the semantic content or viewpoint of the image. If two augmented views differ only by scale, the model can rely on low-level features (such as texture or color distribution) to match them, instead of learning meaningful, high-level representations. This weak augmentation reduces the difficulty of the contrastive task and can lead to poor generalization.
+	
+	\item \textbf{Random resized cropping:}  
+	Random resized cropping can fail if the crops are too aggressive or poorly chosen. In such cases, two crops from the same image may not share sufficient overlapping semantic content (e.g., different parts of an object or entirely different objects in the scene). This creates false positive pairs, where the model is forced to treat unrelated views as similar. As a result, the learned representations may become noisy or less discriminative.
+	
+\end{enumerate}
+
+\newpage
 
 \textbf{5(c)} Evaluate the InfoNCE loss for:
 
@@ -1467,9 +1546,225 @@ For the CLIP problem, refer to: \href{https://colab.research.google.com/drive/1g
 
 Discuss the effect of changing the temperature.
 
+\textbf{Solution}
+
+The InfoNCE loss is
+
+\[
+\ell_{i,j}
+=
+-\log
+\left(
+\frac{
+	\exp\left(\mathrm{sim}(z_i,z_j)/\tau\right)
+}{
+	\sum_{k=1}^{2N}\mathbb{1}_{[k \neq i]}
+	\exp\left(\mathrm{sim}(z_i,z_k)/\tau\right)
+}
+\right)
+\]
+
+For one positive pair and $2N-2$ negative examples, this becomes
+
+\[
+\ell
+=
+-\frac{s_p}{\tau}
++
+\log
+\left(
+\exp(s_p/\tau)
++
+(2N-2)\exp(s_n/\tau)
+\right)
+\]
+
+where $s_p$ is the positive similarity score, $s_n$ is the negative similarity score, and $\tau$ is the temperature.
+
+For the ideal case, use
+
+\[
+s_p = 1, \qquad s_n = -1.
+\]
+
+Example calculation for $N=2$ and $\tau=1$:
+
+\[
+\ell
+=
+-1
++
+\log
+\left(
+\exp(1) + 2\exp(-1)
+\right)
+\]
+
+\[
+\ell
+=
+-1
++
+\log(2.718 + 0.736)
+\]
+
+\[
+\ell
+=
+-1 + \log(3.454)
+=
+0.2395
+\]
+
+\begin{center}
+	\begin{minipage}[t]{0.48\textwidth}
+		\centering
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\multicolumn{4}{|c|}{\textbf{Ideal Cases}} \\
+			\hline
+			$N$ & $\tau$ & $s_p$ & Loss \\
+			\hline
+			2 & 1 & 1.0 & 0.2395 \\
+			1000 & 1 & 1.0 & 5.6036 \\
+			2 & 100 & 1.0 & 1.0853 \\
+			1000 & 100 & 1.0 & 7.5804 \\
+			2 & 0.1 & 1.0 & 0.0000 \\
+			1000 & 0.1 & 1.0 & 0.0000 \\
+			\hline
+		\end{tabular}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[t]{0.48\textwidth}
+		\centering
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			\multicolumn{4}{|c|}{\textbf{Realistic Cases}} \\
+			\hline
+			$N$ & $\tau$ & $s_p$ & Loss \\
+			\hline
+			2 & 1 & 0.9 & 0.5951 \\
+			1000 & 1 & 0.9 & 6.7011 \\
+			2 & 0.1 & 0.9 & 0.0002 \\
+			1000 & 0.1 & 0.9 & 0.2204 \\
+			2 & 100 & 0.9 & 1.0926 \\
+			1000 & 100 & 0.9 & 7.5914 \\
+			\hline
+		\end{tabular}
+	\end{minipage}
+\end{center}
+
+For the realistic cases,
+
+\[
+s_p = 0.9, \qquad s_n = 0.
+\]
+
+As the temperature $\tau$ decreases, the softmax becomes sharper. This makes the model focus more strongly on the highest similarity scores, so good positive pairs receive much smaller loss. As $\tau$ increases, the softmax becomes flatter, meaning the model treats positive and negative examples more similarly. This usually increases the loss and makes contrastive learning less discriminative. Also, as $N$ increases, there are many more negative examples in the denominator, so the loss becomes larger.
+
+\newpage
+
 \textbf{5(d)} Provide a block diagram showing the architecture for pre-training.
 
+\textbf{Solution}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[
+		every node/.style={font=\small},
+		box/.style={
+			rectangle,
+			draw,
+			rounded corners,
+			align=center,
+			minimum width=3.1cm,
+			minimum height=0.9cm
+		},
+		arrow/.style={->, thick}
+		]
+		
+		\node[box] (image) at (0,0) {Input Image\\$x$};
+		
+		\node[box] (aug1) at (-3,-1.8) {Random\\Augmentation 1\\$\tilde{x}_i$};
+		\node[box] (aug2) at (3,-1.8) {Random\\Augmentation 2\\$\tilde{x}_j$};
+		
+		\node[box] (enc1) at (-3,-3.3) {Base Encoder\\$f(\cdot)$};
+		\node[box] (enc2) at (3,-3.3) {Base Encoder\\$f(\cdot)$};
+		
+		\node[box] (proj1) at (-3,-4.8) {Projection Head\\$g(\cdot)$};
+		\node[box] (proj2) at (3,-4.8) {Projection Head\\$g(\cdot)$};
+		
+		\node[box] (z1) at (-3,-6.3) {Latent Vector\\$z_i$};
+		\node[box] (z2) at (3,-6.3) {Latent Vector\\$z_j$};
+		
+		\node[box, minimum width=4.2cm] (loss) at (0,-7.9) {
+			InfoNCE Loss\\
+			maximize positive similarity\\
+			minimize negative similarity
+		};
+		
+		\draw[arrow] (image) -- (aug1);
+		\draw[arrow] (image) -- (aug2);
+		
+		\draw[arrow] (aug1) -- (enc1);
+		\draw[arrow] (aug2) -- (enc2);
+		
+		\draw[arrow] (enc1) -- (proj1);
+		\draw[arrow] (enc2) -- (proj2);
+		
+		\draw[arrow] (proj1) -- (z1);
+		\draw[arrow] (proj2) -- (z2);
+		
+		\draw[arrow] (z1) -- (loss);
+		\draw[arrow] (z2) -- (loss);
+		
+	\end{tikzpicture}
+	\caption{Block diagram of the SimCLR pre-training architecture.}
+	\label{fig:simclr_pretraining}
+\end{figure}
+
+\newpage
+
 \textbf{5(e)} Provide a block diagram showing the architecture for classification.
+
+\textbf{Solution}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[
+		every node/.style={font=\small},
+		box/.style={
+			rectangle,
+			draw,
+			rounded corners,
+			align=center,
+			minimum width=3.4cm,
+			minimum height=0.9cm
+		},
+		arrow/.style={->, thick}
+		]
+		
+		\node[box] (image) at (0,0) {Input Image\\$x$};
+		
+		\node[box] (encoder) at (0,-1.6) {Pre-trained Base Encoder\\$f(\cdot)$};
+		
+		\node[box] (features) at (0,-3.2) {Feature Vector\\$h$};
+		
+		\node[box] (classifier) at (0,-4.8) {Linear Classifier\\Logistic Regression};
+		
+		\node[box] (output) at (0,-6.4) {Class Prediction\\$\hat{y}$};
+		
+		\draw[arrow] (image) -- (encoder);
+		\draw[arrow] (encoder) -- (features);
+		\draw[arrow] (features) -- (classifier);
+		\draw[arrow] (classifier) -- (output);
+		
+	\end{tikzpicture}
+	\caption{Block diagram of the classification architecture using the pre-trained SimCLR encoder.}
+	\label{fig:simclr_classification}
+\end{figure}
+
+\newpage
 
 \textbf{5(f)} Consider the multimodal transformer based on CLIP. In our example, we have the following code for encoding text and images separately:
 
@@ -1487,6 +1782,24 @@ Study the high and low similarity values produced here and answer the following:
     \item What is the ideal similarity when a generated caption does not correspond to the image?
     \item What is a realistic similarity when a generated caption corresponds to the image?
     \item What is a realistic similarity when a generated caption does not correspond to the image?
+\end{enumerate}
+
+\textbf{Solution}
+
+\begin{enumerate}[label=\roman*.]
+	
+	\item \textbf{Ideal similarity (matching caption):}  
+	The similarity should be as high as possible. Since CLIP uses normalized embeddings and dot products (cosine similarity), the ideal value is close to $1$, meaning the image and text embeddings are perfectly aligned.
+	
+	\item \textbf{Ideal similarity (non-matching caption):}  
+	The similarity should be as low as possible. Ideally, this would be close to $-1$, indicating that the embeddings are in opposite directions and completely unrelated.
+	
+	\item \textbf{Realistic similarity (matching caption):}  
+	In practice, similarities are typically less than perfect. A realistic value for a correct image-caption pair is around $0.7$ to $0.9$, indicating strong but not perfect alignment due to noise, ambiguity, and imperfect representations.
+	
+	\item \textbf{Realistic similarity (non-matching caption):}  
+	For incorrect pairs, similarities are usually near $0$, meaning the embeddings are roughly orthogonal and share little semantic meaning. Values may range from slightly negative to slightly positive (e.g., $-0.2$ to $0.2$), depending on partial or coincidental feature overlap.
+	
 \end{enumerate}
 
 \end{document}

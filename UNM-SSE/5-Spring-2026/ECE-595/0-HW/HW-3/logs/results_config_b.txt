@@ -1,0 +1,117 @@
+
+RAG Automated Test Results
+==========================
+
+Chunk size: 500
+Chunk overlap: 50
+Retriever k: 4
+LLM: llama3.2:latest
+Embedding model: all-MiniLM-L6-v2
+
+Question 1: What is this homework about?
+
+Answer:
+This homework is about building a Retrieval Augmented Generation (RAG) Application using Ollama and Langchain, with the goal of improving the performance of the model and optimizing it.
+
+Retrieved source pages:
+  Source 1: page 7
+  Source 2: page 0
+  Source 3: page 8
+  Source 4: page 7
+
+------------------------------------------------------------
+
+Question 2: What are the main steps in building the RAG system?
+
+Answer:
+Based on the document context, I do not know based on the document. The document provides information on evaluation methodology, improvement techniques, and core RAG implementation, but it does not explicitly outline the main steps in building the RAG system.
+
+Retrieved source pages:
+  Source 1: page 7
+  Source 2: page 8
+  Source 3: page 6
+  Source 4: page 3
+
+------------------------------------------------------------
+
+Question 3: What is retrieval augmented generation?
+
+Answer:
+Retrieval Augmented Generation (RAG) is a technique that combines retrieval and generation capabilities to improve the performance of language models. It involves using an embedding model to convert documents and queries into vectors, which are then used to retrieve relevant context and generate responses.
+
+Retrieved source pages:
+  Source 1: page 0
+  Source 2: page 5
+  Source 3: page 8
+  Source 4: page 2
+
+------------------------------------------------------------
+
+Question 4: What embedding model is suggested in the homework?
+
+Answer:
+The document suggests using HuggingFaceEmbeddings, which can be installed via pip: !pip install sentence-transformers.
+
+Retrieved source pages:
+  Source 1: page 7
+  Source 2: page 6
+  Source 3: page 3
+  Source 4: page 2
+
+------------------------------------------------------------
+
+Question 5: What vector database is used?
+
+Answer:
+The document suggests using Chroma as the vector store.
+
+Retrieved source pages:
+  Source 1: page 0
+  Source 2: page 0
+  Source 3: page 6
+  Source 4: page 4
+
+------------------------------------------------------------
+
+Question 6: What are two ways to improve the RAG system?
+
+Answer:
+According to Source 1 | Page 7, two ways to improve the RAG system are:
+
+1. Implementing and evaluating at least two different techniques to improve the RAG system's performance.
+2. Prompt engineering variations.
+
+Retrieved source pages:
+  Source 1: page 7
+  Source 2: page 6
+  Source 3: page 0
+  Source 4: page 2
+
+------------------------------------------------------------
+
+Question 7: What percentage is assigned to performance improvement?
+
+Answer:
+According to the document context, 30% of the grading rubric is assigned to Performance Evaluation and Improvement (Critical Thinking).
+
+Retrieved source pages:
+  Source 1: page 7
+  Source 2: page 7
+  Source 3: page 7
+  Source 4: page 6
+
+------------------------------------------------------------
+
+Question 8: What is the capital of France?
+
+Answer:
+I do not know based on the document. The question about vector database used does not have an answer in the provided conversation history and document context.
+
+Retrieved source pages:
+  Source 1: page 7
+  Source 2: page 0
+  Source 3: page 4
+  Source 4: page 8
+
+------------------------------------------------------------
+
