@@ -1,5 +1,5 @@
 \documentclass[10pt]{article}
-\usepackage[margin=0.25in]{geometry}
+\usepackage[margin=0.35in]{geometry}
 \usepackage{enumitem}
 \usepackage{titlesec}
 \usepackage{parskip}
@@ -47,8 +47,8 @@
 	
 	\section*{Education}
 	
-	\textbf{Master of Science in Electrical Engineering \textbar\ Space Systems Engineering} \hfill \textbf{Fall 2026} \\
-	University of New Mexico \hfill GPA: 3.95/4.00
+	\textbf{Master of Science in Electrical Engineering \textbar\ Space Systems Engineering} \hfill \textbf{Summer 2026} \\
+	University of New Mexico \hfill GPA: 3.93/4.00
 	
 	\textbf{Master of Science in Aerospace Engineering} \hfill \textbf{Fall 2024} \\
 	University of Illinois Urbana-Champaign
@@ -59,13 +59,24 @@
 	\sectionline
 	
 	\section*{Skills}
-	\textbf{Programming Languages:} MATLAB, Python, C/C++, Ruby \\
-	\textbf{Frameworks / Libraries / Tools:} NumPy, SciPy, Matplotlib, Astropy, Poliastro, bpy, git \\
-	\textbf{Applications:} Simulink, Blender, ANSYS HFSS, FEKO, TICRA
+	\textbf{Programming:} Python, MATLAB, C/C++, Ruby \\
+	\textbf{GNC / Flight Software:} cFS, PX4, MAVSDK, MAVLink, EKF/UKF, Monte Carlo Analysis, Orbit Determination \\
+	\textbf{Simulation / Tools:} Simulink, Trick, NumPy, SciPy, Matplotlib, Git, Linux, CI/CD \\
+	\textbf{Applications:} ANSYS HFSS, FEKO, TICRA, Blender
 	
 	\sectionline
 	
 	\section*{Work Experience}
+	
+	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill 
+	\textbf{January 2026 – May 2026} \\
+	\emph{NASA Johnson Space Center (JSC)}
+	\begin{itemize}
+		\item Developed and integrated GNC flight software applications within NASA's \textbf{core Flight System (cFS)} architecture for the \textbf{SPLICE} project.
+		\item Worked on \textbf{CAMXIC}, \textbf{ECAM}, and \textbf{IMU} applications supporting telemetry interfaces, packet routing, and payload integration.
+		\item Built \textbf{PX4 + MAVSDK} offboard-control simulations for autonomous translational pointing guidance and trajectory evaluation.
+		\item Developed \textbf{Trick-based} simulations, telemetry analysis tools, and automated controller tuning workflows for closed-loop testing.
+	\end{itemize}
 
 	\textbf{Student Co-Op, Electronics for Contested Space Group} \hfill \textbf{September 2025 – January 2026} \\
 	\emph{MIT Lincoln Laboratory}
@@ -105,22 +116,6 @@
 		\item Developed \textbf{angles-only orbit determination} pipelines using UKF, range iteration, and least-squares methods for \textbf{SSA tracking and characterization}.
 		\item Performed Monte Carlo observability analysis to identify challenging geometries and improve tracking of closely spaced RSOs.
 		\item Implemented and unit-tested a \textbf{Lambert-based IOD solver} to support track initialization and catalog maintenance.
-	\end{itemize}
-
-	\sectionline
-	
-	\section*{Research Projects}
-	
-	\textbf{Optical Orbit Determination and Tracking}
-	\begin{itemize}
-		\item Built an end-to-end orbit determination pipeline from ground-based optical line-of-sight measurements, including time/frames handling and measurement conditioning
-		\item Applied classical initial orbit determination (Laplace) to recover an ECI state from sparse measurements; validated against truth propagation and evaluated sensitivity to realistic measurement noise via Monte Carlo error statistics
-	\end{itemize}
-	
-	\textbf{Astrodynamics and Optimization for Mission Design (Earth--Mars Transfer)}
-	\begin{itemize}
-		\item Designed and analyzed interplanetary transfers using ephemeris-driven Lambert targeting and patched-conic $\Delta V$ estimates to assess launch-window trade spaces.
-		\item Combined grid-based porkchop mapping with constrained nonlinear optimization (SLSQP) to identify low-$\Delta V$ solutions under time-of-flight constraints; produced 3D trajectory visualizations for verification and communication
 	\end{itemize}
 	
 \end{document}
