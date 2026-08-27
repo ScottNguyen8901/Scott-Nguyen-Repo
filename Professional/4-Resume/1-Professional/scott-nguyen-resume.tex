@@ -1,5 +1,5 @@
 \documentclass[10pt]{article}
-\usepackage[margin=0.35in]{geometry}
+\usepackage[margin=0.50in]{geometry}
 \usepackage{enumitem}
 \usepackage{titlesec}
 \usepackage{parskip}
@@ -14,7 +14,7 @@
 
 \pagestyle{empty}
 
-% Line between sections (no spacing)
+% Line between sections
 \newcommand{\sectionline}{\noindent\rule{\linewidth}{0.4pt}}
 
 % No extra paragraph spacing
@@ -31,6 +31,7 @@
 \titlespacing{\section}{0pt}{2pt}{2pt}
 
 \begin{document}
+	\fontsize{9.5}{11}\selectfont
 	
 	\begin{center}
 		{\color{mygreen}
@@ -42,80 +43,91 @@
 			\textbf{Security Clearance: Interim Secret}
 		}
 	\end{center}
-
+	
 	\sectionline
 	
 	\section*{Education}
 	
-	\textbf{Master of Science in Electrical Engineering \textbar\ Space Systems Engineering} \hfill \textbf{Summer 2026} \\
+	\textbf{Ph.D. in Mechanical and Aerospace Engineering} \hfill \textbf{Spring 2030}
+	
+	UC San Diego \textbar\ San Diego State University \textit{(Joint Doctoral Program)}
+	
+	\textbf{Master of Science in Electrical Engineering \textbar\ Space Systems Engineering} \hfill \textbf{Summer 2026}
+	
 	University of New Mexico \hfill GPA: 3.93/4.00
 	
-	\textbf{Master of Science in Aerospace Engineering} \hfill \textbf{Fall 2024} \\
+	\textbf{Master of Science in Aerospace Engineering} \hfill \textbf{Fall 2024}
+	
 	University of Illinois Urbana-Champaign
 	
-	\textbf{Bachelor of Science in Aerospace Engineering} \hfill \textbf{Spring 2022} \\
-	Iowa State University
+	\textbf{Bachelor of Science in Aerospace Engineering} \hfill \textbf{Spring 2022}
 	
+	Iowa State University
+
 	\sectionline
 	
 	\section*{Skills}
 	\textbf{Programming:} Python, MATLAB, C/C++, Ruby \\
-	\textbf{GNC / Flight Software:} cFS, PX4, MAVSDK, MAVLink, EKF/UKF, Monte Carlo Analysis, Orbit Determination \\
-	\textbf{Simulation / Tools:} Simulink, Trick, NumPy, SciPy, Matplotlib, Git, Linux, CI/CD \\
+	\textbf{GNC / Flight Software:} cFS, PX4, MAVSDK, MAVLink, ROS2, EKF, UKF, MEKF, Sensor Fusion, Orbit Determination \\
+	\textbf{Simulation / Tools:} Gazebo, Simulink, Trick, NumPy, SciPy, Git, Linux, CI/CD \\
 	\textbf{Applications:} ANSYS HFSS, FEKO, TICRA, Blender
 	
 	\sectionline
 	
 	\section*{Work Experience}
 	
-	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill 
-	\textbf{January 2026 – May 2026} \\
-	\emph{NASA Johnson Space Center (JSC)}
+	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill \textbf{May 2026 -- August 2026} \\
+	\emph{Air Force Research Laboratory (AFRL), Eglin Air Force Base}
 	\begin{itemize}
-		\item Developed and integrated GNC flight software applications within NASA's \textbf{core Flight System (cFS)} architecture for the \textbf{SPLICE} project.
-		\item Worked on \textbf{CAMXIC}, \textbf{ECAM}, and \textbf{IMU} applications supporting telemetry interfaces, packet routing, and payload integration.
-		\item Built \textbf{PX4 + MAVSDK} offboard-control simulations for autonomous translational pointing guidance and trajectory evaluation.
-		\item Developed \textbf{Trick-based} simulations, telemetry analysis tools, and automated controller tuning workflows for closed-loop testing.
-	\end{itemize}
-
-	\textbf{Student Co-Op, Electronics for Contested Space Group} \hfill \textbf{September 2025 – January 2026} \\
-	\emph{MIT Lincoln Laboratory}
-	\begin{itemize}
-		\item Developed an optical space domain awareness analysis tool that propagates TLE-based RSO orbits from user-defined sensor locations and applies illumination and elevation constraints to identify observable windows and pointing solutions.
-		\item Modeled RSO detectability and tracking performance for optical space domain awareness using photometric, kinematic, and sensor-noise models to assess detection limits and track duration.
-		\item Designed a communication architecture with radio-frequency hardware and simulation to support lost-satellite reacquisition.
-	\end{itemize}
-
-	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill \textbf{May 2025 – August 2025} \\
-	\emph{Blue Canyon Technologies}
-	\begin{itemize}
-		\item Executed post-environment testing of \textbf{IMU, star trackers, reaction wheels, torque rods, and sun sensors}.
-		\item Diagnosed \textbf{Solar Array Drive Assembly (SADA)} timing latency and automated \textbf{COSMOS (Ruby)} validation.
-	\end{itemize}
-
-	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill \textbf{January 2025 – April 2025} \\
-	\emph{Blue Origin}
-	\begin{itemize}
-		\item Designed a hybrid \textbf{\emph{Active Disturbance Rejection Control (ADRC)}} + \textbf{\emph{Sliding Mode Control (SMC)}} controller; used an extended state observer and a sliding manifold for robust tracking under uncertainty and actuator limits.
-		\item Injected time-domain disturbances and conducted a trade study comparing the hybrid controller to \textbf{\emph{PID}} and \textbf{\emph{LQR}} on LTI systems; benchmarked rise time, settling time, and overshoot.
-		\item Integrated flight software into \textbf{\emph{Simulink}} via \textbf{\emph{C}} \textbf{\emph{S-functions}} to run full closed-loop simulations.
-	\end{itemize}
-
-	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill \textbf{May 2024 – August 2024} \\
-	\emph{Varda Space Industries}
-	\begin{itemize}
-	    \item Conducted trade studies to optimize gravity models for mission requirements and select the best filter (\textbf{\emph{Extended Kalman Filter (EKF)}} vs. \textbf{\emph{Unscented Kalman Filter (UKF)}})
-	    \item Created Monte Carlo simulations to perform flight safety analysis and develop reentry criteria for capsule reentry
-	    \item Implemented an \textbf{\emph{EKF}} for state estimation, optimizing ground station data timing to minimize residuals and enable precise delta-v planning
-	    \item Implemented unit testing for the code base and introduced CI/CD pipelines using Bamboo
-	\end{itemize}
-
-	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill \textbf{May 2023 – August 2023} \\
-	\emph{Space Dynamics Laboratory}
-	\begin{itemize}
-		\item Developed \textbf{angles-only orbit determination} pipelines using UKF, range iteration, and least-squares methods for \textbf{SSA tracking and characterization}.
-		\item Performed Monte Carlo observability analysis to identify challenging geometries and improve tracking of closely spaced RSOs.
-		\item Implemented and unit-tested a \textbf{Lambert-based IOD solver} to support track initialization and catalog maintenance.
+		\item Implemented and validated a \textbf{Pose Unit Dual Quaternion Multiplicative Extended Kalman Filter (PUDQ-MEKF)} against a traditional \textbf{Extended Kalman Filter (EKF)} for nonlinear pose estimation.
+		\item Performed \textbf{Monte Carlo} analysis using \textbf{Normalized Estimation Error Squared (NEES)}, state-error, and covariance metrics to evaluate estimator consistency.
+		\item Designed a keyframe-based relative pose estimation framework and quantified filter consistency through covariance, error-state, and trajectory-level performance analysis.
+		\item Integrated the estimator in \textbf{Gazebo} and verified closed-loop performance on \textbf{ROS2}-based TurtleBot and multirotor platforms.
 	\end{itemize}
 	
+	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill \textbf{January 2026 -- May 2026} \\
+	\emph{NASA Johnson Space Center (JSC)}
+	\begin{itemize}
+		\item Built Guidance, Navigation, and Controls (GNC) flight software within NASA's \textbf{core Flight System (cFS)} for the \textbf{SPLICE} project.
+		\item Supported \textbf{frame camera}, \textbf{event camera}, and \textbf{Inertial Measurement Unit (IMU)} applications for telemetry, packet routing, and payload integration.
+		\item Created \textbf{PX4 + MAVSDK} simulations and \textbf{Trick}-based tools for autonomous guidance and controller evaluation.
+	\end{itemize}
+	
+	\textbf{Student Co-Op} \hfill \textbf{September 2025 -- January 2026} \\
+	\emph{MIT Lincoln Laboratory, Electronics for Contested Space Group}
+	\begin{itemize}
+		\item Built an optical Space Domain Awareness (SDA) tool to propagate Two-Line Element (TLE)-based Resident Space Object (RSO) orbits and identify observable tracking windows.
+		\item Modeled RSO detectability and tracking performance using photometric, kinematic, and sensor-noise models.
+		\item Designed a radio-frequency communication architecture to support lost-satellite reacquisition.
+	\end{itemize}
+	
+	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill \textbf{May 2025 -- August 2025} \\
+	\emph{Blue Canyon Technologies}
+	\begin{itemize}
+		\item Executed post-environment testing of \textbf{IMUs}, star trackers, reaction wheels, torque rods, and sun sensors.
+		\item Diagnosed \textbf{Solar Array Drive Assembly (SADA)} timing latency and automated \textbf{COSMOS (Ruby)} validation.
+	\end{itemize}
+	
+	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill \textbf{January 2025 -- April 2025} \\
+	\emph{Blue Origin}
+	\begin{itemize}
+		\item Designed a hybrid \textbf{Active Disturbance Rejection Control (ADRC)} + \textbf{Sliding Mode Control (SMC)} controller for robust tracking under uncertainty and actuator limits.
+		\item Benchmarked the hybrid controller against \textbf{PID} and \textbf{LQR} using disturbance-injected simulations and performance metrics.
+		\item Integrated flight software into \textbf{Simulink} through \textbf{C S-functions} for closed-loop testing.
+	\end{itemize}
+	
+	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill \textbf{May 2024 -- August 2024} \\
+	\emph{Varda Space Industries}
+	\begin{itemize}
+		\item Performed gravity-model and \textbf{EKF vs. Unscented Kalman Filter (UKF)} trade studies for reentry navigation architecture selection.
+		\item Implemented an \textbf{EKF} and Monte Carlo flight-safety analyses for state estimation, residual reduction, and delta-v planning.
+	\end{itemize}
+	
+	\textbf{Guidance, Navigation \& Controls Engineer Intern} \hfill \textbf{May 2023 -- August 2023} \\
+	\emph{Space Dynamics Laboratory}
+	\begin{itemize}
+		\item Implemented angles-only orbit determination algorithms using \textbf{UKF}, least-squares, and range-iteration methods for Space Situational Awareness (SSA).
+		\item Performed Monte Carlo observability studies and implemented a \textbf{Lambert-based Initial Orbit Determination (IOD)} solver.
+	\end{itemize}
+
 \end{document}

@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.7.26)  1 DEC 2025 11:41
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.12.13)  23 JUN 2026 21:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **./Nguyen-Scott-SDSU-Cover-Letter.tex
 (Nguyen-Scott-SDSU-Cover-Letter.tex
-LaTeX2e <2025-06-01> patch level 1
-L3 programming layer <2025-07-19>
+LaTeX2e <2025-11-01>
+L3 programming layer <2025-11-06>
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
 Document Class: article 2025/01/22 v1.4n Standard LaTeX document class
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/base\size11.clo
@@ -62,7 +62,7 @@ Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
 ))
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
-Package: etoolbox 2025/02/11 v2.5l e-TeX tools for LaTeX (JAW)
+Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count286
 )) (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.st
 y
@@ -184,7 +184,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 \Hy@SectionHShift=\skip51
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty
-Package: fontenc 2024/12/21 v2.1c Standard LaTeX package
+Package: fontenc 2025/07/18 v2.1d Standard LaTeX package
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
 Package: inputenc 2024/02/08 v1.3d Input encoding file
@@ -212,7 +212,7 @@ Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
 )
 (C:\Users\scott\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
 tex.def
-File: l3backend-pdftex.def 2025-06-09 L3 backend support: PDF output (pdfTeX)
+File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count298
 ) (Nguyen-Scott-SDSU-Cover-Letter.aux)
 \openout1 = `Nguyen-Scott-SDSU-Cover-Letter.aux'.
@@ -275,47 +275,61 @@ Package hyperref Info: Link coloring OFF on input line 22.
 \@outlinefile=\write3
 \openout3 = `Nguyen-Scott-SDSU-Cover-Letter.out'.
 
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <10.95> on input line 43.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 43.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 43.
 
+Overfull \hbox (255.46208pt too wide) has occurred while \output is active
+ [][]
+ []
 
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 44.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 44.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 44.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 54.39996pt, for example:
-(fancyhdr)                \setlength{\headheight}{54.39996pt}.
+(fancyhdr)                Make it at least 27.21753pt, for example:
+(fancyhdr)                \setlength{\headheight}{27.21753pt}.
 (fancyhdr)                You might also make \topmargin smaller:
-(fancyhdr)                \addtolength{\topmargin}{-42.39996pt}.
+(fancyhdr)                \addtolength{\topmargin}{-15.21753pt}.
 
 [1{C:/Users/scott/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}
 
 ]
-(Nguyen-Scott-SDSU-Cover-Letter.aux)
+Overfull \hbox (255.46208pt too wide) has occurred while \output is active
+ [][]
+ []
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 27.21753pt, for example:
+(fancyhdr)                \setlength{\headheight}{27.21753pt}.
+(fancyhdr)                You might also make \topmargin smaller:
+(fancyhdr)                \addtolength{\topmargin}{-15.21753pt}.
+
+[2] (Nguyen-Scott-SDSU-Cover-Letter.aux)
  ***********
-LaTeX2e <2025-06-01> patch level 1
-L3 programming layer <2025-07-19>
+LaTeX2e <2025-11-01>
+L3 programming layer <2025-11-06>
  ***********
 Package rerunfilecheck Info: File `Nguyen-Scott-SDSU-Cover-Letter.out' has not 
 changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 8660 strings out of 468149
- 136419 string characters out of 5431082
- 553515 words of memory out of 5000000
- 37209 multiletter control sequences out of 15000+600000
- 631116 words of font info for 51 fonts, out of 8000000 for 9000
+ 8661 strings out of 467871
+ 136520 string characters out of 5418375
+ 558868 words of memory out of 5000000
+ 37487 multiletter control sequences out of 15000+600000
+ 632012 words of font info for 51 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,17n,79p,822b,440s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 69i,17n,79p,697b,443s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\scott\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm
 1095.pk> <C:\Users\scott\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
 0\ecbx1095.pk>
-Output written on Nguyen-Scott-SDSU-Cover-Letter.pdf (1 page, 32422 bytes).
+Output written on Nguyen-Scott-SDSU-Cover-Letter.pdf (2 pages, 32507 bytes).
 PDF statistics:
- 107 PDF objects out of 1000 (max. 8388607)
- 2 named destinations out of 1000 (max. 500000)
+ 108 PDF objects out of 1000 (max. 8388607)
+ 3 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
